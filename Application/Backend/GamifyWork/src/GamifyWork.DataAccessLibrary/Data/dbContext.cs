@@ -11,7 +11,13 @@ namespace GamifyWork.DataAccessLibrary.Data
 {
     public class dbContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder dbContextOptionsBuilder) => dbContextOptionsBuilder.UseMySQL("");
-        public DbSet<TaskModel> Tasks { get; set; }
+        private readonly string _connectionString;
+        public dbContext(IConfiguration configuration)
+        {
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder dbContextOptionsBuilder) => 
+            dbContextOptionsBuilder.UseMySQL(_connectionString);
+        public DbSet<TaskModel> task { get; set; }
     }
 }
