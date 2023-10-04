@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A2CDA4D3-F3A1-4B5D-9BCD-087939F19818}"
-	ProjectSection(SolutionItems) = preProject
-		src\GamifyWork.API\Dockerfile = src\GamifyWork.API\Dockerfile
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamifyWork.API", "src\GamifyWork.API\GamifyWork.API.csproj", "{CC3F8A7E-88D4-4C92-9BCB-72DA978C0562}"
 EndProject
@@ -22,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamifyWork.ServiceLibrary.t
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamifyWork.DataAccessLibrary.tests", "tests\GamifyWork.DataAccessLibrary.tests\GamifyWork.DataAccessLibrary.tests.csproj", "{3F9F87D7-6936-452A-99FE-45815B568F3A}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{62E1E926-9BB7-4192-9FDA-DBBF74E167CF}"
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{56550F14-3C65-4A74-96A1-95ED07541FFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,10 +51,10 @@ Global
 		{3F9F87D7-6936-452A-99FE-45815B568F3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F9F87D7-6936-452A-99FE-45815B568F3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F9F87D7-6936-452A-99FE-45815B568F3A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{62E1E926-9BB7-4192-9FDA-DBBF74E167CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{62E1E926-9BB7-4192-9FDA-DBBF74E167CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{62E1E926-9BB7-4192-9FDA-DBBF74E167CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{62E1E926-9BB7-4192-9FDA-DBBF74E167CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56550F14-3C65-4A74-96A1-95ED07541FFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56550F14-3C65-4A74-96A1-95ED07541FFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56550F14-3C65-4A74-96A1-95ED07541FFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56550F14-3C65-4A74-96A1-95ED07541FFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GamifyWork.ServiceLibrary.Services
 {
-    public class TaskService
+    public class TaskService : ITaskService
     {
         private readonly ITaskRepository _taskRepository;
 
@@ -18,9 +18,15 @@ namespace GamifyWork.ServiceLibrary.Services
         }
         public async Task<IEnumerable> GetAllTasks()
         {
-            // validate some stuff
-            var tasks = await _taskRepository.GetAllTasks();
-            return (tasks);
+            try
+            {
+                var tasks = await _taskRepository.GetAllTasks();
+                return (tasks);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

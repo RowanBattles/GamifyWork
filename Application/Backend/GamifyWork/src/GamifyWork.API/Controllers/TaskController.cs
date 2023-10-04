@@ -1,4 +1,5 @@
 ﻿using GamifyWork.DataAccessLibrary.Repositories;
+using GamifyWork.ServiceLibrary.Interfaces;
 using GamifyWork.ServiceLibrary.Models;
 using GamifyWork.ServiceLibrary.Services;
 using Microsoft.AspNetCore.Http;
@@ -11,9 +12,9 @@ namespace GamifyWork.API.Controllers
     [ApiController]
     public class TaskController : ControllerBase
     {
-        private readonly TaskService _taskService;
+        private readonly ITaskService _taskService;
 
-        public TaskController(TaskService taskService)
+        public TaskController(ITaskService taskService)
         {
             _taskService = taskService;
         }
@@ -22,7 +23,7 @@ namespace GamifyWork.API.Controllers
         public async Task<IActionResult> GetAllTasks()
         {
             var tasks = await _taskService.GetAllTasks();
-            return Ok(tasks);
+            return tasks != null ? Ok(tasks) : NotFound();
         }
     }
 }

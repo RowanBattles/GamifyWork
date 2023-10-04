@@ -5,6 +5,17 @@ using GamifyWork.ServiceLibrary.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CORSpolicy", builder =>
+    {
+        builder
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+        .WithOrigins("http://localhost:5173");
+    });
+});
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -14,7 +25,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<dbContext>();
-builder.Services.AddScoped<TaskService>();
+builder.Services.AddScoped<ITaskService, TaskService>();
 
 
 var app = builder.Build();
@@ -27,6 +38,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("CORSpolicy");
 
 app.UseAuthorization();
 

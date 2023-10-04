@@ -15,13 +15,13 @@ services:
         - MYSQL_HOST=mysql
         - MYSQL_PORT=5050
         - MYSQL_PASSWORD=Example@2023#
-        - MYSQL_DATABASE=Demo
+        - MYSQL_DATABASE=gamifywork
 
   mysql:
     restart: unless-stopped
     image: mysql:latest
     environment:
         - MYSQL_ROOT_PASSWORD=Example@2023#
-        - MYSQL_DATABASE=Demo
+        - MYSQL_DATABASE=gamifywork
     ports:
         - "5050:3306"

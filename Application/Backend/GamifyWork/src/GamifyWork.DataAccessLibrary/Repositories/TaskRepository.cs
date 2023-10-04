@@ -19,7 +19,7 @@ namespace GamifyWork.DataAccessLibrary.Repositories
         {
              _dbContext = dbContext;
         }
-        public async Task<List<TaskModel>> GetAllTasks()
+        public async Task<IEnumerable<TaskModel>> GetAllTasks()
         {
             using (_dbContext)
             {

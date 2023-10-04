@@ -25,4 +25,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\GamifyWork.DataAccessLibrary\GamifyWork.DataAccessLibrary.csproj" />
+  </ItemGroup>
+
 </Project>

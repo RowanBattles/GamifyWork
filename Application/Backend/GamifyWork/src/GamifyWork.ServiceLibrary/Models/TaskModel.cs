@@ -10,6 +10,20 @@ namespace GamifyWork.ServiceLibrary.Models
 {
     public class TaskModel
     {
+        public TaskModel(int task_ID, string title, string? description, int? points, bool completed, 
+            bool recurring, string? recurrenceType, int? recurrenceInterval, DateTime? nextDueDate, int user_ID)
+        {
+            Task_ID = task_ID;
+            Title = title;
+            Description = description;
+            Points = points;
+            Completed = completed;
+            RecurrenceType = recurrenceType;
+            RecurrenceInterval = recurrenceInterval;
+            NextDueDate = nextDueDate;
+            User_ID = user_ID;
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Task_ID { get; set; }
