@@ -26,7 +26,7 @@ jobs:
       - name: Restore dependencies 💉
         run: dotnet restore ./Application/Backend/GamifyWork/GamifyWork.sln
 
-      - name: Build app 👷‍♂️🧱d
+      - name: Build app 👷‍♂️🧱
         run: dotnet build -c Release --no-restore ./Application/Backend/GamifyWork/GamifyWork.sln
 
       - name: Run UnitTestst 🧪
