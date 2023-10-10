@@ -1,5 +1,7 @@
 import "./App.css";
 import React, { useState } from "react";
+import axios from "axios";
+import Endpoints from "./utils/Constants";
 
 export default function App() {
   const [tasks, setTasks] = useState([]);
@@ -101,13 +103,12 @@ export default function App() {
   }
 
   function getTasks() {
-    const url = "https://localhost:7017/api/task";
+    const url = Endpoints.GetAllTasks;
 
-    fetch(url, {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((tasksFromServer) => {
+    axios
+      .get(url)
+      .then((response) => {
+        const tasksFromServer = response.data;
         console.log(tasksFromServer);
         setTasks(tasksFromServer);
       })
