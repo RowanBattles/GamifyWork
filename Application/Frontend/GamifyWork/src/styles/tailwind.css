@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .blue {
+    background-color: #1c559a;
+  }
+
+  .border-blue {
+    border-color: #1c559a;
+  }
+
+  .text-blue {
+    color: #1c559a;
+  }
+}
