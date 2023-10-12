@@ -21,15 +21,17 @@ jobs:
 
       - name: Restore dependencies 💉
         uses: bahmutov/npm-install@v1
+        working-directory: ./Application/Frontend/GamifyWork
 
       - name: Build project 👷‍♂️🧱
-        run: npm --prefix ./Application/Frontend/GamifyWork run build
+        run: npm run build
+        working-directory: ./Application/Frontend/GamifyWork
 
       - name: Upload production-ready build files 🔼🚀
         uses: actions/upload-artifact@v2
         with:
           name: production-files
-          path: ./dist
+          path: ./Application/Frontend/GamifyWork/dist
 
   deploy:
     name: Deploy
@@ -42,10 +44,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: production-files
-          path: ./dist
+          path: ./Application/Frontend/GamifyWork/dist
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./Application/Frontend/GamifyWork/dist
