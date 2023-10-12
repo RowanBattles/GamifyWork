@@ -20,7 +20,7 @@ jobs:
           node-version: 16
 
       - name: Restore dependencies 💉
-        uses: bahmutov/npm-install@v1
+        run: npm install
         working-directory: ./Application/Frontend/GamifyWork
 
       - name: Build project 👷‍♂️🧱
