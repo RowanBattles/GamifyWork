@@ -14,4 +14,13 @@
   .text-blue {
     color: #1c559a;
   }
+
+  .outline-blue {
+    outline-color: #1c559a;
+  }
+
+  .placeholder-bold::placeholder {
+    font-weight: 700;
+    color: rgb(106, 106, 106);
+  }
 }

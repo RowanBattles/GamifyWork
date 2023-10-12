@@ -5,10 +5,10 @@ function LabelButton() {
     <>
       <button
         data-dropdown-toggle="dropdown"
-        className=" hover:text-blue focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        className="bg-white hover:text-blue hover:shadow-xl active:shadow-none active:border-solid active:border-blue active:border focus:border-solid focus:border focus:border-blue transition-all shadow font-medium rounded text-xs px-5 py-0 h-auto text-center inline-flex items-center"
         type="button"
       >
-        Dropdown button{" "}
+        Labels{" "}
         <svg
           className="w-2.5 h-2.5 ml-2.5"
           aria-hidden="true"
@@ -35,36 +35,7 @@ function LabelButton() {
           aria-labelledby="dropdownDefaultButton"
         >
           <li>
-            <a
-              href="#"
-              className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-            >
-              Dashboard
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-            >
-              Settings
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-            >
-              Earnings
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-            >
-              Sign out
-            </a>
+            <div>Label 1</div>
           </li>
         </ul>
       </div>

@@ -20,7 +20,7 @@ function SearchBar() {
           </svg>
         </div>
         <input
-          className="outline-none block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:border-blue transition-all duration-300"
+          className="outline-none block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:border-blue transition-all duration-300"
           placeholder="Search"
         />
       </div>
