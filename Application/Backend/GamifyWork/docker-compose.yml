@@ -1,27 +1,24 @@
 version: '3.4'
 
 services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Example@2023#
+      MYSQL_DATABASE: gamifywork
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Example@2023#
+    ports:
+      - 5050:3306
+
   gamifywork.api:
-    image: ${DOCKER_REGISTRY-}gamifyworkapi
+    container_name: GamifyWorkAPI
     build:
       context: .
       dockerfile: src/GamifyWork.API/Dockerfile
-    ports: 
-        - 5400:80
-        - 5401:443
-    depends_on:
-        - mysql
-    environment:
-        - MYSQL_HOST=mysql
-        - MYSQL_PORT=5050
-        - MYSQL_PASSWORD=Example@2023#
-        - MYSQL_DATABASE=gamifywork
-
-  mysql:
-    restart: unless-stopped
-    image: mysql:latest
-    environment:
-        - MYSQL_ROOT_PASSWORD=Example@2023#
-        - MYSQL_DATABASE=gamifywork
     ports:
-        - "5050:3306"
+      - 5400:80
+      - 5401:443
+    depends_on:
+      - mysql
