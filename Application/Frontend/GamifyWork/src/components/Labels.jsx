@@ -8,7 +8,7 @@ function LabelButton() {
         className="bg-white hover:text-blue hover:shadow-xl active:shadow-none active:border-solid active:border-blue active:border focus:border-solid focus:border focus:border-blue transition-all shadow font-medium rounded text-xs px-5 py-0 h-auto text-center inline-flex items-center"
         type="button"
       >
-        Labels{" "}
+        Labels
         <svg
           className="w-2.5 h-2.5 ml-2.5"
           aria-hidden="true"
