@@ -1,20 +1,15 @@
 import axios from "axios";
 import EndPoints from "./Constants";
 
-function getTasks(setTasks) {
+async function getTasks() {
   const url = EndPoints.GetAllTasks;
 
-  axios
-    .get(url)
-    .then((response) => {
-      const tasksFromServer = response.data;
-      console.log(tasksFromServer);
-      setTasks(tasksFromServer);
-    })
-    .catch((error) => {
-      console.log(error);
-      alert(error);
-    });
+  try {
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 }
 
 export default getTasks;

@@ -1,9 +1,27 @@
+import React, { useState, useEffect } from "react";
+import getTasks from "../utils/api";
 import NavBar from "../components/NavBar";
 import SearchBar from "../components/SearchBar";
 import LabelButton from "../components/Labels";
 import TaskTable from "../components/TaskTable";
 
 function HomePage() {
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    async function fetchTasks() {
+      try {
+        const tasksFromServer = await getTasks(); // Await the promise
+        setTasks(tasksFromServer);
+      } catch (error) {
+        console.error(error);
+        // Handle errors, e.g., show an error message to the user
+      }
+    }
+
+    fetchTasks();
+  }, []);
+
   return (
     <>
       <NavBar />
@@ -13,9 +31,9 @@ function HomePage() {
           <LabelButton />
         </div>
         <div className="columns-3">
-          <TaskTable />
-          <TaskTable />
-          <TaskTable />
+          <TaskTable tasks={tasks} title="Recurring" />
+          <TaskTable tasks={tasks} title="To do" />
+          <TaskTable tasks={tasks} title="Rewards" />
         </div>
       </div>
     </>
