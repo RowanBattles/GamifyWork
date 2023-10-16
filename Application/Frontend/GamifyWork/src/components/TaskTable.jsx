@@ -2,7 +2,7 @@ import React from "react";
 
 function TaskTable({ tasks, title }) {
   return (
-    <div className="px-4 pt-5">
+    <div className="px-4 pt-5 min-h-[556px]">
       <div className="flex justify-between items-center">
         <div className="text-lg font-bold">{title}</div>
         <div className="text-sm flex gap-2">
@@ -11,7 +11,7 @@ function TaskTable({ tasks, title }) {
           <div>Active</div>
         </div>
       </div>
-      <div className="p-2 bg-neutral-100">
+      <div className="p-2 bg-neutral-100 h-full">
         <textarea
           className="text-sm resize-none h-10 border border-neutral-200 border-solid bg-neutral-200 w-full transition-all focus:bg-white focus:border hover:bg-neutral-300 hover:border hover:border-blue hover:border-solid placeholder-bold"
           placeholder="Add task"

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { filterTasksByRecurring } from "../utils/Filters/taskFilters";
 import getTasks from "../utils/api";
 import NavBar from "../components/NavBar";
 import SearchBar from "../components/SearchBar";
@@ -13,6 +14,7 @@ function HomePage() {
       try {
         const tasksFromServer = await getTasks(); // Await the promise
         setTasks(tasksFromServer);
+        console.log(tasksFromServer);
       } catch (error) {
         console.error(error);
         // Handle errors, e.g., show an error message to the user
@@ -21,6 +23,9 @@ function HomePage() {
 
     fetchTasks();
   }, []);
+
+  const recurringTasks = filterTasksByRecurring(tasks, true);
+  const todoTasks = filterTasksByRecurring(tasks, false);
 
   return (
     <>
@@ -31,8 +36,8 @@ function HomePage() {
           <LabelButton />
         </div>
         <div className="columns-3">
-          <TaskTable tasks={tasks} title="Recurring" />
-          <TaskTable tasks={tasks} title="To do" />
+          <TaskTable tasks={recurringTasks} title="Recurring" />
+          <TaskTable tasks={todoTasks} title="To do" />
           <TaskTable tasks={tasks} title="Rewards" />
         </div>
       </div>

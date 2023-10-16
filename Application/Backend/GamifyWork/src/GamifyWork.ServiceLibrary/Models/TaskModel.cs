@@ -18,6 +18,7 @@ namespace GamifyWork.ServiceLibrary.Models
             Description = description;
             Points = points;
             Completed = completed;
+            Recurring = recurring;
             RecurrenceType = recurrenceType;
             RecurrenceInterval = recurrenceInterval;
             NextDueDate = nextDueDate;
