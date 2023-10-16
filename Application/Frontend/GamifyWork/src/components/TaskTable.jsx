@@ -1,6 +1,10 @@
 import React from "react";
 
 function TaskTable({ tasks, title }) {
+  if (tasks === null) {
+    return null;
+  }
+
   return (
     <div className="px-4 pt-5 min-h-[556px]">
       <div className="flex justify-between items-center">
