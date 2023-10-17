@@ -40,14 +40,6 @@ jobs:
         shell: powershell
         run: dotnet tool install --global dotnet-sonarscanner --version 5.14.0
 
-      - name: Verify SonarScanner Installation
-        run: |
-          if (Test-Path -Path 'C:\Users\rowan\.dotnet\tools\dotnet-sonarscanner') {
-            Write-Output "SonarScanner for .NET is installed."
-          } else {
-            Write-Output "SonarScanner for .NET is not installed or the path is incorrect."
-          }
-
       - name: Build and analyze
         shell: pwsh
         run: |
