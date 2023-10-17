@@ -52,6 +52,6 @@ jobs:
         shell: pwsh
         run: |
           Set-Location -Path ./Application/Backend/GamifyWork/src/GamifyWork.API
-          & 'C:\Users\rowan\.dotnet\tools\dotnet-sonarscanner' begin /k:"GamifyWork" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
+          dotnet-sonarscanner begin /k:"GamifyWork" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
           dotnet build
-          & 'C:\Users\rowan\.dotnet\tools\dotnet-sonarscanner' end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+          dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
