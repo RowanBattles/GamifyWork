@@ -1,9 +1,0 @@
-﻿C:\Users\rowan\Desktop\Tools\School\Semester 3\Ip\GamifyWork\Application\Backend\GamifyWork\src\GamifyWork.API\Controllers\TaskController.cs
-C:\Users\rowan\Desktop\Tools\School\Semester 3\Ip\GamifyWork\Application\Backend\GamifyWork\src\GamifyWork.API\Program.cs
-C:\Users\rowan\Desktop\Tools\School\Semester 3\Ip\GamifyWork\Application\Backend\GamifyWork\src\GamifyWork.API\obj\Debug\net6.0\GamifyWork.API.GlobalUsings.g.cs
-C:\Users\rowan\Desktop\Tools\School\Semester 3\Ip\GamifyWork\Application\Backend\GamifyWork\src\GamifyWork.API\obj\Debug\net6.0\.NETCoreApp,Version=v6.0.AssemblyAttributes.cs
-C:\Users\rowan\Desktop\Tools\School\Semester 3\Ip\GamifyWork\Application\Backend\GamifyWork\src\GamifyWork.API\obj\Debug\net6.0\GamifyWork.API.AssemblyInfo.cs
-C:\Users\rowan\Desktop\Tools\School\Semester 3\Ip\GamifyWork\Application\Backend\GamifyWork\src\GamifyWork.API\obj\Debug\net6.0\GamifyWork.API.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\rowan\Desktop\Tools\School\Semester 3\Ip\GamifyWork\Application\Backend\GamifyWork\src\GamifyWork.API\appsettings.Development.json
-C:\Users\rowan\Desktop\Tools\School\Semester 3\Ip\GamifyWork\Application\Backend\GamifyWork\src\GamifyWork.API\appsettings.json
-C:\Users\rowan\Desktop\Tools\School\Semester 3\Ip\GamifyWork\Application\Backend\GamifyWork\src\GamifyWork.API\Properties\launchSettings.json
