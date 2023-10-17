@@ -42,16 +42,16 @@ jobs:
 
       - name: Verify SonarScanner Installation
         run: |
-          if (Test-Path -Path C:\Users\rowan\.dotnet\tools\dotnet-sonarscanner.exe) {
+          if (Test-Path -Path 'C:\Users\rowan\.dotnet\tools\dotnet-sonarscanner') {
             Write-Output "SonarScanner for .NET is installed."
           } else {
             Write-Output "SonarScanner for .NET is not installed or the path is incorrect."
           }
 
       - name: Build and analyze
-        shell: powershell
+        shell: pwsh
         run: |
           Set-Location -Path ./Application/Backend/GamifyWork/src/GamifyWork.API
-          C:\Users\rowan\.dotnet\tools\dotnet-sonarscanner.exe begin /k:"GamifyWork" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
+          & 'C:\Users\rowan\.dotnet\tools\dotnet-sonarscanner' begin /k:"GamifyWork" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
           dotnet build
-          C:\Users\rowan\.dotnet\tools\dotnet-sonarscanner.exe end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+          & 'C:\Users\rowan\.dotnet\tools\dotnet-sonarscanner' end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
