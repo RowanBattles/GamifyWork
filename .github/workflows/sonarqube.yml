@@ -48,10 +48,6 @@ jobs:
             Write-Output "SonarScanner for .NET is not installed or the path is incorrect."
           }
 
-      - name: List SonarQube Configuration Files
-        run: |
-          Get-ChildItem -Path ./Application/Backend/GamifyWork/src/GamifyWork.API/.sonarqube/conf/
-
       - name: Build and analyze
         shell: pwsh
         run: |
@@ -59,3 +55,7 @@ jobs:
           dotnet-sonarscanner begin /k:"GamifyWork" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
           dotnet build
           dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+
+      - name: List SonarQube Configuration Files
+        run: |
+          Get-ChildItem -Path ./Application/Backend/GamifyWork/src/GamifyWork.API/.sonarqube/conf/
