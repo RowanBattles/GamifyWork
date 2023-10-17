@@ -21,5 +21,6 @@ jobs:
       - name: Run SonarQube Analysis
         run: |
           docker run -e SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }} \
-                     -e SONAR_LOGIN=${{ secrets.SONAR_TOKEN }} \
-                     -v $(pwd):/usr/src --workdir /usr/src sonarsource/sonar-scanner-cli:latest
+          -e SONAR_LOGIN=${{ secrets.SONAR_TOKEN }} \
+          -v $(pwd):/usr/src --workdir /usr/src \
+          -p 9000:9000 sonarsource/sonar-scanner-cli:latest
