@@ -37,6 +37,15 @@ jobs:
         run: |
           New-Item -Path .\.sonar\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+
+      - name: Verify SonarScanner Installation
+        run: |
+          if (Test-Path -Path .\.sonar\scanner\dotnet-sonarscanner) {
+            Write-Output "SonarScanner for .NET is installed."
+          } else {
+            Write-Output "SonarScanner for .NET is not installed or the path is incorrect."
+          }
+
       - name: Build and analyze
         shell: powershell
         run: |
