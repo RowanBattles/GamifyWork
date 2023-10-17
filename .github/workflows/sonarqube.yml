@@ -20,7 +20,7 @@ jobs:
 
       - name: Run SonarQube Analysis
         run: |
-          docker run -e SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }} \
-          -e SONAR_LOGIN=${{ secrets.SONAR_TOKEN }} \
-          -v $(pwd):/usr/src --workdir /usr/src \
-          -p 9000:9000 sonarsource/sonar-scanner-cli:latest
+          dotnet tool install --global dotnet-sonarscanner --version 5.14.0
+          dotnet sonarscanner begin /k:"GamifyWork" /d:sonar.host.url="http://localhost:9000" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+          dotnet build
+          dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
