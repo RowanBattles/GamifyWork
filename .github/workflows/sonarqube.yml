@@ -51,7 +51,7 @@ jobs:
       - name: Build and analyze
         shell: pwsh
         run: |
-          Set-Locatio n -Path ./Application/Backend/GamifyWork/src/GamifyWork.API
+          Set-Location -Path ./Application/Backend/GamifyWork/src/GamifyWork.API
           dotnet-sonarscanner begin /k:"GamifyWork" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
           dotnet build
           dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
