@@ -19,6 +19,7 @@ jobs:
           java-version: 1.17
 
       - name: Run SonarQube Analysis
+        working-directory: ./Application/Backend/GamifyWork
         run: |
           dotnet tool install --global dotnet-sonarscanner --version 5.14.0
           dotnet sonarscanner begin /k:"GamifyWork" /d:sonar.host.url="https://6a46-188-75-133-230.ngrok-free.app/" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
