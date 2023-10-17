@@ -1,17 +1,16 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: Continuous Integration
+name: ASP.NET core API
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -21,7 +20,7 @@ jobs:
       - name: Setup .NET core 🔧🔩
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: "6.0.x"
 
       - name: Restore dependencies 💉
         run: dotnet restore ./Application/Backend/GamifyWork/GamifyWork.sln
@@ -31,4 +30,3 @@ jobs:
 
       - name: Run UnitTestst 🧪
         run: dotnet test ./Application/Backend/GamifyWork/GamifyWork.sln
-

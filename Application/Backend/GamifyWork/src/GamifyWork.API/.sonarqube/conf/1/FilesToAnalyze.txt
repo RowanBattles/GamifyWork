@@ -1,2 +1,0 @@
-﻿C:\Users\rowan\Desktop\Tools\School\Semester 3\Ip\GamifyWork\Application\Backend\GamifyWork\src\GamifyWork.DataAccessLibrary\Data\dbContext.cs
-C:\Users\rowan\Desktop\Tools\School\Semester 3\Ip\GamifyWork\Application\Backend\GamifyWork\src\GamifyWork.DataAccessLibrary\Repositories\TaskRepository.cs
