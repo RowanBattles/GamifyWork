@@ -54,5 +54,28 @@ namespace GamifyWork.ServiceLibrary.Models
 
         [Required]
         public int User_ID { get; set; }
+
+        public DateTime? CalculateNextDueDate()
+        {
+            if (!Recurring)
+            {
+                return null;
+            }
+
+            if (RecurrenceType == "daily")
+            {
+                return NextDueDate?.AddDays(RecurrenceInterval ?? 1);
+            }
+            else if (RecurrenceType == "weekly")
+            {
+                return NextDueDate?.AddDays(7 * (RecurrenceInterval ?? 1));
+            }
+            else if (RecurrenceType == "monthly")
+            {
+                return NextDueDate?.AddMonths(RecurrenceInterval ?? 1);
+            }
+
+            throw new InvalidOperationException("Invalid recurrence type.");
+        }
     }
 }

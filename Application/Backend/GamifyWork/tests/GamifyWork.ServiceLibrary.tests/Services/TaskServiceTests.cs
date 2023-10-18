@@ -2,43 +2,45 @@
 using GamifyWork.ServiceLibrary.Models;
 using GamifyWork.ServiceLibrary.Services;
 using Moq;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace GamifyWork.ServiceLibrary.tests.Services
+public class TaskServiceTests
 {
-    public class TaskServiceTests
+    [Fact]
+    public async Task GetAllTasks_ReturnsAllTasks()
     {
-        private readonly Mock<ITaskRepository> _taskRepositoryMock;
-        private readonly ITaskService _taskService;
-
-        public TaskServiceTests()
+        // Arrange
+        var mockRepository = new Mock<ITaskRepository>();
+        var tasks = new List<TaskModel>
         {
-            _taskRepositoryMock = new Mock<ITaskRepository>();
-            _taskService = new TaskService(_taskRepositoryMock.Object);
-        }
+            new TaskModel(1, "Task 1", "Description 1", 10, false, false, null, null, null, 1),
+            new TaskModel(2, "Task 2", "Description 2", 20, false, false, null, null, null, 1),
+            new TaskModel(3, "Task 3", "Description 3", 30, false, false, null, null, null, 2)
+        };
+        mockRepository.Setup(repo => repo.GetAllTasks()).ReturnsAsync(tasks);
 
-        private readonly TaskModel mockTask1 = new(1, "title 1", null, 10, false, false, null, null, null, 1);
-        private readonly TaskModel mockTask2 = new(1, "title 2", "this description", 20, true, true, "weekly", 2, DateTime.Today, 1);
-        
+        var taskService = new TaskService(mockRepository.Object);
 
-        [Fact]
-        public void GetTasks_ShouldReturnData_WhenDataFound()
-        {
-            // Arrange
-            List<TaskModel> MockTasks = new();
-            MockTasks.Add(mockTask1);
-            MockTasks.Add(mockTask2);
+        // Act
+        var result = await taskService.GetAllTasks();
 
-            _taskRepositoryMock.Setup(x => x.GetAllTasks()).ReturnsAsync(MockTasks);
+        // Assert
+        Assert.Equal(3, result.Count()); 
+    }
 
-            // Act
+    [Fact]
+    public async Task GetAllTasks_ThrowsException()
+    {
+        // Arrange
+        var mockRepository = new Mock<ITaskRepository>();
+        mockRepository.Setup(repo => repo.GetAllTasks()).ThrowsAsync(new Exception("An error occurred"));
 
-            // Assert
-        }
+        var taskService = new TaskService(mockRepository.Object);
+
+        // Act and Assert
+        await Assert.ThrowsAsync<Exception>(() => taskService.GetAllTasks());
     }
 }

@@ -1,4 +1,5 @@
 ﻿using GamifyWork.ServiceLibrary.Interfaces;
+using GamifyWork.ServiceLibrary.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,12 +17,11 @@ namespace GamifyWork.ServiceLibrary.Services
         {
             _taskRepository = taskRepository;
         }
-        public async Task<IEnumerable> GetAllTasks()
+        public async Task<List<TaskModel>> GetAllTasks()
         {
             try
             {
-                var tasks = await _taskRepository.GetAllTasks();
-                return (tasks);
+                return await _taskRepository.GetAllTasks();
             }
             catch (Exception ex)
             {

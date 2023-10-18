@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GamifyWork.ServiceLibrary.Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace GamifyWork.ServiceLibrary.Interfaces
 {
     public interface ITaskService
     {
-        Task<IEnumerable> GetAllTasks();
+        Task<List<TaskModel>> GetAllTasks();
     }
 }
