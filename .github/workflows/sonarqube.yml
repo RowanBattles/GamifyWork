@@ -22,6 +22,6 @@ jobs:
         working-directory: ./Application/Backend/GamifyWork
         run: |
           dotnet tool install --global dotnet-sonarscanner --version 5.14.0
-          dotnet sonarscanner begin /k:"GamifyWork" /d:sonar.host.url="https://5624-188-75-133-230.ngrok-free.app/" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+          dotnet sonarscanner begin /k:"GamifyWork" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
           dotnet build
           dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
