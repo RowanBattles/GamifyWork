@@ -24,4 +24,5 @@ jobs:
           dotnet tool install --global dotnet-sonarscanner --version 5.14.0
           dotnet sonarscanner begin /k:"GamifyWork" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
           dotnet build
+          dotnet test
           dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
