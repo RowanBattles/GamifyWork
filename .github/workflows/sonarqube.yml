@@ -30,7 +30,11 @@ jobs:
         id: ngrok
         run: |
           sleep 5  # Wait for ngrok to start
-          echo "::set-output name=url::$(curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url')"
+          echo "NGROK_URL=$(curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url')" >> $GITHUB_ENV
+
+      - name: Show ngrok URL
+        run: |
+          echo $NGROK_URL
 
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -44,6 +48,6 @@ jobs:
         working-directory: ./Application/Backend/GamifyWork
         run: |
           dotnet tool install --global dotnet-sonarscanner --version 5.14.0
-          dotnet sonarscanner begin /k:"GamifyWork" /d:sonar.host.url="${{ steps.ngrok.outputs.url }}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+          dotnet sonarscanner begin /k:"GamifyWork" /d:sonar.host.url="${{ env.NGROK_URL }}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
           dotnet build
           dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
