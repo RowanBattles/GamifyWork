@@ -42,10 +42,10 @@ jobs:
         with:
           node-version: "14"
 
-      - uses: sonarsource/sonarqube-scan-action@master
+      - name: SonarQube Analysis
+        run: |
+          cd ./Application/Frontend/GamifyWork
+          sonar-scanner
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_REACT }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        with:
-          args: >
-            -Dsonar.projectBaseDir=./Application/Frontend/GamifyWork
