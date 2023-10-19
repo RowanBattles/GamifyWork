@@ -42,6 +42,13 @@ jobs:
         with:
           node-version: "14"
 
+      - name: Install SonarScanner
+        run: |
+          sudo apt-get install -y unzip
+          curl -L -o sonar-scanner-cli.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
+          unzip sonar-scanner-cli.zip
+          export PATH=$PWD/sonar-scanner-4.6.2.2472-linux/bin:$PATH
+
       - name: SonarQube Analysis
         run: |
           cd ./Application/Frontend/GamifyWork
