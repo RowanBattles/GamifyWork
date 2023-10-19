@@ -1,4 +1,4 @@
-import { filterTasksByRecurring } from "../utils/Filters/taskFilters";
+import { filterTasksByRecurring } from "../utils/filters/taskFilters";
 import useFetch from "../hooks/useFetch";
 import getTasks from "../utils/api";
 import NavBar from "../components/NavBar";
