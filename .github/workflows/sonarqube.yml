@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  sonarqube-analysis:
+  sonarqube-analysis-backend:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,3 +26,23 @@ jobs:
           dotnet build
           dotnet test
           dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+
+  sonarqube-analysis-frontend:
+    runs-on: ubuntu-latest
+    permissions: read-all
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_REACT }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
