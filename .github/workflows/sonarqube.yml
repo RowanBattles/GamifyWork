@@ -51,8 +51,7 @@ jobs:
 
       - name: SonarQube Analysis
         run: |
-          cd ./Application/Frontend/GamifyWork
-          sonar-scanner
+          docker run -e SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }} -e SONAR_TOKEN=${{ secrets.SONAR_TOKEN_REACT }} -v $PWD:/usr/src -w /usr/src ./sonarsource/sonar-scanner-cli
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_REACT }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
