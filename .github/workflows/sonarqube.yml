@@ -22,10 +22,17 @@ jobs:
         working-directory: ./Application/Backend/GamifyWork
         run: |
           dotnet tool install --global dotnet-sonarscanner --version 5.14.0
+          dotnet tool install -g dotnet-coverage
           dotnet sonarscanner begin /k:"GamifyWork" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
           dotnet build
-          dotnet test
+          dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
           dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage
+          path: ./coverage.opencover.xml
 
   sonarqube-analysis-frontend:
     runs-on: ubuntu-latest
