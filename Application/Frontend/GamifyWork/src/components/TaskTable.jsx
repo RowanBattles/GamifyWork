@@ -10,9 +10,9 @@ function TaskTable({ tasks, title }) {
       <div className="flex justify-between items-center">
         <div className="text-lg font-bold">{title}</div>
         <div className="text-sm flex gap-2">
-          <div>Every</div>
-          <div>Completed</div>
+          <div>All</div>
           <div>Active</div>
+          <div>Completed</div>
         </div>
       </div>
       <div className="p-2 bg-neutral-100 h-full">
