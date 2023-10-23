@@ -25,7 +25,7 @@ jobs:
           dotnet sonarscanner begin /k:"GamifyWork" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.sources=src /d:sonar.tests=tests
           dotnet build
           dotnet test --filter FullyQualifiedName!~dbContext
-          dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.coverage.exclusions="**/dbContext.cs"
+          dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
   sonarqube-analysis-frontend:
     runs-on: ubuntu-latest
