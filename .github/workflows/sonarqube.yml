@@ -27,27 +27,10 @@ jobs:
       - name: Run SonarQube Analysis
         working-directory: ./Application/Backend/GamifyWork
         run: |
-          dotnet sonarscanner begin /k:"GamifyWork" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-          dotnet build
-          dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+          dotnet sonarscanner begin /k:"GamifyWork" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
+          dotnet build --no-incremental
+          dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
           dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-
-      - name: Install ReportGenerator
-        run: dotnet tool install --global dotnet-reportgenerator-globaltool
-
-      - name: Generate Coverage Report
-        run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-        continue-on-error: true
-
-      - name: Convert Coverage Report to SonarQube format
-        run: reportgenerator -reports:**/coverage.opencover.xml -targetdir:./CoverageReport -reporttypes:SonarQube
-        continue-on-error: true
-
-      - name: Upload Coverage Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: coverage
-          path: ./CoverageReport/SonarQube.xml
 
   sonarqube-analysis-frontend:
     runs-on: ubuntu-latest
