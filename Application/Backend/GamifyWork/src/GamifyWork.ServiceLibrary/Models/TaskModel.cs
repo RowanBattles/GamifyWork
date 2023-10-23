@@ -27,33 +27,32 @@ namespace GamifyWork.ServiceLibrary.Models
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Task_ID { get; set; }
+        public int Task_ID { get; private set; }
 
         [Required]
         [StringLength(60)]
-        public string Title { get; set; }
+        public string Title { get; private set; }
 
         [StringLength(255)]
-        public string? Description { get; set; }
+        public string? Description { get; private set; }
 
-        //[DisplayFormat(DataFormatString = "{0:D10}")]
-        public int? Points { get; set; }
-
-        [Required]
-        public bool Completed { get; set; }
+        public int? Points { get; private set; }
 
         [Required]
-        public bool Recurring { get; set; }
+        public bool Completed { get; private set; }
+
+        [Required]
+        public bool Recurring { get; private set; }
 
         [StringLength(45)]
-        public string? RecurrenceType { get; set; }
+        public string? RecurrenceType { get; private set; }
 
-        public int? RecurrenceInterval { get; set; }
+        public int? RecurrenceInterval { get; private set; }
 
-        public DateTime? NextDueDate { get; set; }
+        public DateTime? NextDueDate { get; private set; }
 
         [Required]
-        public int User_ID { get; set; }
+        public int User_ID { get; private set; }
 
         public DateTime? CalculateNextDueDate()
         {
