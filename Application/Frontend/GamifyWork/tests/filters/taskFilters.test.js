@@ -1,6 +1,8 @@
 import { test, expect, describe } from "vitest";
-import { filterTasksByRecurring } from "../../src/utils/Filters/taskFilters";
-import { filterTasksByStatus } from "../../src/utils/Filters/taskFilters";
+import {
+  filterTasksByRecurring,
+  filterTasksByStatus,
+} from "../../src/utils/Filters/taskFilters";
 
 describe("filterTasksByRecurring", () => {
   const tasks = [

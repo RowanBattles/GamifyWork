@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [react()],
   test: {
     coverage: {
+      provider: "istanbul",
       reporter: ["lcov"],
     },
   },

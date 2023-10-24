@@ -57,6 +57,9 @@ jobs:
         run: yarn test --coverage
         working-directory: ./Application/Frontend/GamifyWork
 
+      - name: Remove lcov-report Directory
+        run: rm -rf ./Application/Frontend/GamifyWork/coverage/lcov-report
+
       - name: SonarQube Analysis
         uses: sonarsource/sonarqube-scan-action@master
         with:
