@@ -42,11 +42,20 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install dependencies
-        run: cd ./Application/Frontend/GamifyWork && yarn
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+
+      - name: Restore dependencies
+        run: |
+          yarn install
+          npm install vitest
+        working-directory: ./Application/Frontend/GamifyWork
 
       - name: Test and coverage
-        run: cd ./Application/Frontend/GamifyWork && yarn test --coverage
+        run: yarn test --coverage
+        working-directory: ./Application/Frontend/GamifyWork
 
       - name: SonarQube Analysis
         uses: sonarsource/sonarqube-scan-action@master
