@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   test: {
     coverage: {
-      reporter: ["text", "lcov"],
+      reporter: ["lcov"],
     },
   },
 });
