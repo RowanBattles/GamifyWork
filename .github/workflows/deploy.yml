@@ -20,7 +20,7 @@ jobs:
           node-version: 16
 
       - name: Restore dependencies 💉
-        run: npm install
+        run: yarn install
         working-directory: ./Application/Frontend/GamifyWork
 
       - name: Build project 👷‍♂️🧱

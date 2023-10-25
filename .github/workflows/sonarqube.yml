@@ -50,7 +50,6 @@ jobs:
       - name: Restore dependencies
         run: |
           yarn install
-          npm install vitest
         working-directory: ./Application/Frontend/GamifyWork
 
       - name: Test and coverage
