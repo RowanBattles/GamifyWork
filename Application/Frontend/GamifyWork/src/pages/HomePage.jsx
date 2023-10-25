@@ -8,8 +8,14 @@ import TaskTable from "../components/TaskTable";
 
 function HomePage() {
   const { data: tasks, loading, error } = useFetch(getTasks);
-  const recurringTasks = filterTasksByRecurring(tasks, true);
-  const todoTasks = filterTasksByRecurring(tasks, false);
+
+  let recurringTasks = [];
+  let todoTasks = [];
+
+  if (tasks !== null) {
+    recurringTasks = filterTasksByRecurring(tasks, true);
+    todoTasks = filterTasksByRecurring(tasks, false);
+  }
 
   return (
     <>
@@ -18,6 +24,7 @@ function HomePage() {
           <img
             src="/src/assets/GamifyWorkLogoWhite.png"
             className="h-1/4 animate-pulse"
+            alt="LogoLoading"
           />
         </div>
       ) : (

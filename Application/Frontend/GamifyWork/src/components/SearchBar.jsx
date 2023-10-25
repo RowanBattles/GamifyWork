@@ -1,5 +1,3 @@
-import React from "react";
-
 function SearchBar() {
   return (
     <div className="relative">
@@ -9,6 +7,7 @@ function SearchBar() {
             className="w-4 h-4 text-gray-500"
             fill="none"
             viewBox="0 0 20 20"
+            data-testid="search-icon"
           >
             <path
               stroke="currentColor"
