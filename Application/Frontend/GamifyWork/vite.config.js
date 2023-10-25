@@ -5,8 +5,10 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   test: {
-    cache: false,
-    clearMocks: true,
+    coverage: {
+      reporter: ["lcov"],
+    },
+
     globals: true,
     environment: "jsdom",
     setupFiles: "./tests/setup.js",
