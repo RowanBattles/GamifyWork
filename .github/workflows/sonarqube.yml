@@ -27,10 +27,10 @@ jobs:
       - name: Run SonarQube Analysis
         working-directory: ./Application/Backend/GamifyWork
         run: |
-          dotnet sonarscanner begin /k:"GamifyWork" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.coverage.exclusions="**/Program.cs,**/dbContext.cs"
+          dotnet sonarscanner begin /k:"GamifyWork" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" /d:sonar.login="${{ secrets.SONAR_TOKEN_BACKEND }}" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.coverage.exclusions="**/Program.cs,**/dbContext.cs"
           dotnet build --no-incremental
           dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
-          dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+          dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN_BACKEND }}"
 
   sonarqube-analysis-frontend:
     runs-on: ubuntu-latest
@@ -64,5 +64,5 @@ jobs:
         with:
           projectBaseDir: ./Application/Frontend/GamifyWork
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_REACT }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONTEND }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}

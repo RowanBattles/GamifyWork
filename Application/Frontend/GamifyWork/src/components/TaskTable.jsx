@@ -5,10 +5,6 @@ function TaskTable({ tasks, title }) {
   const [activeFilter, setActiveFilter] = useState("All");
   const filteredTasks = filterTasksByStatus(tasks, activeFilter);
 
-  if (tasks === null) {
-    return null;
-  }
-
   return (
     <div className="px-4 pt-5 min-h-[556px]">
       <div className="flex justify-between items-center">
