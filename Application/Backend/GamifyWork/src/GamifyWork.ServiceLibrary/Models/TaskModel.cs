@@ -44,7 +44,6 @@ namespace GamifyWork.ServiceLibrary.Models
         [Required]
         public bool Recurring { get; private set; }
 
-        [StringLength(45)]
         public string? RecurrenceType { get; private set; }
 
         public int? RecurrenceInterval { get; private set; }
@@ -61,15 +60,15 @@ namespace GamifyWork.ServiceLibrary.Models
                 return null;
             }
 
-            if (RecurrenceType == "daily")
+            if (RecurrenceType == "Daily")
             {
                 return NextDueDate?.AddDays(RecurrenceInterval ?? 1);
             }
-            else if (RecurrenceType == "weekly")
+            else if (RecurrenceType == "Weekly")
             {
                 return NextDueDate?.AddDays(7 * (RecurrenceInterval ?? 1));
             }
-            else if (RecurrenceType == "monthly")
+            else if (RecurrenceType == "Monthly")
             {
                 return NextDueDate?.AddMonths(RecurrenceInterval ?? 1);
             }

@@ -1,4 +1,8 @@
-function SearchBar() {
+function SearchBar({ setSearchQuery }) {
+  const handleInputChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
   return (
     <div className="relative">
       <div className="relative">
@@ -21,6 +25,7 @@ function SearchBar() {
         <input
           className="outline-none block w-full px-4 py-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded bg-white focus:border-blue transition-all duration-300"
           placeholder="Search"
+          onChange={handleInputChange}
         />
       </div>
     </div>

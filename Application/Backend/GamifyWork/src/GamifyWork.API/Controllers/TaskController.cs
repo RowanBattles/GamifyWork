@@ -1,14 +1,11 @@
-﻿using GamifyWork.DataAccessLibrary.Repositories;
-using GamifyWork.ServiceLibrary.Interfaces;
-using GamifyWork.ServiceLibrary.Models;
-using GamifyWork.ServiceLibrary.Services;
+﻿using GamifyWork.ServiceLibrary.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace GamifyWork.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/task")]
     [ApiController]
     public class TaskController : ControllerBase
     {

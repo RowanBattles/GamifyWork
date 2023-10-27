@@ -12,4 +12,15 @@ async function getTasks() {
   }
 }
 
+async function getRewards() {
+  const url = EndPoints.GetAllRewards;
+
+  try {
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export default getTasks;

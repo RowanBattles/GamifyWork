@@ -69,7 +69,7 @@ public class TaskModelTests
         int? points = null;
         bool completed = false;
         bool recurring = true;
-        string? recurrenceType = "daily";
+        string recurrenceType = "Daily";
         int recurrenceInterval = 1;
         DateTime nextDueDate = new(2023, 10, 1, 12, 0, 0);
         int userId = 1;
@@ -94,7 +94,7 @@ public class TaskModelTests
         int? points = null;
         bool completed = false;
         bool recurring = true;
-        string? recurrenceType = "weekly";
+        string? recurrenceType = "Weekly";
         int recurrenceInterval = 2;
         DateTime nextDueDate = new(2023, 10, 1, 12, 0, 0);
         int userId = 1;
@@ -119,7 +119,7 @@ public class TaskModelTests
         int? points = null;
         bool completed = false;
         bool recurring = true;
-        string? recurrenceType = "monthly";
+        string? recurrenceType = "Monthly";
         int recurrenceInterval = 2;
         DateTime nextDueDate = new(2023, 10, 1, 12, 0, 0);
         int userId = 1;

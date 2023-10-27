@@ -1,21 +1,26 @@
-import { filterTasksByRecurring } from "../utils/Filters/taskFilters.jsx";
+import {
+  filterTasksByRecurring,
+  filterTasksByTitle,
+} from "../utils/Filters/taskFilters.jsx";
+import { useState } from "react";
 import useFetch from "../hooks/useFetch";
 import getTasks from "../utils/api";
 import NavBar from "../components/NavBar";
 import SearchBar from "../components/SearchBar";
 import LabelButton from "../components/Labels";
 import TaskTable from "../components/TaskTable";
+import RewardTable from "../components/RewardTable.jsx";
 
 function HomePage() {
   const { data: tasks, loading, error } = useFetch(getTasks);
-
-  let recurringTasks = [];
-  let todoTasks = [];
-
-  if (tasks !== null) {
-    recurringTasks = filterTasksByRecurring(tasks, true);
-    todoTasks = filterTasksByRecurring(tasks, false);
-  }
+  const [searchQuery, setSearchQuery] = useState("");
+  const recurringTasks = filterTasksByRecurring(tasks, true);
+  const todoTasks = filterTasksByRecurring(tasks, false);
+  const searchedRecurringTasks = filterTasksByTitle(
+    recurringTasks,
+    searchQuery
+  );
+  const searchedTodoTasks = filterTasksByTitle(todoTasks, searchQuery);
 
   return (
     <>
@@ -32,16 +37,16 @@ function HomePage() {
           <NavBar />
           <div className="p-4 bg-slate-50 h-screen">
             <div className="flex justify-center gap-5">
-              <SearchBar />
+              <SearchBar setSearchQuery={setSearchQuery} />
               <LabelButton />
             </div>
             {error !== null ? (
               <div>{error}</div>
             ) : (
               <div className="columns-3">
-                <TaskTable tasks={recurringTasks} title="Recurring" />
-                <TaskTable tasks={todoTasks} title="To do" />
-                <TaskTable tasks={tasks} title="Rewards" />
+                <TaskTable tasks={searchedRecurringTasks} title="Recurring" />
+                <TaskTable tasks={searchedTodoTasks} title="To do" />
+                <RewardTable rewards={tasks} title="Rewards" />
               </div>
             )}
           </div>
