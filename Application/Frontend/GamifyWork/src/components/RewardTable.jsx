@@ -1,34 +1,30 @@
 function RewardTable({ rewards, title }) {
-  const activeFilter = "All";
-
   return (
     <div className="px-4 pt-5 min-h-[556px]">
       <div className="flex justify-between items-center">
         <div className="text-lg font-bold">{title}</div>
-        <div className="text-xs flex font-bold text-gray-600">
-          <div>All</div>
-          <div>Active</div>
-          <div>Completed</div>
-        </div>
       </div>
       <div className="p-2 bg-neutral-100 h-full">
         <textarea
           className="text-sm resize-none h-10 border border-neutral-200 border-solid bg-neutral-200 w-full transition-all focus:bg-white focus:border hover:bg-neutral-300 hover:border hover:border-blue hover:border-solid placeholder-bold"
-          placeholder="Add task"
+          placeholder="Add reward"
         ></textarea>
-        <div className="flex shadow-md mb-1">
-          <div className="flex items-center py-4 px-2 rounded-l bg-yellow-300">
-            <input
-              type="checkbox"
-              value=""
-              className="w-8 h-8 cursor-pointer border-none bg-yellow-100 hover:border hover:border-blue hover:border-solid rounded focus:ring-0"
-            />
+        {rewards.map((reward, index) => (
+          <div className="flex shadow-md mb-1" key={index}>
+            <div className="flex-col items-center py-2 px-2 rounded-l bg-red-200">
+              <img
+                src="https://static.vecteezy.com/system/resources/previews/015/271/916/original/gold-coin-icon-with-dollar-sign-yuan-euro-pound-and-baht-illustration-free-png.png"
+                className="w-8 max-w-none "
+                alt="coin-icon"
+              />
+              <span className="flex justify-center">{reward.cost}</span>
+            </div>
+            <div className="bg-white rounded-r w-full p-2">
+              <p>{reward.title}</p>
+              <p className="text-xs">{reward.description}</p>
+            </div>
           </div>
-          <div className="bg-white rounded-r w-full p-2">
-            <p>Reward title</p>
-            <p className="text-xs">Reward description</p>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

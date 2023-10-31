@@ -4,7 +4,7 @@ import {
 } from "../utils/Filters/taskFilters.jsx";
 import { useState } from "react";
 import useFetch from "../hooks/useFetch";
-import getTasks from "../utils/api";
+import { getTasks, getRewards } from "../utils/api";
 import NavBar from "../components/NavBar";
 import SearchBar from "../components/SearchBar";
 import LabelButton from "../components/Labels";
@@ -12,7 +12,16 @@ import TaskTable from "../components/TaskTable";
 import RewardTable from "../components/RewardTable.jsx";
 
 function HomePage() {
-  const { data: tasks, loading, error } = useFetch(getTasks);
+  const {
+    data: tasks,
+    loading: loadingTasks,
+    error: errorTasks,
+  } = useFetch(getTasks, "tasks");
+  const {
+    data: rewards,
+    loading: loadingRewards,
+    error: errorRewards,
+  } = useFetch(getRewards, "rewards");
   const [searchQuery, setSearchQuery] = useState("");
   const recurringTasks = filterTasksByRecurring(tasks, true);
   const todoTasks = filterTasksByRecurring(tasks, false);
@@ -24,7 +33,7 @@ function HomePage() {
 
   return (
     <>
-      {loading ? (
+      {loadingTasks || loadingRewards ? (
         <div className="h-screen blue flex justify-center content-center items-center">
           <img
             src="/src/assets/GamifyWorkLogoWhite.png"
@@ -40,13 +49,16 @@ function HomePage() {
               <SearchBar setSearchQuery={setSearchQuery} />
               <LabelButton />
             </div>
-            {error !== null ? (
-              <div>{error}</div>
+            {(errorTasks || errorRewards) !== null ? (
+              <>
+                <div>{errorTasks}</div>
+                <div>{errorRewards}</div>
+              </>
             ) : (
               <div className="columns-3">
                 <TaskTable tasks={searchedRecurringTasks} title="Recurring" />
                 <TaskTable tasks={searchedTodoTasks} title="To do" />
-                <RewardTable rewards={tasks} title="Rewards" />
+                <RewardTable rewards={rewards} title="Rewards" />
               </div>
             )}
           </div>

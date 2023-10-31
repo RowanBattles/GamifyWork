@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useFetch = (fetchFunction) => {
+const useFetch = (fetchFunction, dataMessage) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setErrorMessage] = useState(null);
@@ -13,6 +13,7 @@ const useFetch = (fetchFunction) => {
         setLoading(false);
       } catch (err) {
         setErrorMessage("Couldn't fetch data");
+        setErrorMessage(`Error: Couldn't fetch ${dataMessage}`);
         setLoading(false);
       }
     }

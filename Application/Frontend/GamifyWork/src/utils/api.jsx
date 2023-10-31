@@ -1,7 +1,7 @@
 import axios from "axios";
 import EndPoints from "./Constants";
 
-async function getTasks() {
+export async function getTasks() {
   const url = EndPoints.GetAllTasks;
 
   try {
@@ -12,7 +12,7 @@ async function getTasks() {
   }
 }
 
-async function getRewards() {
+export async function getRewards() {
   const url = EndPoints.GetAllRewards;
 
   try {
@@ -22,5 +22,3 @@ async function getRewards() {
     throw error;
   }
 }
-
-export default getTasks;
