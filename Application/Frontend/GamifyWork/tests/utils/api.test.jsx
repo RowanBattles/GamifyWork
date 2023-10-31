@@ -1,5 +1,5 @@
 import { test, expect, describe, vi } from "vitest";
-import getTasks from "../../src/utils/api";
+import { getTasks } from "../../src/utils/api";
 import axios from "axios";
 
 vi.mock("axios");

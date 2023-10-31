@@ -27,15 +27,21 @@ it("renders loading state", async () => {
 });
 
 it("renders error state", async () => {
-  mocks.useFetch.mockReturnValue({
+  mocks.useFetch.mockReturnValueOnce({
     data: null,
     loading: false,
-    error: "Couldn't fetch data",
+    error: "Error: Couldn't fetch tasks",
+  });
+
+  mocks.useFetch.mockReturnValueOnce({
+    data: null,
+    loading: false,
+    error: "Error: Couldn't fetch rewards",
   });
 
   render(<HomePage />);
-  const errorElement = await screen.findByText("Couldn't fetch data");
-  expect(errorElement).toBeVisible();
+  const errorElements = await screen.findAllByText(/Error: Couldn't fetch/);
+  expect(errorElements.length).toBe(2);
 });
 
 it("renders tasks", async () => {
