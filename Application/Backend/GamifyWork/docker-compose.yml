@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  gamifywork.api:
+    image: ${DOCKER_REGISTRY-}gamifyworkapi
+    build:
+      context: .
+      dockerfile: src/GamifyWork.API/Dockerfile
+
+  mysql:
+    image: mysql:latest
+    container_name: my-mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: sterkwachtwoord
+      MYSQL_DATABASE: mijn_database
+      MYSQL_USER: mijn_gebruikersnaam
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
