@@ -29,10 +29,17 @@ namespace GamifyWork.DataAccessLibrary.Repositories
 
         public async Task CreateTask(TaskModel taskModel)
         {
-            using (_dbContext)
+            try
             {
-                await _dbContext.task.AddAsync(taskModel);
-                //await _dbContext.SaveChangesAsync();
+                using (_dbContext)
+                {
+                    await _dbContext.task.AddAsync(taskModel);
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }
