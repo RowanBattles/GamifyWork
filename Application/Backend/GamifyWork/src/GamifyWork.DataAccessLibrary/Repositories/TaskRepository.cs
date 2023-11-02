@@ -26,69 +26,60 @@ namespace GamifyWork.DataAccessLibrary.Repositories
                 return await _dbContext.task.ToListAsync();
             }
         }
+
+        public async Task CreateTask(TaskModel taskModel)
+        {
+            using (_dbContext)
+            {
+                await _dbContext.task.AddAsync(taskModel);
+                //await _dbContext.SaveChangesAsync();
+            }
+        }
     }
 }
 
-/*
+//public async Task<TaskModel> GetTaskById(int Id)
+//{
+//    using (var db = new dbContext())
+//    {
+//        return await db.Tasks.FirstOrDefaultAsync(task => task.Task_ID == Id);
+//    }
+//}
 
-        public async Task<TaskModel> GetTaskById(int Id)
-        {
-            using (var db = new dbContext())
-            {
-                return await db.Tasks.FirstOrDefaultAsync(task => task.Task_ID == Id);
-            }
-        }
+        
 
-        public async Task<bool> CreateTask(TaskModel taskModel)
-        {
-            using (var db = new dbContext())
-            {
-                try
-                {
-                    await db.Tasks.AddAsync(taskModel);
-                    return await db.SaveChangesAsync() >= 1;
-                }
-                catch (Exception ex)
-                {
-                    return false;
-                }
-            }
-        }
+//public async Task<bool> UpdateTask(TaskModel taskModel)
+//{
+//    using (var db = new dbContext())
+//    {
+//        try
+//        {
+//            db.Tasks.Update(taskModel);
 
-        public async Task<bool> UpdateTask(TaskModel taskModel)
-        {
-            using (var db = new dbContext())
-            {
-                try
-                {
-                    db.Tasks.Update(taskModel);
+//            return await db.SaveChangesAsync() >= 1;
+//        }
+//        catch (Exception ex)
+//        {
+//            return false;
+//        }
+//    }
+//}
 
-                    return await db.SaveChangesAsync() >= 1;
-                }
-                catch (Exception ex)
-                {
-                    return false;
-                }
-            }
-        }
-
-        public async Task<bool> DeleteTask(int Id)
-        {
-            using (var db = new dbContext())
-            {
-                try
-                {
-                    TaskModel taskModel = await GetTaskById(Id);
+//public async Task<bool> DeleteTask(int Id)
+//{
+//    using (var db = new dbContext())
+//    {
+//        try
+//        {
+//            TaskModel taskModel = await GetTaskById(Id);
                     
-                    db.Remove(taskModel);
+//            db.Remove(taskModel);
 
-                    return await db.SaveChangesAsync() >= 1;
-                }
-                catch (Exception ex)
-                {
-                    return false;
-                }
-            }
-        }
-
-        */
+//            return await db.SaveChangesAsync() >= 1;
+//        }
+//        catch (Exception ex)
+//        {
+//            return false;
+//        }
+//    }
+//}

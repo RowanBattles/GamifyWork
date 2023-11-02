@@ -6,16 +6,17 @@ services:
     build:
       context: .
       dockerfile: src/GamifyWork.API/Dockerfile
+    depends_on:
+      - mysql
 
   mysql:
     image: mysql:latest
     container_name: my-mysql-container
     environment:
-      MYSQL_ROOT_PASSWORD: sterkwachtwoord
-      MYSQL_DATABASE: mijn_database
-      MYSQL_USER: mijn_gebruikersnaam
+      MYSQL_ROOT_PASSWORD: Example@2023#
+      MYSQL_DATABASE: gamifywork
     ports:
-      - "3306:3306"
+      - "3308:3306"
     volumes:
       - mysql_data:/var/lib/mysql
 

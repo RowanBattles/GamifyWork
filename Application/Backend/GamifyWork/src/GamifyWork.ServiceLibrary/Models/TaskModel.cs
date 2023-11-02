@@ -75,5 +75,11 @@ namespace GamifyWork.ServiceLibrary.Models
 
             throw new InvalidOperationException("Invalid recurrence type.");
         }
+
+        public void setPoints()
+        {
+            Random random = new();
+            this.Points = random.Next(10, 200);
+        }
     }
 }

@@ -28,5 +28,18 @@ namespace GamifyWork.ServiceLibrary.Services
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task CreateTask(TaskModel taskModel)
+        {
+            try
+            {
+                taskModel.setPoints();
+                await _taskRepository.CreateTask(taskModel);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
