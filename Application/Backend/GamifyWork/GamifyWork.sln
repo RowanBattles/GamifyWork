@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamifyWork.Api.tests", "tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamifyWork.ServiceLibrary.tests", "tests\GamifyWork.ServiceLibrary.tests\GamifyWork.ServiceLibrary.tests.csproj", "{FC7CB14C-49BC-407C-9BD5-7FC2189B4B8E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamifyWork.DataAccessLibrary.tests", "tests\GamifyWork.DataAccessLibrary.tests\GamifyWork.DataAccessLibrary.tests.csproj", "{3F9F87D7-6936-452A-99FE-45815B568F3A}"
-EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1CCF79B2-632B-4662-8B7F-E7592087B9A5}"
 EndProject
 Global
@@ -47,10 +45,6 @@ Global
 		{FC7CB14C-49BC-407C-9BD5-7FC2189B4B8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC7CB14C-49BC-407C-9BD5-7FC2189B4B8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC7CB14C-49BC-407C-9BD5-7FC2189B4B8E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3F9F87D7-6936-452A-99FE-45815B568F3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3F9F87D7-6936-452A-99FE-45815B568F3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3F9F87D7-6936-452A-99FE-45815B568F3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3F9F87D7-6936-452A-99FE-45815B568F3A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1CCF79B2-632B-4662-8B7F-E7592087B9A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1CCF79B2-632B-4662-8B7F-E7592087B9A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CCF79B2-632B-4662-8B7F-E7592087B9A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -65,7 +59,6 @@ Global
 		{DE61257B-1CF1-49DA-9C65-BA064E8BB595} = {A2CDA4D3-F3A1-4B5D-9BCD-087939F19818}
 		{D003F548-11E5-4C6D-A898-CB929820DA58} = {A382FBA6-B006-4214-B316-FAF976DB5F33}
 		{FC7CB14C-49BC-407C-9BD5-7FC2189B4B8E} = {A382FBA6-B006-4214-B316-FAF976DB5F33}
-		{3F9F87D7-6936-452A-99FE-45815B568F3A} = {A382FBA6-B006-4214-B316-FAF976DB5F33}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8306760A-274F-4901-8833-A3C875F04354}
