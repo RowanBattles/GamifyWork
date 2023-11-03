@@ -44,7 +44,7 @@ function HomePage() {
       ) : (
         <>
           <NavBar />
-          <div className="p-4 bg-slate-50 h-screen">
+          <div className="p-4 bg-slate-50 min-h-screen">
             <div className="flex justify-center gap-5">
               <SearchBar setSearchQuery={setSearchQuery} />
               <LabelButton />
@@ -55,7 +55,7 @@ function HomePage() {
                 <div>{errorRewards}</div>
               </>
             ) : (
-              <div className="columns-3">
+              <div className="grid-cols-3 grid">
                 <TaskTable tasks={searchedRecurringTasks} title="Recurring" />
                 <TaskTable tasks={searchedTodoTasks} title="To do" />
                 <RewardTable rewards={rewards} title="Rewards" />

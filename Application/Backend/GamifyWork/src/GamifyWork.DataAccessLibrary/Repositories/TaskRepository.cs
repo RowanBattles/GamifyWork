@@ -1,13 +1,13 @@
 ﻿using GamifyWork.DataAccessLibrary.Data;
-using GamifyWork.ServiceLibrary.Interfaces;
-using GamifyWork.ServiceLibrary.Models;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GamifyWork.ServiceLibrary.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using GamifyWork.DataAccessLibrary.Entities;
 
 namespace GamifyWork.DataAccessLibrary.Repositories
 {
@@ -19,23 +19,17 @@ namespace GamifyWork.DataAccessLibrary.Repositories
         {
              _dbContext = dbContext;
         }
-        public async Task<List<TaskModel>> GetAllTasks()
+        public async Task<List<TaskEntity>> GetAllTasks()
         {
-            using (_dbContext)
-            {
-                return await _dbContext.task.ToListAsync();
-            }
+            return await _dbContext.task.ToListAsync();
         }
 
-        public async Task CreateTask(TaskModel taskModel)
+        public async Task CreateTask(TaskEntity taskModel)
         {
             try
             {
-                using (_dbContext)
-                {
-                    await _dbContext.task.AddAsync(taskModel);
-                    await _dbContext.SaveChangesAsync();
-                }
+                await _dbContext.task.AddAsync(taskModel);
+                await _dbContext.SaveChangesAsync();
             }
             catch(Exception ex)
             {

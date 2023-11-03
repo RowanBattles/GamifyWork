@@ -2,6 +2,8 @@ using GamifyWork.DataAccessLibrary.Data;
 using GamifyWork.DataAccessLibrary.Repositories;
 using GamifyWork.ServiceLibrary.Interfaces;
 using GamifyWork.ServiceLibrary.Services;
+using AutoMapper;
+using Microsoft.AspNetCore.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,23 +14,21 @@ builder.Services.AddCors(options =>
         builder
         .AllowAnyOrigin()
         .AllowAnyMethod()
+        .AllowAnyHeader()
         .WithOrigins("http://localhost:5173");
     });
 });
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<dbContext>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
-builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<IRewardRepository, RewardRepository>();
-builder.Services.AddScoped<IRewardService, RewardService>();
-
 
 var app = builder.Build();
 

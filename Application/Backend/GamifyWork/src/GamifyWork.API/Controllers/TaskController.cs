@@ -1,5 +1,6 @@
 ﻿using GamifyWork.ServiceLibrary.Interfaces;
 using GamifyWork.ServiceLibrary.Models;
+using GamifyWork.ServiceLibrary.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySqlX.XDevAPI.Common;
@@ -11,9 +12,9 @@ namespace GamifyWork.API.Controllers
     [ApiController]
     public class TaskController : ControllerBase
     {
-        private readonly ITaskService _taskService;
+        private readonly TaskService _taskService;
 
-        public TaskController(ITaskService taskService)
+        public TaskController(TaskService taskService)
         {
             _taskService = taskService;
         }

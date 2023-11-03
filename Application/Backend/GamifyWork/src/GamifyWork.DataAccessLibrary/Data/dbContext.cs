@@ -1,4 +1,4 @@
-﻿using GamifyWork.ServiceLibrary.Models;
+﻿using GamifyWork.DataAccessLibrary.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -18,7 +18,6 @@ namespace GamifyWork.DataAccessLibrary.Data
         }
         protected override void OnConfiguring(DbContextOptionsBuilder dbContextOptionsBuilder) => 
             dbContextOptionsBuilder.UseMySQL(_connectionString);
-        public virtual DbSet<TaskModel> task { get; set; }
-        public DbSet<RewardModel> reward { get; set; }
+        public virtual DbSet<TaskEntity> task { get; set; }
     }
 }

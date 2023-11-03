@@ -1,9 +1,45 @@
 import React, { useState } from "react";
 import { filterTasksByStatus } from "../utils/Filters/taskFilters";
+import { CreateTask } from "../utils/api";
 
 function TaskTable({ tasks, title }) {
   const [activeFilter, setActiveFilter] = useState("All");
+  const [newTask, setNewTask] = useState("");
   const filteredTasks = filterTasksByStatus(tasks, activeFilter);
+
+  const handleInputChange = (event) => {
+    setNewTask(event.target.value);
+  };
+
+  const handleKeyDown = async (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const recurring = title === "Recurring" ? true : false;
+      if (newTask.trim() !== "") {
+        try {
+          const taskData = {
+            title: newTask.trim(),
+            description: null,
+            points: 0,
+            completed: false,
+            recurring: recurring,
+            recurrenceType: null,
+            recurrenceInterval: null,
+            nextDueDate: null,
+            user_ID: 1,
+          };
+
+          await CreateTask(taskData);
+
+          console.log("Task submitted:", newTask);
+          setNewTask("");
+        } catch (error) {
+          console.error("Error creating task:", error);
+        }
+      }
+      event.target.blur();
+    }
+  };
 
   return (
     <div className="px-4 pt-5 min-h-[556px]">
@@ -44,6 +80,9 @@ function TaskTable({ tasks, title }) {
         <textarea
           className="text-sm resize-none h-10 border border-neutral-200 border-solid bg-neutral-200 w-full transition-all focus:bg-white focus:border hover:bg-neutral-300 hover:border hover:border-blue hover:border-solid placeholder-bold"
           placeholder="Add task"
+          value={newTask}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
         ></textarea>
         {filteredTasks.map((task) => (
           <div key={task.task_ID}>

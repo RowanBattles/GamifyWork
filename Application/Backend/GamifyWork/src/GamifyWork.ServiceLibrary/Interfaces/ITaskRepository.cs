@@ -9,7 +9,7 @@ namespace GamifyWork.ServiceLibrary.Interfaces
 {
     public interface ITaskRepository
     {
-        Task<List<TaskModel>> GetAllTasks();
-        Task CreateTask(TaskModel taskModel);
+        Task<List<TaskEntity>> GetAllTasks();
+        Task CreateTask(TaskEntity taskModel);
     }
 }
