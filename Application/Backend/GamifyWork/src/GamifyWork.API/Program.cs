@@ -26,7 +26,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<dbContext>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<IRewardRepository, RewardRepository>();
-builder.Services.AddScoped<TaskService, TaskService>();
+//builder.Services.AddScoped<TaskService, TaskService>();
 
 var app = builder.Build();
 

@@ -1,5 +1,5 @@
 ﻿using GamifyWork.ContractLayer.Interfaces;
-using GamifyWork.SharedModels.Models;
+using GamifyWork.ServiceLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

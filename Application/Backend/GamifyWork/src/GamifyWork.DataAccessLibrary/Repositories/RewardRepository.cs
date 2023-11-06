@@ -1,6 +1,6 @@
 ﻿using GamifyWork.ContractLayer.Interfaces;
 using GamifyWork.DataAccessLibrary.Data;
-using GamifyWork.SharedModels.Models;
+using GamifyWork.Dto;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,7 +19,7 @@ namespace GamifyWork.DataAccessLibrary.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<List<RewardModel>> GetAllRewards()
+        public async Task<List<RewardDto>> GetAllRewards()
         {
             using (_dbContext)
             {

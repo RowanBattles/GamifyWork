@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GamifyWork.DataAccessLibrary\GamifyWork.DataAccessLibrary.csproj" />
     <ProjectReference Include="..\GamifyWork.ServiceLibrary\GamifyWork.ServiceLibrary.csproj" />
   </ItemGroup>
 
