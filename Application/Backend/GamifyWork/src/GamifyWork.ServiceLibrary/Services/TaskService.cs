@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using GamifyWork.ContractLayer.Dto;
+using GamifyWork.ContractLayer.Interfaces;
 using GamifyWork.ServiceLibrary.Interfaces;
 using GamifyWork.ServiceLibrary.Models;
 using System;
@@ -12,20 +13,22 @@ namespace GamifyWork.ServiceLibrary.Services
 {
     public class TaskService
     {
-        private readonly ITaskRepository _taskRepository;
-        private readonly IMapper _mapper;
+        private ITaskRepository _taskRepository;
+        private ITaskMapperS _taskMapper;
 
-        public TaskService(ITaskRepository taskRepository, IMapper mapper)
+        public TaskService(ITaskRepository taskRepository, ITaskMapperS taskMapperS)
         {
             _taskRepository = taskRepository;
-            _mapper = mapper;
+            _taskMapper = taskMapperS;
         }
+
         public async Task<List<TaskModel>> GetAllTasks()
         {
             try
             {
-                var entities = await _taskRepository.GetAllTasks();
-                return _mapper.Map<List<TaskModel>>(entities);
+                var taskDtos = await _taskRepository.GetAllTasks();
+                var taskModels = _taskMapper.MapDtoToModelList(taskDtos);
+                return taskModels;
             }
             catch (Exception ex)
             {
@@ -38,8 +41,8 @@ namespace GamifyWork.ServiceLibrary.Services
             try
             {
                 taskModel.setPoints();
-                var entity = _mapper.Map<TaskModel>(taskModel);
-                await _taskRepository.CreateTask(entity);
+                TaskDto taskDto = _taskMapper.MapModelToDto(taskModel);
+                await _taskRepository.CreateTask(taskDto);
             }
             catch (Exception ex)
             {

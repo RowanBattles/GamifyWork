@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GamifyWork.ServiceLibrary.Models
+namespace GamifyWork.SharedDto
 {
-    public class RewardModel
+    public class RewardDto
     {
-        public RewardModel(int reward_ID, string title, string? description, int? cost, int user_ID)
+        public RewardDto(int reward_ID, string title, string? description, int? cost, int user_ID)
         {
             Reward_ID = reward_ID;
             Title = title;
@@ -19,20 +19,10 @@ namespace GamifyWork.ServiceLibrary.Models
             User_ID = user_ID;
         }
 
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Reward_ID { get; set; }
-
-        [Required]
-        [StringLength(60)]
         public string Title { get; set; }
-
-        [StringLength(255)]
         public string? Description { get; set; }
-
         public int? Cost { get; set; }
-
-        [Required]
         public int User_ID { get; private set; }
     }
 }

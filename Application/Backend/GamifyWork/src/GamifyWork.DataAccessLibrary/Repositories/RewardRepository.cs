@@ -1,6 +1,6 @@
-﻿using GamifyWork.DataAccessLibrary.Data;
-using GamifyWork.ServiceLibrary.Interfaces;
-using GamifyWork.ServiceLibrary.Models;
+﻿using GamifyWork.ContractLayer.Interfaces;
+using GamifyWork.DataAccessLibrary.Data;
+using GamifyWork.SharedModels.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

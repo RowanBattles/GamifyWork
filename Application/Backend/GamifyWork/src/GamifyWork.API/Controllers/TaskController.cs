@@ -1,5 +1,4 @@
-﻿using GamifyWork.ServiceLibrary.Interfaces;
-using GamifyWork.ServiceLibrary.Models;
+﻿using GamifyWork.ServiceLibrary.Models;
 using GamifyWork.ServiceLibrary.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

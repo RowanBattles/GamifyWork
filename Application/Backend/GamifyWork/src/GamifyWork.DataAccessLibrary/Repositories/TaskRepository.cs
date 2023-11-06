@@ -5,30 +5,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GamifyWork.ServiceLibrary.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using GamifyWork.DataAccessLibrary.Entities;
+using GamifyWork.ContractLayer.Interfaces;
+using GamifyWork.ContractLayer.Dto;
+using GamifyWork.DataAccessLibrary.Interfaces;
 
 namespace GamifyWork.DataAccessLibrary.Repositories
 {
     public class TaskRepository : ITaskRepository
     {
         private readonly dbContext _dbContext;
+        private ITaskMapperD _taskMapper; 
 
-        public TaskRepository(dbContext dbContext)
+        public TaskRepository(dbContext dbContext, ITaskMapperD taskMapperD)
         {
              _dbContext = dbContext;
-        }
-        public async Task<List<TaskEntity>> GetAllTasks()
-        {
-            return await _dbContext.task.ToListAsync();
+            _taskMapper = taskMapperD;
         }
 
-        public async Task CreateTask(TaskEntity taskModel)
+        public async Task<List<TaskDto>> GetAllTasks()
+        {
+            var taskEntities = await _dbContext.task.ToListAsync();
+            return _taskMapper.MapEntityToDtoList(taskEntities);
+        }
+
+        public async Task CreateTask(TaskDto taskDto)
         {
             try
             {
-                await _dbContext.task.AddAsync(taskModel);
+                TaskEntity taskEntity = _taskMapper.MapDtoToEntity(taskDto);
+                await _dbContext.task.AddAsync(taskEntity);
                 await _dbContext.SaveChangesAsync();
             }
             catch(Exception ex)

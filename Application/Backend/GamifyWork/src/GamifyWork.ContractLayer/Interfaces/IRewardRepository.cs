@@ -1,14 +1,14 @@
-﻿using GamifyWork.ServiceLibrary.Models;
+﻿using GamifyWork.SharedDto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GamifyWork.ServiceLibrary.Interfaces
+namespace GamifyWork.ContractLayer.Interfaces
 {
     public interface IRewardRepository
     {
-        Task<List<RewardModel>> GetAllRewards();
+        Task<List<RewardDto>> GetAllRewards();
     }
 }

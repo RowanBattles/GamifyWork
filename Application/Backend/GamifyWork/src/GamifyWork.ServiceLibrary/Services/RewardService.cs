@@ -1,5 +1,5 @@
-﻿using GamifyWork.ServiceLibrary.Interfaces;
-using GamifyWork.ServiceLibrary.Models;
+﻿using GamifyWork.ContractLayer.Interfaces;
+using GamifyWork.SharedModels.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GamifyWork.ServiceLibrary.Services
 {
-    public class RewardService : IRewardService
+    public class RewardService
     {
         private readonly IRewardRepository _rewardRepository;
         public RewardService(IRewardRepository rewardRepository)

@@ -1,9 +1,7 @@
+using GamifyWork.ContractLayer.Interfaces;
 using GamifyWork.DataAccessLibrary.Data;
 using GamifyWork.DataAccessLibrary.Repositories;
-using GamifyWork.ServiceLibrary.Interfaces;
 using GamifyWork.ServiceLibrary.Services;
-using AutoMapper;
-using Microsoft.AspNetCore.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,10 +23,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<dbContext>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<IRewardRepository, RewardRepository>();
+builder.Services.AddScoped<TaskService, TaskService>();
 
 var app = builder.Build();
 

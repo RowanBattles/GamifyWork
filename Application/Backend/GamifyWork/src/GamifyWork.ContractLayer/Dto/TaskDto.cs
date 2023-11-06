@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GamifyWork.DataAccessLibrary.Entities
+namespace GamifyWork.ContractLayer.Dto
 {
-    public class TaskEntity
+    public class TaskDto
     {
-        public TaskEntity(int task_ID, string title, string? description, int? points, bool completed,
+        public TaskDto(int task_ID, string title, string? description, int? points, bool completed,
             bool recurring, string? recurrenceType, int? recurrenceInterval, DateTime? nextDueDate, int user_ID)
         {
             Task_ID = task_ID;
@@ -25,33 +24,15 @@ namespace GamifyWork.DataAccessLibrary.Entities
             User_ID = user_ID;
         }
 
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Task_ID { get; private set; }
-
-        [Required]
-        [StringLength(60)]
         public string Title { get; private set; }
-
-        [StringLength(255)]
         public string? Description { get; private set; }
-
-        [Required]
         public int? Points { get; private set; }
-
-        [Required]
         public bool Completed { get; private set; }
-
-        [Required]
         public bool Recurring { get; private set; }
-
         public string? RecurrenceType { get; private set; }
-
         public int? RecurrenceInterval { get; private set; }
-
         public DateTime? NextDueDate { get; private set; }
-
-        [Required]
         public int User_ID { get; private set; }
     }
 }
