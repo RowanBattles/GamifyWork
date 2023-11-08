@@ -19,7 +19,7 @@ namespace GamifyWork.MapperLayer.Mappers
                 taskModel.Task_ID, 
                 taskModel.Title, 
                 taskModel.Description, 
-                taskModel.Points, 
+                taskModel.Points ?? 0, 
                 taskModel.Completed, 
                 taskModel.Recurring, 
                 taskModel.RecurrenceType,

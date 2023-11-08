@@ -10,7 +10,7 @@ namespace GamifyWork.DataAccessLibrary.Entities
 {
     public class TaskEntity
     {
-        public TaskEntity(int task_ID, string title, string? description, int? points, bool completed,
+        public TaskEntity(int task_ID, string title, string? description, int points, bool completed,
             bool recurring, string? recurrenceType, int? recurrenceInterval, DateTime? nextDueDate, int user_ID)
         {
             Task_ID = task_ID;
@@ -37,7 +37,7 @@ namespace GamifyWork.DataAccessLibrary.Entities
         public string? Description { get; private set; }
 
         [Required]
-        public int? Points { get; private set; }
+        public int Points { get; private set; }
 
         [Required]
         public bool Completed { get; private set; }

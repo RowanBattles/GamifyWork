@@ -1,7 +1,13 @@
 using GamifyWork.ContractLayer.Interfaces;
 using GamifyWork.DataAccessLibrary.Data;
+using GamifyWork.DataAccessLibrary.Interfaces;
 using GamifyWork.DataAccessLibrary.Repositories;
+using GamifyWork.MapperLayer.Mappers;
+using GamifyWork.ServiceLibrary.Interfaces;
+using AutoMapper;
 using GamifyWork.ServiceLibrary.Services;
+using Microsoft.AspNetCore.Hosting;
+using GamifyWork.MapperLayer.Profiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,10 +29,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<dbContext>();
+builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
+builder.Services.AddDbContext<dbContext>();
+builder.Services.AddScoped<RewardService>();
+builder.Services.AddScoped<TaskService>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<IRewardRepository, RewardRepository>();
-//builder.Services.AddScoped<TaskService, TaskService>();
+builder.Services.AddScoped<ITaskMapperD, TaskMapper>();
+builder.Services.AddScoped<ITaskMapperS, TaskMapper>();
+builder.Services.AddScoped<IRewardMapperS, RewardMapper>();
+builder.Services.AddScoped<IRewardMapperD, RewardMapper>();
+
 
 var app = builder.Build();
 

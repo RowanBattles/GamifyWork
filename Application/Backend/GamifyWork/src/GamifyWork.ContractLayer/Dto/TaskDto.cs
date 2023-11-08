@@ -9,7 +9,7 @@ namespace GamifyWork.ContractLayer.Dto
 {
     public class TaskDto
     {
-        public TaskDto(int task_ID, string title, string? description, int? points, bool completed,
+        public TaskDto(int task_ID, string title, string? description, int points, bool completed,
             bool recurring, string? recurrenceType, int? recurrenceInterval, DateTime? nextDueDate, int user_ID)
         {
             Task_ID = task_ID;
@@ -27,7 +27,7 @@ namespace GamifyWork.ContractLayer.Dto
         public int Task_ID { get; private set; }
         public string Title { get; private set; }
         public string? Description { get; private set; }
-        public int? Points { get; private set; }
+        public int Points { get; private set; }
         public bool Completed { get; private set; }
         public bool Recurring { get; private set; }
         public string? RecurrenceType { get; private set; }

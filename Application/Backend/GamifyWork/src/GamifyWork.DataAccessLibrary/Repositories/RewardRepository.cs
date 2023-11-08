@@ -1,5 +1,6 @@
 ﻿using GamifyWork.ContractLayer.Interfaces;
 using GamifyWork.DataAccessLibrary.Data;
+using GamifyWork.DataAccessLibrary.Interfaces;
 using GamifyWork.Dto;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,17 +14,19 @@ namespace GamifyWork.DataAccessLibrary.Repositories
     public class RewardRepository : IRewardRepository
     {
         private readonly dbContext _dbContext;
+        private IRewardMapperD _rewardMapper;
 
-        public RewardRepository(dbContext dbContext)
+        public RewardRepository(dbContext dbContext, IRewardMapperD rewardMapper)
         {
             _dbContext = dbContext;
+            _rewardMapper = rewardMapper;
         }
 
         public async Task<List<RewardDto>> GetAllRewards()
         {
             using (_dbContext)
             {
-                return await _dbContext.reward.ToListAsync();
+                return _rewardMapper.MapEntityToDtoList(await _dbContext.reward.ToListAsync());
             }
         }
     }

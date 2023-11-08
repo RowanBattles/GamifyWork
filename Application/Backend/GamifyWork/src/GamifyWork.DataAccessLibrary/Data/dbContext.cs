@@ -20,6 +20,6 @@ namespace GamifyWork.DataAccessLibrary.Data
         protected override void OnConfiguring(DbContextOptionsBuilder dbContextOptionsBuilder) => 
             dbContextOptionsBuilder.UseMySQL(_connectionString);
         public DbSet<TaskEntity> task { get; set; }
-        public DbSet<RewardDto> reward { get; set; }
+        public DbSet<RewardEntity> reward { get; set; }
     }
 }

@@ -11,6 +11,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.23" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
@@ -19,7 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GamifyWork.ContractLayer\GamifyWork.ContractLayer.csproj" />
     <ProjectReference Include="..\GamifyWork.DataAccessLibrary\GamifyWork.DataAccessLibrary.csproj" />
+    <ProjectReference Include="..\GamifyWork.MapperLayer\GamifyWork.MapperLayer.csproj" />
     <ProjectReference Include="..\GamifyWork.ServiceLibrary\GamifyWork.ServiceLibrary.csproj" />
   </ItemGroup>
 

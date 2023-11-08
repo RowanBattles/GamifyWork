@@ -1,4 +1,5 @@
 ﻿using GamifyWork.ContractLayer.Interfaces;
+using GamifyWork.ServiceLibrary.Interfaces;
 using GamifyWork.ServiceLibrary.Models;
 using System;
 using System.Collections.Generic;
@@ -11,16 +12,20 @@ namespace GamifyWork.ServiceLibrary.Services
     public class RewardService
     {
         private readonly IRewardRepository _rewardRepository;
-        public RewardService(IRewardRepository rewardRepository)
+        private IRewardMapperS _rewardMapper;
+        public RewardService(IRewardRepository rewardRepository, IRewardMapperS rewardMapper)
         {
             _rewardRepository = rewardRepository;
+            _rewardMapper = rewardMapper;
         }
 
         public async Task<List<RewardModel>> GetAllRewards()
         {
             try
             {
-                return await _rewardRepository.GetAllRewards();
+                var rewardDtos = await _rewardRepository.GetAllRewards();
+                var rewardModels = _rewardMapper.MapDtoToModelList(rewardDtos);
+                return rewardModels;
             }
             catch (Exception ex)
             {
