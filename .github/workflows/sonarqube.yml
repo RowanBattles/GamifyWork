@@ -25,7 +25,7 @@ jobs:
         run: dotnet tool install -g dotnet-coverage
 
       - name: Run SonarQube Analysis
-        working-directory: ./Application/Backend/GamifyWork/GamifyWork.sln
+        working-directory: ./Application/Backend/GamifyWork
         run: |
           dotnet sonarscanner begin /k:"NetCoreApi" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" /d:sonar.token="${{ secrets.SONAR_TOKEN_BACKEND }}" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.coverage.exclusions="**/Program.cs,**/dbContext.cs"
           dotnet build --no-incremental
