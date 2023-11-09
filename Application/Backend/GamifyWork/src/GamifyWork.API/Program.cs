@@ -31,8 +31,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 builder.Services.AddDbContext<dbContext>();
-builder.Services.AddScoped<RewardService>();
-builder.Services.AddScoped<TaskService>();
+builder.Services.AddScoped<IRewardService, RewardService>();
+builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<IRewardRepository, RewardRepository>();
 builder.Services.AddScoped<ITaskMapperD, TaskMapper>();

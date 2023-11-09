@@ -15,10 +15,10 @@ namespace GamifyWork.MapperLayer.Profiles
     {
         public MappingProfile()
         {
-            CreateMap<TaskEntity, TaskDto>();
-            CreateMap<TaskDto, TaskModel>();
-            CreateMap<RewardEntity, RewardDto>();
-            CreateMap<RewardDto, RewardModel>();
+            CreateMap<TaskDto, TaskEntity>().ReverseMap();
+            CreateMap<TaskDto, TaskModel>().ReverseMap();
+            CreateMap<RewardDto, RewardEntity>().ReverseMap();
+            CreateMap<RewardDto, RewardModel>().ReverseMap();
         }
     }
 

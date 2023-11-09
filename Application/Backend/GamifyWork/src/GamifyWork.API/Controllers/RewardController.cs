@@ -1,4 +1,4 @@
-﻿using GamifyWork.ServiceLibrary.Services;
+﻿using GamifyWork.ServiceLibrary.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,9 +8,9 @@ namespace GamifyWork.API.Controllers
     [ApiController]
     public class RewardController : ControllerBase
     {
-        private readonly RewardService _rewardService;
+        private readonly IRewardService _rewardService;
 
-        public RewardController(RewardService rewardService)
+        public RewardController(IRewardService rewardService)
         {
             _rewardService = rewardService;
         }

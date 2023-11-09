@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace GamifyWork.ServiceLibrary.Services
 {
-    public class RewardService
+    public class RewardService : IRewardService
     {
         private readonly IRewardRepository _rewardRepository;
-        private IRewardMapperS _rewardMapper;
+        private readonly IRewardMapperS _rewardMapper;
         public RewardService(IRewardRepository rewardRepository, IRewardMapperS rewardMapper)
         {
             _rewardRepository = rewardRepository;
@@ -21,16 +21,7 @@ namespace GamifyWork.ServiceLibrary.Services
 
         public async Task<List<RewardModel>> GetAllRewards()
         {
-            try
-            {
-                var rewardDtos = await _rewardRepository.GetAllRewards();
-                var rewardModels = _rewardMapper.MapDtoToModelList(rewardDtos);
-                return rewardModels;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return _rewardMapper.MapDtoToModelList(await _rewardRepository.GetAllRewards());
         }
     }
 }

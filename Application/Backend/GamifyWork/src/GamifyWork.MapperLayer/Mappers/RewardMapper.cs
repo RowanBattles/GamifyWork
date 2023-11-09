@@ -15,7 +15,7 @@ namespace GamifyWork.MapperLayer.Mappers
 {
     public class RewardMapper : IRewardMapperS, IRewardMapperD
     {
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
         public RewardMapper(IMapper mapper)
         {
             _mapper = mapper;

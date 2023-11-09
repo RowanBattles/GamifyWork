@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace GamifyWork.ServiceLibrary.Services
 {
-    public class TaskService
+    public class TaskService : ITaskService
     {
-        private ITaskRepository _taskRepository;
-        private ITaskMapperS _taskMapper;
+        private readonly ITaskRepository _taskRepository;
+        private readonly ITaskMapperS _taskMapper;
 
         public TaskService(ITaskRepository taskRepository, ITaskMapperS taskMapperS)
         {
@@ -24,30 +24,13 @@ namespace GamifyWork.ServiceLibrary.Services
 
         public async Task<List<TaskModel>> GetAllTasks()
         {
-            try
-            {
-                var taskDtos = await _taskRepository.GetAllTasks();
-                var taskModels = _taskMapper.MapDtoToModelList(taskDtos);
-                return taskModels;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return _taskMapper.MapDtoToModelList(await _taskRepository.GetAllTasks());
         }
 
         public async Task CreateTask(TaskModel taskModel)
         {
-            try
-            {
-                taskModel.setPoints();
-                TaskDto taskDto = _taskMapper.MapModelToDto(taskModel);
-                await _taskRepository.CreateTask(taskDto);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            taskModel.setPoints();
+            await _taskRepository.CreateTask(_taskMapper.MapModelToDto(taskModel));
         }
     }
 }

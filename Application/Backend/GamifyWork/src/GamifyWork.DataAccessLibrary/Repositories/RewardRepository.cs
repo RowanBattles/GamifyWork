@@ -14,7 +14,7 @@ namespace GamifyWork.DataAccessLibrary.Repositories
     public class RewardRepository : IRewardRepository
     {
         private readonly dbContext _dbContext;
-        private IRewardMapperD _rewardMapper;
+        private readonly IRewardMapperD _rewardMapper;
 
         public RewardRepository(dbContext dbContext, IRewardMapperD rewardMapper)
         {

@@ -16,7 +16,7 @@ namespace GamifyWork.DataAccessLibrary.Repositories
     public class TaskRepository : ITaskRepository
     {
         private readonly dbContext _dbContext;
-        private ITaskMapperD _taskMapper; 
+        private readonly ITaskMapperD _taskMapper; 
 
         public TaskRepository(dbContext dbContext, ITaskMapperD taskMapperD)
         {
@@ -26,22 +26,13 @@ namespace GamifyWork.DataAccessLibrary.Repositories
 
         public async Task<List<TaskDto>> GetAllTasks()
         {
-            var taskEntities = await _dbContext.task.ToListAsync();
-            return _taskMapper.MapEntityToDtoList(taskEntities);
+            return _taskMapper.MapEntityToDtoList(await _dbContext.task.ToListAsync());
         }
 
         public async Task CreateTask(TaskDto taskDto)
         {
-            try
-            {
-                TaskEntity taskEntity = _taskMapper.MapDtoToEntity(taskDto);
-                await _dbContext.task.AddAsync(taskEntity);
-                await _dbContext.SaveChangesAsync();
-            }
-            catch(Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            await _dbContext.task.AddAsync(_taskMapper.MapDtoToEntity(taskDto));
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
