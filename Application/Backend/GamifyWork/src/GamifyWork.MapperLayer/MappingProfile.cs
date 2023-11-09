@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GamifyWork.MapperLayer.Profiles
+namespace GamifyWork.MapperLayer
 {
     public class MappingProfile : Profile
     {

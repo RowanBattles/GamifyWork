@@ -7,7 +7,7 @@ using GamifyWork.ServiceLibrary.Interfaces;
 using AutoMapper;
 using GamifyWork.ServiceLibrary.Services;
 using Microsoft.AspNetCore.Hosting;
-using GamifyWork.MapperLayer.Profiles;
+using GamifyWork.MapperLayer;
 
 var builder = WebApplication.CreateBuilder(args);
 

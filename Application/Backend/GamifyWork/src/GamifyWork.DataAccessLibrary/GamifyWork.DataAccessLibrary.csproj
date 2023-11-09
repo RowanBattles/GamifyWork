@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\GamifyWork.ContractLayer\GamifyWork.ContractLayer.csproj" />
     <ProjectReference Include="..\GamifyWork.ContractLayer\GamifyWork.ContractLayer.csproj" />
   </ItemGroup>
 
