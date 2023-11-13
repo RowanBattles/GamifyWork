@@ -21,5 +21,4 @@ namespace GamifyWork.MapperLayer
             CreateMap<RewardDto, RewardModel>().ReverseMap();
         }
     }
-
 }

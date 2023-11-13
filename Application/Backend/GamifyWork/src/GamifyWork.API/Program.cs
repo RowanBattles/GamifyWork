@@ -1,13 +1,12 @@
+using GamifyWork.API.Middleware;
 using GamifyWork.ContractLayer.Interfaces;
 using GamifyWork.DataAccessLibrary.Data;
 using GamifyWork.DataAccessLibrary.Interfaces;
 using GamifyWork.DataAccessLibrary.Repositories;
+using GamifyWork.MapperLayer;
 using GamifyWork.MapperLayer.Mappers;
 using GamifyWork.ServiceLibrary.Interfaces;
-using AutoMapper;
 using GamifyWork.ServiceLibrary.Services;
-using Microsoft.AspNetCore.Hosting;
-using GamifyWork.MapperLayer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,7 +28,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
+builder.Services.AddAutoMapper(cfg => cfg.AllowNullCollections = true, typeof(MappingProfile).Assembly);
 builder.Services.AddDbContext<dbContext>();
 builder.Services.AddScoped<IRewardService, RewardService>();
 builder.Services.AddScoped<ITaskService, TaskService>();
@@ -42,6 +41,8 @@ builder.Services.AddScoped<IRewardMapperD, RewardMapper>();
 
 
 var app = builder.Build();
+
+app.UseExceptionHandlerMiddleware();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySqlX.XDevAPI.Common;
 using System.Collections.Generic;
+using GamifyWork.ServiceLibrary.Exceptions;
+using GamifyWork.API.Middleware;
+using Newtonsoft.Json;
+using Microsoft.VisualBasic;
 
 namespace GamifyWork.API.Controllers
 {
@@ -21,8 +25,19 @@ namespace GamifyWork.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllTasks()
         {
-            var tasks = await _taskService.GetAllTasks();
-            return tasks != null ? Ok(tasks) : NotFound();
+            try
+            {
+                return Ok(await _taskService.GetAllTasks());
+            }
+            catch (TaskException ex)
+            {
+                var error = new Error(ex.Message, ex.ErrorCode);
+                return BadRequest(error);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [HttpPost]

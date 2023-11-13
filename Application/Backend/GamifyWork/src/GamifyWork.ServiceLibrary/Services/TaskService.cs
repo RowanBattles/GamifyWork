@@ -1,11 +1,13 @@
 ﻿using GamifyWork.ContractLayer.Dto;
 using GamifyWork.ContractLayer.Interfaces;
+using GamifyWork.ServiceLibrary.Exceptions;
 using GamifyWork.ServiceLibrary.Interfaces;
 using GamifyWork.ServiceLibrary.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,7 +26,19 @@ namespace GamifyWork.ServiceLibrary.Services
 
         public async Task<List<TaskModel>> GetAllTasks()
         {
-            return _taskMapper.MapDtoToModelList(await _taskRepository.GetAllTasks());
+            try
+            {
+                var tasks = await _taskRepository.GetAllTasks();
+                if (tasks != null)
+                {
+                    throw new TaskException("no tasks found", (int)HttpStatusCode.NoContent);
+                }
+                return _taskMapper.MapDtoToModelList(tasks);
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public async Task CreateTask(TaskModel taskModel)
