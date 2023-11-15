@@ -1,4 +1,5 @@
 ﻿using GamifyWork.API.Controllers;
+using GamifyWork.ServiceLibrary.Exceptions;
 using GamifyWork.ServiceLibrary.Interfaces;
 using GamifyWork.ServiceLibrary.Models;
 using GamifyWork.ServiceLibrary.Services;
@@ -8,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -47,14 +49,14 @@ namespace GamifyWork.Api.tests.Controllers
         {
             // Arrange
             List<TaskModel> tasks = null;
-            _taskServiceMock.Setup(x => x.GetAllTasks()).ReturnsAsync(tasks);
+            _taskServiceMock.Setup(x => x.GetAllTasks()).ThrowsAsync(new TaskException("Error retrieving tasks", (int)HttpStatusCode.BadRequest));
 
             // Act
             var result = await _controller.GetAllTasks();
 
             // Assert
-            var notFoundResult = Assert.IsType<NotFoundResult>(result);
-            Assert.Equal(404, notFoundResult.StatusCode);
+            var badRequest = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal((int)HttpStatusCode.BadRequest, badRequest.StatusCode);
         }
 
         [Fact]

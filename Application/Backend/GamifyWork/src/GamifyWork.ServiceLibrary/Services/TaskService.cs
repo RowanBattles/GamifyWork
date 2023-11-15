@@ -29,15 +29,11 @@ namespace GamifyWork.ServiceLibrary.Services
             try
             {
                 var tasks = await _taskRepository.GetAllTasks();
-                if (tasks != null)
-                {
-                    throw new TaskException("no tasks found", (int)HttpStatusCode.NoContent);
-                }
                 return _taskMapper.MapDtoToModelList(tasks);
             }
             catch
             {
-                throw;
+                throw new TaskException("Error retrieving tasks", (int)HttpStatusCode.BadRequest);
             }
         }
 

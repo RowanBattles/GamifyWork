@@ -1,8 +1,6 @@
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import TaskTable from "../../src/components/TaskTable";
 import { CreateTask } from "../../src/utils/api";
-import { describe } from "vitest";
 
 describe("renderingTaskTable", () => {
   test("renders TaskTable component", () => {

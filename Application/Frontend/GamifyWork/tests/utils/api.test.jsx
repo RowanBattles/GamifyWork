@@ -1,4 +1,3 @@
-import { test, expect, describe, vi } from "vitest";
 import { getTasks, CreateTask, getRewards } from "../../src/utils/api";
 import axios from "axios";
 

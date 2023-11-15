@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import HomePage from "../../src/pages/HomePage";
-import { vi } from "vitest";
 
 const mocks = vi.hoisted(() => {
   return {

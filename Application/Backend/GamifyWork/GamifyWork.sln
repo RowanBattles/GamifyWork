@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamifyWork.MapperLayer", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamifyWork.DataAccessLibrary", "src\GamifyWork.DataAccessLibrary\GamifyWork.DataAccessLibrary.csproj", "{CBB6169E-DA69-4CDB-980F-F617C110CA97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamifyWork.MapperLayer.tests", "..\GamifyWork.MapperLayer.tests\GamifyWork.MapperLayer.tests.csproj", "{D32ED10C-A4FB-45A4-A9F0-A350DACC59DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamifyWork.MapperLayer.tests", "tests\GamifyWork.MapperLayer.tests\GamifyWork.MapperLayer.tests.csproj", "{47007294-500A-4944-9575-D388BD3193D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,10 +63,10 @@ Global
 		{CBB6169E-DA69-4CDB-980F-F617C110CA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBB6169E-DA69-4CDB-980F-F617C110CA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBB6169E-DA69-4CDB-980F-F617C110CA97}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D32ED10C-A4FB-45A4-A9F0-A350DACC59DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D32ED10C-A4FB-45A4-A9F0-A350DACC59DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D32ED10C-A4FB-45A4-A9F0-A350DACC59DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D32ED10C-A4FB-45A4-A9F0-A350DACC59DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47007294-500A-4944-9575-D388BD3193D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47007294-500A-4944-9575-D388BD3193D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47007294-500A-4944-9575-D388BD3193D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47007294-500A-4944-9575-D388BD3193D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,7 +79,7 @@ Global
 		{D41CD688-A3CC-40E5-960A-D51AA2EBF9C1} = {A2CDA4D3-F3A1-4B5D-9BCD-087939F19818}
 		{4A6F641E-D7A4-4923-9414-8D62F80C4527} = {A2CDA4D3-F3A1-4B5D-9BCD-087939F19818}
 		{CBB6169E-DA69-4CDB-980F-F617C110CA97} = {A2CDA4D3-F3A1-4B5D-9BCD-087939F19818}
-		{D32ED10C-A4FB-45A4-A9F0-A350DACC59DE} = {A382FBA6-B006-4214-B316-FAF976DB5F33}
+		{47007294-500A-4944-9575-D388BD3193D8} = {A382FBA6-B006-4214-B316-FAF976DB5F33}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8306760A-274F-4901-8833-A3C875F04354}

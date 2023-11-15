@@ -24,7 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GamifyWork\src\GamifyWork.MapperLayer\GamifyWork.MapperLayer.csproj" />
+    <ProjectReference Include="..\..\src\GamifyWork.ContractLayer\GamifyWork.ContractLayer.csproj" />
+    <ProjectReference Include="..\..\src\GamifyWork.DataAccessLibrary\GamifyWork.DataAccessLibrary.csproj" />
+    <ProjectReference Include="..\..\src\GamifyWork.MapperLayer\GamifyWork.MapperLayer.csproj" />
+    <ProjectReference Include="..\..\src\GamifyWork.ServiceLibrary\GamifyWork.ServiceLibrary.csproj" />
   </ItemGroup>
 
 </Project>

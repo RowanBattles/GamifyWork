@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Xunit;
 using GamifyWork.ContractLayer.Interfaces;
 using GamifyWork.ContractLayer.Dto;
+using GamifyWork.ServiceLibrary.Exceptions;
 
 public class TaskServiceTests
 {
@@ -113,7 +114,7 @@ public class TaskServiceTests
     }
 
     [Fact]
-    public async Task GetAllTasks_ThrowsException()
+    public async Task GetAllTasks_ThrowsTaskException()
     {
         // Arrange
         mockRepository.Setup(repo => repo.GetAllTasks()).ThrowsAsync(new Exception("An error occurred"));
@@ -121,7 +122,7 @@ public class TaskServiceTests
         var taskService = new TaskService(mockRepository.Object, mockMapper.Object);
 
         // Act and Assert
-        await Assert.ThrowsAsync<Exception>(() => taskService.GetAllTasks());
+        await Assert.ThrowsAsync<TaskException>(() => taskService.GetAllTasks());
     }
 
     [Fact]
