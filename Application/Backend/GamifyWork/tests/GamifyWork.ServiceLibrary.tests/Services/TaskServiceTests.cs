@@ -9,12 +9,21 @@ using Xunit;
 using GamifyWork.ContractLayer.Interfaces;
 using GamifyWork.ContractLayer.Dto;
 using GamifyWork.ServiceLibrary.Exceptions;
+using Microsoft.Extensions.Logging;
 
 public class TaskServiceTests
 {
-    DateTime currentTime = DateTime.Now;
-    Mock<ITaskRepository> mockRepository = new();
-    Mock<ITaskMapperS> mockMapper = new();
+    DateTime _currentTime = DateTime.Now;
+    Mock<ITaskRepository> _mockRepository;
+    Mock<ITaskMapperS> _mockMapper;
+    Mock<ILogger<TaskService>> _mockLogger;
+
+    public TaskServiceTests()
+    {
+        _mockRepository = new Mock<ITaskRepository>();
+        _mockMapper = new Mock<ITaskMapperS>();
+        _mockLogger = new Mock<ILogger<TaskService>>();
+    }
 
     [Fact]
     public async Task GetAllTasks_ReturnsAllTasks()
@@ -22,13 +31,13 @@ public class TaskServiceTests
         // Arrange
         var taskDtos = new List<TaskDto>
         {
-            new TaskDto(1, "Task 1", "Description 1", 10, false, true, "daily", 3, currentTime, 1),
+            new TaskDto(1, "Task 1", "Description 1", 10, false, true, "daily", 3, _currentTime, 1),
             new TaskDto(2, "Task 2", "Description 2", 20, true, false, null, null, null, 1),
             new TaskDto(3, "Task 3", "Description 3", 30, false, false, null, null, null, 2)
         };
 
-        mockRepository.Setup(repo => repo.GetAllTasks()).ReturnsAsync(taskDtos);
-        mockMapper.Setup(mapper => mapper.MapDtoToModelList(taskDtos))
+        _mockRepository.Setup(repo => repo.GetAllTasks()).ReturnsAsync(taskDtos);
+        _mockMapper.Setup(mapper => mapper.MapDtoToModelList(taskDtos))
                      .Returns(taskDtos.Select(dto => new TaskModel(
                          dto.Task_ID,
                          dto.Title,
@@ -42,7 +51,7 @@ public class TaskServiceTests
                          dto.User_ID
                      )).ToList());
 
-        var taskService = new TaskService(mockRepository.Object, mockMapper.Object);
+        var taskService = new TaskService(_mockRepository.Object, _mockMapper.Object, _mockLogger.Object);
 
 
         // Act
@@ -76,7 +85,7 @@ public class TaskServiceTests
         Assert.Equal(3, result[0].RecurrenceInterval);
         Assert.Null(result[1].RecurrenceInterval);
         Assert.Null(result[2].RecurrenceInterval);
-        Assert.Equal(currentTime, result[0].NextDueDate);
+        Assert.Equal(_currentTime, result[0].NextDueDate);
         Assert.Null(result[1].NextDueDate);
         Assert.Null(result[2].NextDueDate);
         Assert.Equal(1, result[0].User_ID);
@@ -89,8 +98,8 @@ public class TaskServiceTests
     {
         // Arrange
         var emptyTasks = new List<TaskDto>();
-        mockRepository.Setup(repo => repo.GetAllTasks()).ReturnsAsync(emptyTasks);
-        mockMapper.Setup(mapper => mapper.MapDtoToModelList(emptyTasks))
+        _mockRepository.Setup(repo => repo.GetAllTasks()).ReturnsAsync(emptyTasks);
+        _mockMapper.Setup(mapper => mapper.MapDtoToModelList(emptyTasks))
                      .Returns(emptyTasks.Select(dto => new TaskModel(
                          dto.Task_ID,
                          dto.Title,
@@ -104,7 +113,7 @@ public class TaskServiceTests
                          dto.User_ID
                      )).ToList());
 
-        var taskService = new TaskService(mockRepository.Object, mockMapper.Object);
+        var taskService = new TaskService(_mockRepository.Object, _mockMapper.Object, _mockLogger.Object);
 
         // Act
         var result = await taskService.GetAllTasks();
@@ -114,12 +123,11 @@ public class TaskServiceTests
     }
 
     [Fact]
-    public async Task GetAllTasks_ThrowsTaskException()
+    public async Task GetAllTasks_ThrowsTaskExceptionAndLogsError()
     {
         // Arrange
-        mockRepository.Setup(repo => repo.GetAllTasks()).ThrowsAsync(new Exception("An error occurred"));
-
-        var taskService = new TaskService(mockRepository.Object, mockMapper.Object);
+        _mockRepository.Setup(repo => repo.GetAllTasks()).ThrowsAsync(new Exception("An error occurred"));
+        var taskService = new TaskService(_mockRepository.Object, _mockMapper.Object, _mockLogger.Object);
 
         // Act and Assert
         await Assert.ThrowsAsync<TaskException>(() => taskService.GetAllTasks());
@@ -131,7 +139,7 @@ public class TaskServiceTests
         // Arrange
         var taskModel = new TaskModel(1, "Task 1", "Description 1", null, false, true, "daily", 3, DateTime.Now, 1);
 
-        mockMapper.Setup(mapper => mapper.MapModelToDto(taskModel))
+        _mockMapper.Setup(mapper => mapper.MapModelToDto(taskModel))
                   .Returns(new TaskDto(
                       taskModel.Task_ID,
                       taskModel.Title,
@@ -145,14 +153,14 @@ public class TaskServiceTests
                       taskModel.User_ID
                   ));
 
-        var taskService = new TaskService(mockRepository.Object, mockMapper.Object);
+        var taskService = new TaskService(_mockRepository.Object, _mockMapper.Object, _mockLogger.Object);
 
         // Act
         await taskService.CreateTask(taskModel);
 
         // Assert
-        mockMapper.Verify(mapper => mapper.MapModelToDto(taskModel), Times.Once);
-        mockRepository.Verify(repo => repo.CreateTask(It.IsAny<TaskDto>()), Times.Once);
+        _mockMapper.Verify(mapper => mapper.MapModelToDto(taskModel), Times.Once);
+        _mockRepository.Verify(repo => repo.CreateTask(It.IsAny<TaskDto>()), Times.Once);
     }
 
     [Fact]
@@ -161,7 +169,7 @@ public class TaskServiceTests
         // Arrange
         var taskModel = new TaskModel(1, "Task 1", "Description 1", null, false, true, "daily", 3, DateTime.Now, 1);
 
-        mockMapper.Setup(mapper => mapper.MapModelToDto(taskModel))
+        _mockMapper.Setup(mapper => mapper.MapModelToDto(taskModel))
                   .Returns(new TaskDto(
                       taskModel.Task_ID,
                       taskModel.Title,
@@ -175,14 +183,14 @@ public class TaskServiceTests
                       taskModel.User_ID
                   ));
 
-        var taskService = new TaskService(mockRepository.Object, mockMapper.Object);
+        var taskService = new TaskService(_mockRepository.Object, _mockMapper.Object, _mockLogger.Object);
 
         // Act
         await taskService.CreateTask(taskModel);
 
         // Assert
         Assert.NotNull(taskModel.Points);
-        mockMapper.Verify(mapper => mapper.MapModelToDto(taskModel), Times.Once);
+        _mockMapper.Verify(mapper => mapper.MapModelToDto(taskModel), Times.Once);
     }
 
 }

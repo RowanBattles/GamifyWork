@@ -10,23 +10,35 @@ using GamifyWork.DataAccessLibrary.Entities;
 using GamifyWork.ContractLayer.Interfaces;
 using GamifyWork.ContractLayer.Dto;
 using GamifyWork.DataAccessLibrary.Interfaces;
+using Microsoft.Extensions.Logging;
+using System.Data.Common;
 
 namespace GamifyWork.DataAccessLibrary.Repositories
 {
     public class TaskRepository : ITaskRepository
     {
         private readonly dbContext _dbContext;
-        private readonly ITaskMapperD _taskMapper; 
+        private readonly ITaskMapperD _taskMapper;
+        private readonly ILogger<TaskRepository> _logger;
 
-        public TaskRepository(dbContext dbContext, ITaskMapperD taskMapperD)
+        public TaskRepository(dbContext dbContext, ITaskMapperD taskMapperD, ILogger<TaskRepository> logger)
         {
              _dbContext = dbContext;
             _taskMapper = taskMapperD;
+            _logger = logger;
         }
 
         public async Task<List<TaskDto>> GetAllTasks()
         {
-            return _taskMapper.MapEntityToDtoList(await _dbContext.task.ToListAsync());
+            try
+            {
+                return _taskMapper.MapEntityToDtoList(await _dbContext.task.ToListAsync());
+            }
+            catch
+            {
+                _logger.LogError("An unexpected error occurred while processing tasks in repository");
+                throw;
+            }  
         }
 
         public async Task CreateTask(TaskDto taskDto)

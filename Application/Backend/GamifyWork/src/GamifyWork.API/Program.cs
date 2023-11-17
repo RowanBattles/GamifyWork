@@ -10,6 +10,9 @@ using GamifyWork.ServiceLibrary.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CORSpolicy", builder =>

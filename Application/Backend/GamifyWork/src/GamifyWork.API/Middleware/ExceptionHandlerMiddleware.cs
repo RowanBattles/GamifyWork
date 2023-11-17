@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using GamifyWork.ServiceLibrary.Exceptions;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
@@ -10,10 +11,12 @@ namespace GamifyWork.API.Middleware
     public class ExceptionHandlerMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger<ExceptionHandlerMiddleware> _logger;
 
-        public ExceptionHandlerMiddleware(RequestDelegate next)
+        public ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionHandlerMiddleware> logger)
         {
             _next = next;
+            _logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -22,18 +25,27 @@ namespace GamifyWork.API.Middleware
             {
                 await _next(context);
             }
+            catch (TaskException taskEx)
+            {
+                await HandleExceptionAsync(context, taskEx, taskEx.Message, taskEx.ErrorCode);
+            }
             catch (Exception ex)
             {
-                // Logging
-
-                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                context.Response.ContentType = "application/json";
-
-                var error = new Error(ex.Message, context.Response.StatusCode);
-                var jsonResponse = JsonConvert.SerializeObject(error);
-
-                await context.Response.WriteAsync(jsonResponse);
+                await HandleExceptionAsync(context, ex, "An unexpected error occurred", (int)HttpStatusCode.InternalServerError);
             }
+        }
+
+        private async Task HandleExceptionAsync(HttpContext context, Exception ex, string errorMessage, int errorCode)
+        {
+            _logger.LogError(ex, ex.Message);
+
+            context.Response.StatusCode = errorCode;
+            context.Response.ContentType = "application/json";
+
+            var error = new Error(errorMessage, context.Response.StatusCode);
+            var jsonResponse = JsonConvert.SerializeObject(error);
+
+            await context.Response.WriteAsync(jsonResponse);
         }
     }
 

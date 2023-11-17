@@ -12,8 +12,12 @@ const useFetch = (fetchFunction, dataMessage) => {
         setData(data);
         setLoading(false);
       } catch (err) {
-        setErrorMessage("Couldn't fetch data");
-        setErrorMessage(`Error: Couldn't fetch ${dataMessage}`);
+        if (err.response && err.response.data) {
+          const { errorCode, message } = err.response.data;
+          setErrorMessage(`Error ${errorCode}: ${message}`);
+        } else {
+          setErrorMessage(`Error: Couldn't fetch ${dataMessage}, no response`);
+        }
         setLoading(false);
       }
     }

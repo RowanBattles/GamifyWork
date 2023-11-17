@@ -1,13 +1,16 @@
 ﻿using GamifyWork.API.Controllers;
+using GamifyWork.API.Middleware;
 using GamifyWork.ServiceLibrary.Exceptions;
 using GamifyWork.ServiceLibrary.Interfaces;
 using GamifyWork.ServiceLibrary.Models;
 using GamifyWork.ServiceLibrary.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -18,13 +21,13 @@ namespace GamifyWork.Api.tests.Controllers
 {
     public class TaskControllerTests
     {
-        private readonly Mock<ITaskService> _taskServiceMock;
+        private readonly Mock<ITaskService> _taskService;
         private readonly TaskController _controller;
 
         public TaskControllerTests()
         {
-            _taskServiceMock = new Mock<ITaskService>();
-            _controller = new TaskController(_taskServiceMock.Object);
+            _taskService = new Mock<ITaskService>();
+            _controller = new TaskController(_taskService.Object);
         }
 
         [Fact]
@@ -32,7 +35,7 @@ namespace GamifyWork.Api.tests.Controllers
         {
             // Arrange
             var tasks = new List<TaskModel>();
-            _taskServiceMock.Setup(x => x.GetAllTasks()).ReturnsAsync(tasks);
+            _taskService.Setup(x => x.GetAllTasks()).ReturnsAsync(tasks);
 
             // Act
             var result = await _controller.GetAllTasks();
@@ -42,21 +45,6 @@ namespace GamifyWork.Api.tests.Controllers
             Assert.NotNull(result);
             var returnedTasks = Assert.IsAssignableFrom<IEnumerable<TaskModel>>(Okresult.Value);
             Assert.NotNull(returnedTasks);
-        }
-
-        [Fact]
-        public async Task GetTasks_ShouldReturnNotFound_WhenDataNotFound()
-        {
-            // Arrange
-            List<TaskModel> tasks = null;
-            _taskServiceMock.Setup(x => x.GetAllTasks()).ThrowsAsync(new TaskException("Error retrieving tasks", (int)HttpStatusCode.BadRequest));
-
-            // Act
-            var result = await _controller.GetAllTasks();
-
-            // Assert
-            var badRequest = Assert.IsType<BadRequestObjectResult>(result);
-            Assert.Equal((int)HttpStatusCode.BadRequest, badRequest.StatusCode);
         }
 
         [Fact]

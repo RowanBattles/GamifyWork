@@ -1,15 +1,9 @@
-﻿using GamifyWork.ContractLayer.Dto;
-using GamifyWork.ContractLayer.Interfaces;
+﻿using GamifyWork.ContractLayer.Interfaces;
 using GamifyWork.ServiceLibrary.Exceptions;
 using GamifyWork.ServiceLibrary.Interfaces;
 using GamifyWork.ServiceLibrary.Models;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.Extensions.Logging;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GamifyWork.ServiceLibrary.Services
 {
@@ -17,11 +11,13 @@ namespace GamifyWork.ServiceLibrary.Services
     {
         private readonly ITaskRepository _taskRepository;
         private readonly ITaskMapperS _taskMapper;
+        private readonly ILogger<TaskService> _logger;
 
-        public TaskService(ITaskRepository taskRepository, ITaskMapperS taskMapperS)
+        public TaskService(ITaskRepository taskRepository, ITaskMapperS taskMapperS, ILogger<TaskService> logger)
         {
             _taskRepository = taskRepository;
             _taskMapper = taskMapperS;
+            _logger = logger;
         }
 
         public async Task<List<TaskModel>> GetAllTasks()
@@ -31,9 +27,10 @@ namespace GamifyWork.ServiceLibrary.Services
                 var tasks = await _taskRepository.GetAllTasks();
                 return _taskMapper.MapDtoToModelList(tasks);
             }
-            catch
+            catch(Exception ex)
             {
-                throw new TaskException("Error retrieving tasks", (int)HttpStatusCode.BadRequest);
+                _logger.LogError(ex, "An unexpected error occurred while retrieving tasks in service");
+                throw new TaskException("Error retrieving tasks", (int)HttpStatusCode.InternalServerError);
             }
         }
 

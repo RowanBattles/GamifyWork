@@ -25,20 +25,9 @@ namespace GamifyWork.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllTasks()
         {
-            try
-            {
-                return Ok(await _taskService.GetAllTasks());
-            }
-            catch (TaskException ex)
-            {
-                var error = new Error(ex.Message, ex.ErrorCode);
-                return BadRequest(error);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return Ok(await _taskService.GetAllTasks());
         }
+
 
         [HttpPost]
         public async Task<IActionResult> CreateTask(TaskModel taskModel)
