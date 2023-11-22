@@ -57,22 +57,8 @@ namespace GamifyWork.Api.tests.Controllers
             var result = await _controller.CreateTask(taskModel);
 
             // Assert
-            var okResult = Assert.IsType<OkResult>(result);
+            var okResult = Assert.IsType<OkObjectResult>(result);
             Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
-        }
-
-        [Fact]
-        public async Task CreateTask_ReturnsBadRequest_WhenModelStateIsInvalid()
-        {
-            // Arrange
-            _controller.ModelState.AddModelError("Title", "Title is required"); // Simulating ModelState error
-
-            // Act
-            var result = await _controller.CreateTask(new TaskModel(1, null, null, null, false, false, null, null, null, 1));
-
-            // Assert
-            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
-            Assert.Equal(StatusCodes.Status400BadRequest, badRequestResult.StatusCode);
         }
     }
 }

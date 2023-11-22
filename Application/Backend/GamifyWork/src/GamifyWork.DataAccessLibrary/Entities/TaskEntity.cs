@@ -28,30 +28,14 @@ namespace GamifyWork.DataAccessLibrary.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Task_ID { get; private set; }
-
-        [Required]
-        [StringLength(60)]
         public string Title { get; private set; }
-
-        [StringLength(255)]
         public string? Description { get; private set; }
-
-        [Required]
         public int Points { get; private set; }
-
-        [Required]
         public bool Completed { get; private set; }
-
-        [Required]
         public bool Recurring { get; private set; }
-
         public string? RecurrenceType { get; private set; }
-
         public int? RecurrenceInterval { get; private set; }
-
         public DateTime? NextDueDate { get; private set; }
-
-        [Required]
         public int User_ID { get; private set; }
     }
 }

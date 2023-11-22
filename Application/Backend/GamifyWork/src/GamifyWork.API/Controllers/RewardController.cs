@@ -18,8 +18,7 @@ namespace GamifyWork.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllRewards()
         {
-            var rewards = await _rewardService.GetAllRewards();
-            return rewards != null ? Ok(rewards) : NotFound();
+            return Ok(await _rewardService.GetAllRewards());
         }
     }
 }

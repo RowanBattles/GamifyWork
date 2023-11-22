@@ -43,8 +43,16 @@ namespace GamifyWork.DataAccessLibrary.Repositories
 
         public async Task CreateTask(TaskDto taskDto)
         {
-            await _dbContext.task.AddAsync(_taskMapper.MapDtoToEntity(taskDto));
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                await _dbContext.task.AddAsync(_taskMapper.MapDtoToEntity(taskDto));
+                await _dbContext.SaveChangesAsync();
+            }
+            catch
+            {
+                _logger.LogError("An unexpected error occurred while creating a task in repository");
+                throw;
+            }
         }
     }
 }

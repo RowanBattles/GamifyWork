@@ -24,8 +24,7 @@ namespace GamifyWork.ServiceLibrary.Services
         {
             try
             {
-                var tasks = await _taskRepository.GetAllTasks();
-                return _taskMapper.MapDtoToModelList(tasks);
+                return _taskMapper.MapDtoToModelList(await _taskRepository.GetAllTasks());
             }
             catch(Exception ex)
             {
@@ -36,8 +35,16 @@ namespace GamifyWork.ServiceLibrary.Services
 
         public async Task CreateTask(TaskModel taskModel)
         {
-            taskModel.setPoints();
-            await _taskRepository.CreateTask(_taskMapper.MapModelToDto(taskModel));
+            try
+            {
+                taskModel.SetPoints();
+                await _taskRepository.CreateTask(_taskMapper.MapModelToDto(taskModel));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred while creating a task in service");
+                throw new TaskException("Error creating task", (int)HttpStatusCode.InternalServerError);
+            }
         }
     }
 }

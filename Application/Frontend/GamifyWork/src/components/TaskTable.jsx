@@ -19,13 +19,6 @@ function TaskTable({ tasks, title }) {
         try {
           const taskData = {
             title: newTask.trim(),
-            description: null,
-            points: 0,
-            completed: false,
-            recurring: recurring,
-            recurrenceType: null,
-            recurrenceInterval: null,
-            nextDueDate: null,
             user_ID: 1,
           };
 

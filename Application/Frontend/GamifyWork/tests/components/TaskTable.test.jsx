@@ -97,13 +97,6 @@ describe("addingTask", () => {
 
     expect(CreateTask).toHaveBeenCalledWith({
       title: "New Task",
-      description: null,
-      points: 0,
-      completed: false,
-      recurring: true,
-      recurrenceType: null,
-      recurrenceInterval: null,
-      nextDueDate: null,
       user_ID: 1,
     });
   });

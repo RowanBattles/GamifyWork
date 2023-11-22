@@ -21,7 +21,7 @@ test("useFetch hook fetches data correctly", async () => {
 
 test("useFetch hook handles fetch error", async () => {
   const errorFetchFunction = async () => {
-    setErrorMessage("Error: Couldn't fetch data");
+    setErrorMessage("Error: Couldn't fetch data, no response");
   };
 
   const { result, waitForNextUpdate } = renderHook(() =>
@@ -32,5 +32,7 @@ test("useFetch hook handles fetch error", async () => {
 
   expect(result.current.loading).toBe(false);
   expect(result.current.data).toEqual([]);
-  expect(result.current.error).toEqual("Error: Couldn't fetch data");
+  expect(result.current.error).toEqual(
+    "Error: Couldn't fetch data, no response"
+  );
 });
