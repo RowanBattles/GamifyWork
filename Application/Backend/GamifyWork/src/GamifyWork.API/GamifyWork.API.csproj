@@ -8,6 +8,9 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
     <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+	  <SonarQubeSetting Include="sonar.coverage.exclusions">
+		  <Value>**/Program.cs</Value>
+	  </SonarQubeSetting>
   </PropertyGroup>
 
   <ItemGroup>

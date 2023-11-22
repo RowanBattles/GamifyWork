@@ -193,4 +193,17 @@ public class TaskServiceTests
         _mockMapper.Verify(mapper => mapper.MapModelToDto(taskModel), Times.Once);
     }
 
+    [Fact]
+    public async Task CreateTask_ShouldThrowException()
+    {
+        // Arrange
+        TaskDto taskDto = new(1, "this", null, 10, false, false, null, null, null, 1);
+        TaskModel taskModel = new(1, "this", null, 10, false, false, null, null, null, 1);
+        _mockRepository.Setup(repo => repo.CreateTask(taskDto)).ThrowsAsync(new Exception("An error occurred"));
+        var taskService = new TaskService(_mockRepository.Object, _mockMapper.Object, _mockLogger.Object);
+
+        // Act and Assert
+        await Assert.ThrowsAsync<TaskException>(() => taskService.CreateTask(taskModel));
+    }
+
 }

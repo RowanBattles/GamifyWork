@@ -43,11 +43,15 @@ namespace GamifyWork.API.Middleware
         {
             _logger.LogError(ex, ex.Message);
 
+            context.Response.Body.Seek(0, SeekOrigin.Begin);
+
             context.Response.StatusCode = errorCode;
             context.Response.ContentType = "application/json";
 
             var error = new Error(errorMessage, context.Response.StatusCode);
             var jsonResponse = JsonConvert.SerializeObject(error);
+
+            _logger.LogError($"jsonResponse: {jsonResponse}");
 
             await context.Response.WriteAsync(jsonResponse);
         }
