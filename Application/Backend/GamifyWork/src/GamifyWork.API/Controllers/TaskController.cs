@@ -32,15 +32,7 @@ namespace GamifyWork.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateTask(TaskModel taskModel)
         {
-            try
-            {
-                taskModel.CheckValidation();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            
+            taskModel.CheckValidation();
             await _taskService.CreateTask(taskModel);
             return Ok(taskModel);
         }

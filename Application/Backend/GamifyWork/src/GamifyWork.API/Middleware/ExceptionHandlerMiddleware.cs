@@ -43,8 +43,6 @@ namespace GamifyWork.API.Middleware
         {
             _logger.LogError(ex, ex.Message);
 
-            context.Response.Body.Seek(0, SeekOrigin.Begin);
-
             context.Response.StatusCode = errorCode;
             context.Response.ContentType = "application/json";
 

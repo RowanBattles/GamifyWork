@@ -38,7 +38,8 @@ namespace GamifyWork.ServiceLibrary.Services
             try
             {
                 taskModel.SetPoints();
-                await _taskRepository.CreateTask(_taskMapper.MapModelToDto(taskModel));
+                var taskdto = _taskMapper.MapModelToDto(taskModel);
+                await _taskRepository.CreateTask(taskdto);
             }
             catch (Exception ex)
             {

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using GamifyWork.ServiceLibrary.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -77,7 +79,7 @@ namespace GamifyWork.ServiceLibrary.Models
             {
                 if(RecurrenceType != "Daily" && RecurrenceType != "Weekly" && RecurrenceType != "Monthly")
                 {
-                    throw new InvalidCastException("RecurrenceType must be Daily, Weekly or Monthly");
+                    throw new TaskException("RecurrenceType must be Daily, Weekly or Monthly", (int)HttpStatusCode.BadRequest);
                 }
             }
         }
