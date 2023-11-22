@@ -1,9 +1,11 @@
-﻿using GamifyWork.ContractLayer.Dto;
+﻿using Castle.Core.Logging;
+using GamifyWork.ContractLayer.Dto;
 using GamifyWork.ContractLayer.Interfaces;
 using GamifyWork.Dto;
 using GamifyWork.ServiceLibrary.Interfaces;
 using GamifyWork.ServiceLibrary.Models;
 using GamifyWork.ServiceLibrary.Services;
+using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -16,8 +18,16 @@ namespace GamifyWork.ServiceLibrary.tests.Services
 {
     public class RewardServiceTests
     {
-        Mock<IRewardRepository> mockRepository = new();
-        Mock<IRewardMapperS> mockMapper = new();
+        Mock<IRewardRepository> mockRepository;
+        Mock<IRewardMapperS> mockMapper;
+        Mock<ILogger<RewardService>> mockLogger;
+
+        public RewardServiceTests()
+        {
+            mockRepository = new Mock<IRewardRepository>();
+            mockMapper = new Mock<IRewardMapperS>();
+            mockLogger = new Mock<ILogger<RewardService>>();
+        }
 
         [Fact]
         public async Task GetAllRewards_ReturnsAllRewards()
@@ -39,7 +49,7 @@ namespace GamifyWork.ServiceLibrary.tests.Services
                          dto.User_ID
                      )).ToList());
 
-            var rewardService = new RewardService(mockRepository.Object, mockMapper.Object);
+            var rewardService = new RewardService(mockRepository.Object, mockMapper.Object, mockLogger.Object);
 
             // Act
             var result = await rewardService.GetAllRewards();
@@ -80,7 +90,7 @@ namespace GamifyWork.ServiceLibrary.tests.Services
                          dto.User_ID
                      )).ToList());
 
-            var rewardService = new RewardService(mockRepository.Object, mockMapper.Object);
+            var rewardService = new RewardService(mockRepository.Object, mockMapper.Object, mockLogger.Object);
 
             // Act
             var result = await rewardService.GetAllRewards();
@@ -96,7 +106,7 @@ namespace GamifyWork.ServiceLibrary.tests.Services
             var mockRepository = new Mock<IRewardRepository>();
             mockRepository.Setup(repo => repo.GetAllRewards()).ThrowsAsync(new Exception("An error occurred"));
 
-            var rewardService = new RewardService(mockRepository.Object, mockMapper.Object);
+            var rewardService = new RewardService(mockRepository.Object, mockMapper.Object, mockLogger.Object);
 
             // Act and Assert
             await Assert.ThrowsAsync<Exception>(() => rewardService.GetAllRewards());
