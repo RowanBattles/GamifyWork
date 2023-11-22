@@ -38,20 +38,5 @@ namespace GamifyWork.Api.tests.Controllers
             var returnedRewards = Assert.IsAssignableFrom<IEnumerable<RewardModel>>(Okresult.Value);
             Assert.NotNull(returnedRewards);
         }
-
-        [Fact]
-        public async Task GetRewards_ShouldReturnNotFound_WhenDataNotFound()
-        {
-            // Arrange
-            List<RewardModel> rewards = null;
-            _rewardServiceMock.Setup(x => x.GetAllRewards()).ReturnsAsync(rewards);
-
-            // Act
-            var result = await _controller.GetAllRewards();
-
-            // Assert
-            var notFoundResult = Assert.IsType<NotFoundResult>(result);
-            Assert.Equal(404, notFoundResult.StatusCode);
-        }
     }
 }

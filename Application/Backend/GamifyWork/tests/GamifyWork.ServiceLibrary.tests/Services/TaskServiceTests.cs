@@ -123,7 +123,7 @@ public class TaskServiceTests
     }
 
     [Fact]
-    public async Task GetAllTasks_ThrowsTaskExceptionAndLogsError()
+    public async Task GetAllTasks_ThrowsTaskException()
     {
         // Arrange
         _mockRepository.Setup(repo => repo.GetAllTasks()).ThrowsAsync(new Exception("An error occurred"));
