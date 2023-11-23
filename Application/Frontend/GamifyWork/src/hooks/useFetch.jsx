@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 const useFetch = (fetchFunction, dataMessage) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setErrorMessage] = useState(null);
+  const [errorHeader, setErrorHeader] = useState(null);
+  const [errorBody, setErrorBody] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -12,12 +13,24 @@ const useFetch = (fetchFunction, dataMessage) => {
         setData(data);
         setLoading(false);
       } catch (err) {
+        let errorHeader = "";
+        let errorBody = "";
         if (err.response && err.response.data) {
-          const { errorCode, message } = err.response.data;
-          setErrorMessage(`Error ${errorCode}: ${message}`);
+          const { ErrorCode, Message } = err.response.data;
+          errorHeader += `${ErrorCode}`;
+          errorBody += `${Message}. `;
+          if (ErrorCode === 500) {
+            errorHeader += " - Internal Server Error";
+            errorBody +=
+              "There is a problem with the resource you are looking for, and it cannot be displayed.";
+          }
         } else {
-          setErrorMessage(`Error: Couldn't fetch ${dataMessage}, no response`);
+          errorHeader += "Unexpected error";
+          errorBody += `Couldn't fetch ${dataMessage}`;
         }
+
+        setErrorHeader(errorHeader);
+        setErrorBody(errorBody);
         setLoading(false);
       }
     }
@@ -25,7 +38,7 @@ const useFetch = (fetchFunction, dataMessage) => {
     fetchData();
   }, [fetchFunction]);
 
-  return { data, loading, error };
+  return { data, loading, errorHeader, errorBody };
 };
 
 export default useFetch;

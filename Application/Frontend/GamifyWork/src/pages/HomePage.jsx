@@ -15,12 +15,14 @@ function HomePage() {
   const {
     data: tasks,
     loading: loadingTasks,
-    error: errorTasks,
+    errorHeader: errorHeaderTasks,
+    errorBody: errorBodyTasks,
   } = useFetch(getTasks, "tasks");
   const {
     data: rewards,
     loading: loadingRewards,
-    error: errorRewards,
+    errorHeader: errorHeaderRewards,
+    errorBody: errorBodyRewards,
   } = useFetch(getRewards, "rewards");
   const [searchQuery, setSearchQuery] = useState("");
   const recurringTasks = filterTasksByRecurring(tasks, true);
@@ -49,10 +51,27 @@ function HomePage() {
               <SearchBar setSearchQuery={setSearchQuery} />
               <LabelButton />
             </div>
-            {(errorTasks || errorRewards) !== null ? (
+            {(errorHeaderTasks || errorHeaderRewards) !== null ? (
               <>
-                <div>{errorTasks}</div>
-                <div>{errorRewards}</div>
+                <div className="border border-gray-400 bg-white border-solid mt-5 p-5">
+                  <div className="text-red-500 font-extrabold text-2xl mb-2">
+                    {errorHeaderTasks}
+                  </div>
+                  <div className="text-s font-semibold">
+                    <div>{errorBodyTasks}</div>
+                    <div>{errorBodyRewards}</div>
+                  </div>
+                </div>
+                <span className="px-5">
+                  Try again &nbsp;
+                  <a
+                    className="text-blue underline"
+                    href="http://localhost:5173"
+                  >
+                    here
+                  </a>
+                  , or Contact Us about the problem.
+                </span>
               </>
             ) : (
               <div className="grid-cols-3 grid">

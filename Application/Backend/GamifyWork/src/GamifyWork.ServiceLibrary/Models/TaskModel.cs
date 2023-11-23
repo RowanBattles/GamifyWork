@@ -75,12 +75,9 @@ namespace GamifyWork.ServiceLibrary.Models
 
         public void CheckValidation()
         {
-            if(Recurring)
+            if(RecurrenceType != "Daily" && RecurrenceType != "Weekly" && RecurrenceType != "Monthly" && Recurring)
             {
-                if(RecurrenceType != "Daily" && RecurrenceType != "Weekly" && RecurrenceType != "Monthly")
-                {
-                    throw new TaskException("RecurrenceType must be Daily, Weekly or Monthly", (int)HttpStatusCode.BadRequest);
-                }
+                throw new TaskException("RecurrenceType must be Daily, Weekly or Monthly", (int)HttpStatusCode.BadRequest);
             }
         }
     }

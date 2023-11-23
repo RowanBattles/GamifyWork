@@ -98,6 +98,9 @@ describe("addingTask", () => {
     expect(CreateTask).toHaveBeenCalledWith({
       title: "New Task",
       user_ID: 1,
+      recurring: true,
+      recurrenceType: "Weekly",
+      recurrenceInterval: 1,
     });
   });
 });

@@ -29,33 +29,40 @@ it("renders error state", async () => {
   mocks.useFetch.mockReturnValueOnce({
     data: null,
     loading: false,
-    error: "Error: Couldn't fetch tasks",
+    errorHeader: "Unexpected error",
+    errorBody: `Couldn't fetch tasks`,
   });
 
   mocks.useFetch.mockReturnValueOnce({
     data: null,
     loading: false,
-    error: "Error: Couldn't fetch rewards",
+    errorHeader: "Unexpected error",
+    errorBody: `Couldn't fetch rewards`,
   });
 
   render(<HomePage />);
-  const errorElements = await screen.findAllByText(/Error: Couldn't fetch/);
+  const errorElements = await screen.findAllByText(/Couldn't fetch/);
   expect(errorElements.length).toBe(2);
 });
 
-it("renders tasks", async () => {
+it("renders tasks and rewards", async () => {
   mocks.useFetch.mockReturnValue({
     data: [
-      { id: 1, title: "Task 1" },
-      { id: 2, title: "Task 2" },
+      { id: 1, title: "Reward 1" },
+      { id: 2, title: "Reward 2" },
     ],
     loading: false,
-    error: null,
+    errorHeader: null,
+    errorBody: null,
   });
 
   render(<HomePage />);
-  const taskElement = await screen.getByText("Task 1");
-  const taskElement2 = await screen.getByText("Task 2");
-  expect(taskElement).toBeInTheDocument();
-  expect(taskElement2).toBeInTheDocument();
+
+  // Assert on rewards
+  const rewardElement = await screen.getByText("Reward 1");
+  const rewardElement2 = await screen.getByText("Reward 2");
+  const RecurringTasks = await screen.getByText("To do");
+  const TodoTasks = await screen.getByText("Recurring");
+  expect(rewardElement).toBeInTheDocument();
+  expect(rewardElement2).toBeInTheDocument();
 });
