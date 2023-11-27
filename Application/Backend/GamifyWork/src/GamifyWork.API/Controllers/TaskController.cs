@@ -36,5 +36,12 @@ namespace GamifyWork.API.Controllers
             await _taskService.CreateTask(taskModel);
             return Ok(taskModel);
         }
+
+        [HttpPatch(Name = "MarkTask")]
+        public async Task<IActionResult> MarkTask(int Id)
+        {
+            await _taskService.MarkTask(Id);
+            return Ok();
+        }
     }
 }

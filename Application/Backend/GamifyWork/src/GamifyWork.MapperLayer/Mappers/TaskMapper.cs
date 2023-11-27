@@ -42,5 +42,15 @@ namespace GamifyWork.MapperLayer.Mappers
         {
             return _mapper.Map<List<TaskModel>>(taskDtos);
         }
+
+        public TaskDto MapEntityToDto(TaskEntity taskEntity)
+        {
+            return _mapper.Map<TaskDto>(taskEntity);
+        }
+
+        public TaskModel MapDtoToModel(TaskDto taskDto)
+        {
+            return _mapper.Map<TaskModel>(taskDto);
+        }
     }
 }

@@ -10,6 +10,7 @@ import SearchBar from "../components/SearchBar";
 import LabelButton from "../components/Labels";
 import TaskTable from "../components/TaskTable";
 import RewardTable from "../components/RewardTable.jsx";
+import ErrorDisplay from "../components/ErrorDisplay.jsx";
 
 function HomePage() {
   const {
@@ -52,27 +53,10 @@ function HomePage() {
               <LabelButton />
             </div>
             {(errorHeaderTasks || errorHeaderRewards) !== null ? (
-              <>
-                <div className="border border-gray-400 bg-white border-solid mt-5 p-5">
-                  <div className="text-red-500 font-extrabold text-2xl mb-2">
-                    {errorHeaderTasks}
-                  </div>
-                  <div className="text-s font-semibold">
-                    <div>{errorBodyTasks}</div>
-                    <div>{errorBodyRewards}</div>
-                  </div>
-                </div>
-                <span className="px-5">
-                  Try again &nbsp;
-                  <a
-                    className="text-blue underline"
-                    href="http://localhost:5173"
-                  >
-                    here
-                  </a>
-                  , or Contact Us about the problem.
-                </span>
-              </>
+              <ErrorDisplay
+                errorHeader={errorHeaderTasks || errorHeaderRewards}
+                errorBody={errorBodyTasks + " " + errorBodyRewards}
+              />
             ) : (
               <div className="grid-cols-3 grid">
                 <TaskTable tasks={searchedRecurringTasks} title="Recurring" />

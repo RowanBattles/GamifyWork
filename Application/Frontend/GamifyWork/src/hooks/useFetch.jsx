@@ -26,7 +26,7 @@ const useFetch = (fetchFunction, dataMessage) => {
           }
         } else {
           errorHeader += "Unexpected error";
-          errorBody += `Couldn't fetch ${dataMessage}`;
+          errorBody += `Couldn't fetch ${dataMessage}.`;
         }
 
         setErrorHeader(errorHeader);

@@ -12,5 +12,6 @@ namespace GamifyWork.DataAccessLibrary.Interfaces
     {
         TaskEntity MapDtoToEntity(TaskDto taskDto);
         List<TaskDto> MapEntityToDtoList(List<TaskEntity> taskEntities);
+        TaskDto MapEntityToDto(TaskEntity taskEntity);
     }
 }

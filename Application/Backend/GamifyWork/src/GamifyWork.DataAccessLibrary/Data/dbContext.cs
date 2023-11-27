@@ -17,8 +17,14 @@ namespace GamifyWork.DataAccessLibrary.Data
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder dbContextOptionsBuilder) => 
-            dbContextOptionsBuilder.UseMySQL(_connectionString);
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder
+                .EnableSensitiveDataLogging()
+                .UseMySQL(_connectionString);
+        }
+
         public DbSet<TaskEntity> task { get; set; }
         public DbSet<RewardEntity> reward { get; set; }
     }

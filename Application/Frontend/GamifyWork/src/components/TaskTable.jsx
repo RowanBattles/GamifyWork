@@ -97,8 +97,8 @@ function TaskTable({ tasks, title }) {
                     className="w-8 h-8 cursor-pointer border-none bg-yellow-100 hover:border hover:border-blue hover:border-solid rounded focus:ring-0"
                   />
                 </div>
-                <div className="bg-white rounded-r w-full p-2">
-                  <p>{task.title}</p>
+                <div className="bg-white rounded-r w-full p-2 overflow-hidden">
+                  <p className="break-normal">{task.title}</p>
                   <p className="text-xs">{task.description}</p>
                 </div>
               </div>

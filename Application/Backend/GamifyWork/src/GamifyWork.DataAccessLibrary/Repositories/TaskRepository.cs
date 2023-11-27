@@ -12,6 +12,7 @@ using GamifyWork.ContractLayer.Dto;
 using GamifyWork.DataAccessLibrary.Interfaces;
 using Microsoft.Extensions.Logging;
 using System.Data.Common;
+using System.Net;
 
 namespace GamifyWork.DataAccessLibrary.Repositories
 {
@@ -26,6 +27,19 @@ namespace GamifyWork.DataAccessLibrary.Repositories
              _dbContext = dbContext;
             _taskMapper = taskMapperD;
             _logger = logger;
+        }
+
+        private async Task <TaskEntity> GetTaskEntityById(int Id)
+        {
+            try
+            {
+                return await _dbContext.task.FindAsync(Id) ?? throw new Exception("Task not found");
+            }
+            catch
+            {
+                _logger.LogError("An unexpected error occurred while retrieving a task in repository");
+                throw;
+            }
         }
 
         public async Task<List<TaskDto>> GetAllTasks()
@@ -54,35 +68,42 @@ namespace GamifyWork.DataAccessLibrary.Repositories
                 throw;
             }
         }
+
+        public async Task<TaskDto> GetTaskById(int Id)
+        {
+            try
+            {
+                var taskEntity = await _dbContext.task.FindAsync(Id);
+                return taskEntity == null ? throw new Exception("Task not found in repository") : _taskMapper.MapEntityToDto(taskEntity);
+            }
+            catch
+            {
+                _logger.LogError("An unexpected error occurred while retrieving a task in repository");
+                throw;
+            }
+        }
+
+        public async Task MarkTask(TaskDto taskDto)
+        {
+            try
+            {
+                TaskEntity existingEntity = await GetTaskEntityById(taskDto.Task_ID);
+
+                existingEntity.Completed = taskDto.Completed;
+                existingEntity.NextDueDate = taskDto.NextDueDate;
+
+                _dbContext.Entry(existingEntity).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
+            }
+            catch
+            {
+                _logger.LogError("An unexpected error occurred while marking a task in repository");
+                throw;
+            }
+        }
+
     }
 }
-
-//public async Task<TaskModel> GetTaskById(int Id)
-//{
-//    using (var db = new dbContext())
-//    {
-//        return await db.Tasks.FirstOrDefaultAsync(task => task.Task_ID == Id);
-//    }
-//}
-
-        
-
-//public async Task<bool> UpdateTask(TaskModel taskModel)
-//{
-//    using (var db = new dbContext())
-//    {
-//        try
-//        {
-//            db.Tasks.Update(taskModel);
-
-//            return await db.SaveChangesAsync() >= 1;
-//        }
-//        catch (Exception ex)
-//        {
-//            return false;
-//        }
-//    }
-//}
 
 //public async Task<bool> DeleteTask(int Id)
 //{

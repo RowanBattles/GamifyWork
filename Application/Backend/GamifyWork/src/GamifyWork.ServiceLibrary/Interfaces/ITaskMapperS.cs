@@ -12,5 +12,6 @@ namespace GamifyWork.ServiceLibrary.Interfaces
     {
         TaskDto MapModelToDto(TaskModel taskModel);
         List<TaskModel> MapDtoToModelList(List<TaskDto> taskDtos);
+        TaskModel MapDtoToModel(TaskDto taskDto);
     }
 }

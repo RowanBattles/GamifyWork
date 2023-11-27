@@ -40,30 +40,24 @@ namespace GamifyWork.ServiceLibrary.Models
         public DateTime? NextDueDate { get; private set; }
         public int User_ID { get; private set; }
 
-        public DateTime? CalculateNextDueDate()
+        public void CalculateNextDueDate()
         {
-            if (Recurring)
+            DateTime now = DateTime.Now;
+
+            if (Recurring && RecurrenceType != null && RecurrenceInterval != null)
             {
                 if (RecurrenceType == "Daily")
                 {
-                    return NextDueDate?.AddDays(RecurrenceInterval ?? 1);
+                    NextDueDate = now.AddDays((int)RecurrenceInterval);
                 }
                 else if (RecurrenceType == "Weekly")
                 {
-                    return NextDueDate?.AddDays(7 * (RecurrenceInterval ?? 1));
+                    NextDueDate= now.AddDays(7 * (int)RecurrenceInterval);
                 }
                 else if (RecurrenceType == "Monthly")
                 {
-                    return NextDueDate?.AddMonths(RecurrenceInterval ?? 1);
+                    NextDueDate =now.AddMonths((int)RecurrenceInterval);
                 }
-                else
-                {
-                    throw new InvalidOperationException("RecurrenceType must be Daily, Weekly or Monthly");
-                }
-            }
-            else
-            {
-                return null;
             }
         }
 
@@ -75,10 +69,16 @@ namespace GamifyWork.ServiceLibrary.Models
 
         public void CheckValidation()
         {
-            if(RecurrenceType != "Daily" && RecurrenceType != "Weekly" && RecurrenceType != "Monthly" && Recurring)
+            if(Recurring && RecurrenceType != "Daily" && RecurrenceType != "Weekly" && RecurrenceType != "Monthly")
             {
                 throw new TaskException("RecurrenceType must be Daily, Weekly or Monthly", (int)HttpStatusCode.BadRequest);
             }
+        }
+
+        public void MarkTask()
+        {
+            CalculateNextDueDate();
+            Completed = !Completed;
         }
     }
 }
