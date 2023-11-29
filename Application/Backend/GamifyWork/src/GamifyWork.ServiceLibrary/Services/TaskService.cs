@@ -55,7 +55,7 @@ namespace GamifyWork.ServiceLibrary.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unexpected error occurred while creating a task in service");
+                _logger.LogError(ex, "Task not found in service");
                 throw new TaskException("Task not found", (int)HttpStatusCode.NotFound);
             }
         }   
@@ -68,9 +68,13 @@ namespace GamifyWork.ServiceLibrary.Services
                 taskModel.MarkTask();
                 await _taskRepository.MarkTask(_taskMapper.MapModelToDto(taskModel));
             }
+            catch (TaskException)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unexpected error occurred while creating a task in service");
+                _logger.LogError(ex, "An unexpected error occurred while marking a task in service");
                 throw new TaskException("Error marking task", (int)HttpStatusCode.InternalServerError);
             }
         }

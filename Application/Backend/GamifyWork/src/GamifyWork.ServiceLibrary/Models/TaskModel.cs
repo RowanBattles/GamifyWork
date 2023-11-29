@@ -40,7 +40,7 @@ namespace GamifyWork.ServiceLibrary.Models
         public DateTime? NextDueDate { get; private set; }
         public int User_ID { get; private set; }
 
-        public void CalculateNextDueDate()
+        private void CalculateNextDueDate()
         {
             DateTime now = DateTime.Now;
 
@@ -77,6 +77,7 @@ namespace GamifyWork.ServiceLibrary.Models
 
         public void MarkTask()
         {
+            CheckValidation();
             CalculateNextDueDate();
             Completed = !Completed;
         }

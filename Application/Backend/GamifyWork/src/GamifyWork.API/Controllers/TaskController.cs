@@ -11,7 +11,7 @@ using Microsoft.VisualBasic;
 
 namespace GamifyWork.API.Controllers
 {
-    [Route("api/task")]
+    [Route("api/[controller]")]
     [ApiController]
     public class TaskController : ControllerBase
     {
@@ -37,7 +37,7 @@ namespace GamifyWork.API.Controllers
             return Ok(taskModel);
         }
 
-        [HttpPatch(Name = "MarkTask")]
+        [HttpPatch("MarkTask")]
         public async Task<IActionResult> MarkTask(int Id)
         {
             await _taskService.MarkTask(Id);

@@ -1,4 +1,5 @@
-﻿using GamifyWork.ServiceLibrary.Models;
+﻿using GamifyWork.ServiceLibrary.Exceptions;
+using GamifyWork.ServiceLibrary.Models;
 using System;
 using Xunit;
 
@@ -53,85 +54,38 @@ public class TaskModelTests
         var taskModel = new TaskModel(taskId, title, description, points, completed, recurring, recurrenceType, recurrenceInterval, nextDueDate, userId);
 
         // Act
-        var CalculatenextDueDate = taskModel.CalculateNextDueDate();
+        taskModel.MarkTask();
 
         // Assert
-        Assert.Equal(taskModel.NextDueDate, CalculatenextDueDate);
+        Assert.Null(taskModel.NextDueDate);
     }
 
-    [Fact]
-    public void CalculateNextDueDate_RecurringDaily_ReturnsNextDueDate()
+    [Theory]
+    [InlineData("Daily", 1, 1)]
+    [InlineData("Weekly", 2, 14)]
+    [InlineData("Monthly", 3, 92)]
+    public void CalculateNextDueDate_ShouldSetCorrectNextDueDate(string RecurrenceType, int RecurrenceInterval, int expectedDays)
     {
         // Arrange
         int taskId = 1;
         string title = "Task 1";
-        string? description = null;
-        int? points = null;
+        string description = "Description 1";
+        int points = 10;
         bool completed = false;
         bool recurring = true;
-        string recurrenceType = "Daily";
-        int recurrenceInterval = 1;
-        DateTime nextDueDate = new(2023, 10, 1, 12, 0, 0);
+        string? recurrenceType = RecurrenceType;
+        int? recurrenceInterval = RecurrenceInterval;
+        DateTime? nextDueDate = null;
         int userId = 1;
 
         var taskModel = new TaskModel(taskId, title, description, points, completed, recurring, recurrenceType, recurrenceInterval, nextDueDate, userId);
 
         // Act
-        var nextDueDateResult = taskModel.CalculateNextDueDate();
+        taskModel.MarkTask();
+        var actualDate = (DateTime)taskModel.NextDueDate;
 
         // Assert
-        DateTime expectedNextDueDate = nextDueDate.AddDays(1);
-        Assert.Equal(expectedNextDueDate, nextDueDateResult);
-    }
-
-    [Fact]
-    public void CalculateNextDueDate_RecurringWeekly_ReturnsNextDueDate()
-    {
-        // Arrange
-        int taskId = 1;
-        string title = "Task 1";
-        string? description = null;
-        int? points = null;
-        bool completed = false;
-        bool recurring = true;
-        string? recurrenceType = "Weekly";
-        int recurrenceInterval = 2;
-        DateTime nextDueDate = new(2023, 10, 1, 12, 0, 0);
-        int userId = 1;
-
-        var taskModel = new TaskModel(taskId, title, description, points, completed, recurring, recurrenceType, recurrenceInterval, nextDueDate, userId);
-
-        // Act
-        var nextDueDateResult = taskModel.CalculateNextDueDate();
-
-        // Assert
-        DateTime expectedNextDueDate = nextDueDate.AddDays(14);
-        Assert.Equal(expectedNextDueDate, nextDueDateResult);
-    }
-
-    [Fact]
-    public void CalculateNextDueDate_RecurringMonthly_ReturnsNextDueDate()
-    {
-        // Arrange
-        int taskId = 1;
-        string title = "Task 1";
-        string? description = null;
-        int? points = null;
-        bool completed = false;
-        bool recurring = true;
-        string? recurrenceType = "Monthly";
-        int recurrenceInterval = 2;
-        DateTime nextDueDate = new(2023, 10, 1, 12, 0, 0);
-        int userId = 1;
-
-        var taskModel = new TaskModel(taskId, title, description, points, completed, recurring, recurrenceType, recurrenceInterval, nextDueDate, userId);
-
-        // Act
-        var nextDueDateResult = taskModel.CalculateNextDueDate();
-
-        // Assert
-        DateTime expectedNextDueDate = nextDueDate.AddMonths(2);
-        Assert.Equal(expectedNextDueDate, nextDueDateResult);
+        Assert.Equal(DateTime.Now.AddDays(expectedDays).ToString("yyyy-mm-dd"), actualDate.ToString("yyyy-mm-dd"));
     }
 
     [Fact]
@@ -152,9 +106,6 @@ public class TaskModelTests
         var taskModel = new TaskModel(taskId, title, description, points, completed, recurring, recurrenceType, recurrenceInterval, nextDueDate, userId);
 
         // Act and Assert
-        Assert.Throws<InvalidOperationException>(() =>
-        {
-            var nextDueDate = taskModel.CalculateNextDueDate();
-        });
+        Assert.Throws<TaskException>(() => taskModel.MarkTask());
     }
 }

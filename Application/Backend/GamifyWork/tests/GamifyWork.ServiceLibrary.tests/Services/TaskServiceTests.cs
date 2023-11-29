@@ -203,4 +203,54 @@ public class TaskServiceTests
         // Act and Assert
         await Assert.ThrowsAsync<TaskException>(() => taskService.CreateTask(It.IsAny<TaskModel>()));
     }
+
+    [Fact]
+    public async Task MarkTask_ShouldMarkTaskCorrectly_IfTaskValid()
+    {
+        // Arrange
+        var taskId = 1;
+        var taskDto = new TaskDto(1, "Task 1", "Description 1", 30, false, false, null, null, null, 1);
+        var taskModel = new TaskModel(1, "Task 1", "Description 1", 30, false, false, null, null, null, 1);
+
+        _mockRepository.Setup(repo => repo.GetTaskById(taskId)).ReturnsAsync(taskDto);
+        _mockMapper.Setup(mapper => mapper.MapDtoToModel(taskDto)).Returns(taskModel);
+
+        var taskService = new TaskService(_mockRepository.Object, _mockMapper.Object, _mockLogger.Object);
+
+        // Act
+        await taskService.MarkTask(taskId);
+
+        // Assert
+        _mockRepository.Verify(repo => repo.MarkTask(It.IsAny<TaskDto>()), Times.Once);
+        Assert.True(taskModel.Completed);
+    }
+
+    [Fact]
+    public async Task MarkTask_ShouldThrowException_IfMarkingFails()
+    {
+        // Arrange
+        var taskId = 1;
+        var taskDto = new TaskDto(taskId, "Task 1", "Description 1", 30, false, false, null, null, null, 1);
+
+        _mockRepository.Setup(repo => repo.GetTaskById(taskId)).ReturnsAsync(taskDto);
+        _mockRepository.Setup(repo => repo.MarkTask(It.IsAny<TaskDto>())).ThrowsAsync(new Exception("Simulated marking error"));
+
+        var taskService = new TaskService(_mockRepository.Object, _mockMapper.Object, _mockLogger.Object);
+
+        // Act and Assert
+        await Assert.ThrowsAsync<TaskException>(() => taskService.MarkTask(taskId));
+    }
+
+    [Fact]
+    public async Task MarkTask_ShouldThrowInternalServerError_IfUnexpectedErrorOccurs()
+    {
+        // Arrange
+        var taskId = 1;
+
+        _mockRepository.Setup(repo => repo.GetTaskById(taskId)).ThrowsAsync(new Exception());
+        var taskService = new TaskService(_mockRepository.Object, _mockMapper.Object, _mockLogger.Object);
+
+        // Act and Assert
+        await Assert.ThrowsAsync<TaskException>(() => taskService.MarkTask(taskId));
+    }
 }

@@ -60,5 +60,18 @@ namespace GamifyWork.Api.tests.Controllers
             var okResult = Assert.IsType<OkObjectResult>(result);
             Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
         }
+
+        [Fact]
+        public async Task MarkTask_ReturnsOk_WhenIdIsValid()
+        {
+            // Arrange
+            var id = 1;
+
+            // Act
+            var result = await _controller.MarkTask(id);
+
+            // Assert
+            Assert.Equal(StatusCodes.Status200OK, ((OkResult)result).StatusCode);
+        }
     }
 }
