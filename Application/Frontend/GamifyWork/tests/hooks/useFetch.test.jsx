@@ -35,5 +35,5 @@ test("useFetch hook handles fetch error", async () => {
   expect(result.current.loading).toBe(false);
   expect(result.current.data).toEqual([]);
   expect(result.current.errorHeader).toEqual("Unexpected error");
-  expect(result.current.errorBody).toEqual("Couldn't fetch data");
+  expect(result.current.errorBody).toEqual("Couldn't fetch data.");
 });

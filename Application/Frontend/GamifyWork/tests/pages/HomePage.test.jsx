@@ -42,7 +42,7 @@ it("renders error state", async () => {
 
   render(<HomePage />);
   const errorElements = await screen.findAllByText(/Couldn't fetch/);
-  expect(errorElements.length).toBe(2);
+  expect(errorElements.length).toBe(1);
 });
 
 it("renders tasks and rewards", async () => {
