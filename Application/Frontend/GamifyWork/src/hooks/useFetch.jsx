@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useFetch = (fetchFunction, dataMessage) => {
+const useFetch = (fetchFunction, dataMessage, fetchTrigger) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorHeader, setErrorHeader] = useState(null);

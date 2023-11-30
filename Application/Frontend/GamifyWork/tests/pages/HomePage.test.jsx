@@ -4,6 +4,7 @@ import HomePage from "../../src/pages/HomePage";
 const mocks = vi.hoisted(() => {
   return {
     useFetch: vi.fn(),
+    useTaskContext: vi.fn(),
   };
 });
 
@@ -13,11 +14,23 @@ vi.mock("../../src/hooks/useFetch.jsx", () => {
   };
 });
 
+vi.mock("../../src/hooks/TaskContext.jsx", () => {
+  return {
+    useTaskContext: mocks.useTaskContext,
+    TaskProvider: ({ children }) => children,
+  };
+});
+
 it("renders loading state", async () => {
   mocks.useFetch.mockReturnValue({
     data: null,
     loading: true,
     error: null,
+  });
+
+  mocks.useTaskContext.mockReturnValue({
+    tasks: [],
+    updateTasks: vi.fn(),
   });
 
   render(<HomePage />);
@@ -40,6 +53,11 @@ it("renders error state", async () => {
     errorBody: `Couldn't fetch rewards`,
   });
 
+  mocks.useTaskContext.mockReturnValue({
+    tasks: [],
+    updateTasks: vi.fn(),
+  });
+
   render(<HomePage />);
   const errorElements = await screen.findAllByText(/Couldn't fetch/);
   expect(errorElements.length).toBe(1);
@@ -56,6 +74,11 @@ it("renders tasks and rewards", async () => {
     errorBody: null,
   });
 
+  mocks.useTaskContext.mockReturnValue({
+    tasks: [],
+    updateTasks: vi.fn(),
+  });
+
   render(<HomePage />);
 
   // Assert on rewards
@@ -65,4 +88,6 @@ it("renders tasks and rewards", async () => {
   const TodoTasks = await screen.getByText("Recurring");
   expect(rewardElement).toBeInTheDocument();
   expect(rewardElement2).toBeInTheDocument();
+  expect(RecurringTasks).toBeInTheDocument();
+  expect(TodoTasks).toBeInTheDocument();
 });

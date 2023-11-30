@@ -2,6 +2,14 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import TaskTable from "../../src/components/TaskTable";
 import { CreateTask } from "../../src/utils/api";
 
+vi.mock("../../src/hooks/TaskContext", () => ({
+  useTaskContext: () => ({
+    tasks: [],
+    updateTasks: vi.fn(),
+  }),
+  TaskProvider: ({ children }) => children,
+}));
+
 describe("renderingTaskTable", () => {
   test("renders TaskTable component", () => {
     const tasks = [

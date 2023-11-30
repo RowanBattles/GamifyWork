@@ -12,6 +12,16 @@ export async function getTasks() {
   }
 }
 
+export async function MarkTask(Id) {
+  const url = EndPoints.MarkTask + Id;
+
+  try {
+    const response = await axios.patch(url);
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function CreateTask(taskData) {
   const url = EndPoints.CreateTask;
 

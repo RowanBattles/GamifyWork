@@ -3,6 +3,7 @@ import {
   filterTasksByTitle,
 } from "../utils/Filters/taskFilters.jsx";
 import { useState } from "react";
+import { useTaskContext } from "../hooks/TaskContext.jsx";
 import useFetch from "../hooks/useFetch";
 import { getTasks, getRewards } from "../utils/api";
 import NavBar from "../components/NavBar";
@@ -25,9 +26,15 @@ function HomePage() {
     errorHeader: errorHeaderRewards,
     errorBody: errorBodyRewards,
   } = useFetch(getRewards, "rewards");
+  const context = useTaskContext();
+
+  if (context.tasks.length === 0) {
+    context.tasks = tasks;
+  }
+
   const [searchQuery, setSearchQuery] = useState("");
-  const recurringTasks = filterTasksByRecurring(tasks, true);
-  const todoTasks = filterTasksByRecurring(tasks, false);
+  const recurringTasks = filterTasksByRecurring(context.tasks, true);
+  const todoTasks = filterTasksByRecurring(context.tasks, false);
   const searchedRecurringTasks = filterTasksByTitle(
     recurringTasks,
     searchQuery

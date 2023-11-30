@@ -37,10 +37,10 @@ namespace GamifyWork.API.Controllers
             return Ok(taskModel);
         }
 
-        [HttpPatch("MarkTask")]
-        public async Task<IActionResult> MarkTask(int Id)
+        [HttpPatch("MarkTask/{id}")]
+        public async Task<IActionResult> MarkTask(int id)
         {
-            await _taskService.MarkTask(Id);
+            await _taskService.MarkTask(id);
             return Ok();
         }
     }
