@@ -1,3 +1,5 @@
+import { Tooltip } from "flowbite-react";
+
 function NavBar() {
   return (
     <>
@@ -23,22 +25,23 @@ function NavBar() {
             />
             <span>112</span>
           </div>
-          <button
-            className="hover:bg-blue-500 rounded-full p-1 transition-all"
-            data-tooltip-target="UserIcon"
+          <Tooltip
+            content="Profile"
+            placement="bottom"
+            animation="duration-500"
+            arrow={false}
           >
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/666/666201.png"
-              alt="user-icon"
-              className="invert h-6"
-            />
-          </button>
-          <div
-            id="UserIcon"
-            className="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium transition-all duration-150 delay-75 bg-gray-700 rounded-lg shadow-sm opacity-0 tooltip"
-          >
-            Profile
-          </div>
+            <button
+              className="hover:bg-blue-500 rounded-full p-1 transition-all"
+              data-tooltip-target="UserIcon"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/666/666201.png"
+                alt="user-icon"
+                className="invert h-6"
+              />
+            </button>
+          </Tooltip>
         </div>
       </nav>
     </>

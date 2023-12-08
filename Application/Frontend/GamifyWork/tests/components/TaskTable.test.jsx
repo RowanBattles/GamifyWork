@@ -19,12 +19,6 @@ describe("renderingTaskTable", () => {
         description: "Description 1",
         completed: false,
       },
-      {
-        task_ID: 2,
-        title: "Task 2",
-        description: "Description 2",
-        completed: true,
-      },
     ];
 
     render(<TaskTable tasks={tasks} title="Test Title" />);
@@ -43,9 +37,7 @@ describe("renderingTaskTable", () => {
 
     // Check if tasks are rendered
     const task1Element = screen.getByText("Task 1");
-    const task2Element = screen.getByText("Task 2");
     expect(task1Element).toBeInTheDocument();
-    expect(task2Element).toBeInTheDocument();
   });
 
   test("filters tasks by status", () => {

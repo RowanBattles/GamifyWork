@@ -6,7 +6,7 @@ import { useTaskContext } from "../hooks/TaskContext";
 import usePatch from "../hooks/usePatch";
 
 function TaskTable({ tasks, title }) {
-  const [activeFilter, setActiveFilter] = useState("All");
+  const [activeFilter, setActiveFilter] = useState("Active");
   const [newTask, setNewTask] = useState("");
   const [hoveredTask, setHoveredTask] = useState(null);
   const filteredTasks = filterTasksByStatus(tasks, activeFilter);
@@ -34,6 +34,8 @@ function TaskTable({ tasks, title }) {
           await CreateTask(taskData);
           succes("created task succesfully!");
           setNewTask("");
+          const updatedTasks = await getTasks();
+          updateTasks(updatedTasks);
         } catch (error) {
           failed("failed creating task");
         }
