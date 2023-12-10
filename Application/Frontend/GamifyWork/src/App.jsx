@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
 import PrivateRoute from "./utils/Helpers/PrivateRoute";
 import keycloak from "./utils/Keycloak";
+import NotFound from "./pages/static/NotFound";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </ReactKeycloakProvider>
