@@ -12,5 +12,6 @@ namespace GamifyWork.ServiceLibrary.Interfaces
         Task<List<TaskModel>> GetAllTasks();
         Task CreateTask(TaskModel taskModel);
         Task MarkTask(int Id);
+        Task<List<TaskModel>> GetTasksByUser(Guid user);
     }
 }

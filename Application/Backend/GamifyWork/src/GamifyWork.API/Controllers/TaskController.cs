@@ -28,6 +28,13 @@ namespace GamifyWork.API.Controllers
             return Ok(await _taskService.GetAllTasks());
         }
 
+        [HttpGet("{user}")]
+        public async Task<IActionResult> GetTasksByUser(Guid user)
+        {
+            // Your logic here
+            return Ok(await _taskService.GetTasksByUser(user));
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> CreateTask(TaskModel taskModel)

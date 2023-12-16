@@ -21,6 +21,7 @@ namespace GamifyWork.Api.tests.Controllers
 {
     public class TaskControllerTests
     {
+        Guid user = new("6B29FC40-CA47-1067-B31D-00DD010662DA");
         private readonly Mock<ITaskService> _taskService;
         private readonly TaskController _controller;
 
@@ -51,7 +52,7 @@ namespace GamifyWork.Api.tests.Controllers
         public async Task CreateTask_ReturnsOk_WhenModelStateIsValid()
         {
             // Arrange
-            var taskModel = new TaskModel(1, "title", null, null, false, false, null, null, null, 1);
+            var taskModel = new TaskModel(1, "title", null, null, false, false, null, null, null, user);
 
             // Act
             var result = await _controller.CreateTask(taskModel);

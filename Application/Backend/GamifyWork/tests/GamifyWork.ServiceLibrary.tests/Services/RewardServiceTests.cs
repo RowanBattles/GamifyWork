@@ -20,6 +20,7 @@ namespace GamifyWork.ServiceLibrary.tests.Services
 {
     public class RewardServiceTests
     {
+        Guid user = new("6B29FC40-CA47-1067-B31D-00DD010662DA");
         Mock<IRewardRepository> mockRepository;
         Mock<IRewardMapperS> mockMapper;
         Mock<ILogger<RewardService>> mockLogger;
@@ -37,9 +38,9 @@ namespace GamifyWork.ServiceLibrary.tests.Services
             // Arrange
             var rewardDtos = new List<RewardDto>
             {
-                new RewardDto(1, "Reward 1", "Description 1", 10, 1),
-                new RewardDto(2, "Reward 2", "Description 2", 20, 1),
-                new RewardDto(3, "Reward 3", "Description 3", 30, 2)
+                new RewardDto(1, "Reward 1", "Description 1", 10, user),
+                new RewardDto(2, "Reward 2", "Description 2", 20, user),
+                new RewardDto(3, "Reward 3", "Description 3", 30, user)
             };
             mockRepository.Setup(repo => repo.GetAllRewards()).ReturnsAsync(rewardDtos);
             mockMapper.Setup(mapper => mapper.MapDtoToModelList(rewardDtos))
@@ -48,7 +49,7 @@ namespace GamifyWork.ServiceLibrary.tests.Services
                          dto.Title,
                          dto.Description,
                          dto.Cost,
-                         dto.User_ID
+                         dto.User
                      )).ToList());
 
             var rewardService = new RewardService(mockRepository.Object, mockMapper.Object, mockLogger.Object);
@@ -72,9 +73,9 @@ namespace GamifyWork.ServiceLibrary.tests.Services
             Assert.Equal(10, result[0].Cost);
             Assert.Equal(20, result[1].Cost);
             Assert.Equal(30, result[2].Cost);
-            Assert.Equal(1, result[0].User_ID);
-            Assert.Equal(1, result[1].User_ID);
-            Assert.Equal(2, result[2].User_ID);
+            Assert.Equal(user, result[0].User);
+            Assert.Equal(user, result[1].User);
+            Assert.Equal(user, result[2].User);
         }
 
         [Fact]
@@ -89,7 +90,7 @@ namespace GamifyWork.ServiceLibrary.tests.Services
                          dto.Title,
                          dto.Description,
                          dto.Cost,
-                         dto.User_ID
+                         dto.User
                      )).ToList());
 
             var rewardService = new RewardService(mockRepository.Object, mockMapper.Object, mockLogger.Object);

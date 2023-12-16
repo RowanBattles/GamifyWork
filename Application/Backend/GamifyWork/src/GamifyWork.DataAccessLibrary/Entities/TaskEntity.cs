@@ -11,7 +11,7 @@ namespace GamifyWork.DataAccessLibrary.Entities
     public class TaskEntity
     {
         public TaskEntity(int task_ID, string title, string? description, int points, bool completed,
-            bool recurring, string? recurrenceType, int? recurrenceInterval, DateTime? nextDueDate, int user_ID)
+            bool recurring, string? recurrenceType, int? recurrenceInterval, DateTime? nextDueDate, Guid user)
         {
             Task_ID = task_ID;
             Title = title;
@@ -22,7 +22,7 @@ namespace GamifyWork.DataAccessLibrary.Entities
             RecurrenceType = recurrenceType;
             RecurrenceInterval = recurrenceInterval;
             NextDueDate = nextDueDate;
-            User_ID = user_ID;
+            User = user;
         }
 
         [Key]
@@ -36,6 +36,6 @@ namespace GamifyWork.DataAccessLibrary.Entities
         public string? RecurrenceType { get; set; }
         public int? RecurrenceInterval { get; set; }
         public DateTime? NextDueDate { get; set; }
-        public int User_ID { get; set; }
+        public Guid User { get; set; }
     }
 }

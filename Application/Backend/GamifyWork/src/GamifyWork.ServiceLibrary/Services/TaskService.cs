@@ -78,5 +78,15 @@ namespace GamifyWork.ServiceLibrary.Services
                 throw new TaskException("Error marking task", (int)HttpStatusCode.InternalServerError);
             }
         }
+
+        public Task<List<TaskModel>> GetTasksByUser(string user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<TaskModel>> GetTasksByUser(Guid user)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -54,7 +54,7 @@ function HomePage() {
       ) : (
         <>
           <NavBar />
-          <div className="p-4 bg-slate-50 min-h-screen">
+          <div className="p-4 bg-slate-50 h-fit">
             <div className="flex justify-center gap-5">
               <SearchBar setSearchQuery={setSearchQuery} />
               <LabelButton />

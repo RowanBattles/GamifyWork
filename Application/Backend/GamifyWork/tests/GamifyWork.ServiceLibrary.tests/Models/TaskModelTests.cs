@@ -18,10 +18,10 @@ public class TaskModelTests
         string? recurrenceType = null;
         int? recurrenceInterval = null;
         DateTime? nextDueDate = null;
-        int userId = 1;
+        Guid user = new("6B29FC40-CA47-1067-B31D-00DD010662DA");
 
         // Act
-        var taskModel = new TaskModel(taskId, title, description, points, completed, recurring, recurrenceType, recurrenceInterval, nextDueDate, userId);
+        var taskModel = new TaskModel(taskId, title, description, points, completed, recurring, recurrenceType, recurrenceInterval, nextDueDate, user);
 
         // Assert
         Assert.Equal(taskId, taskModel.Task_ID);
@@ -33,7 +33,7 @@ public class TaskModelTests
         Assert.Equal(recurrenceType, taskModel.RecurrenceType);
         Assert.Equal(recurrenceInterval, taskModel.RecurrenceInterval);
         Assert.Equal(nextDueDate, taskModel.NextDueDate);
-        Assert.Equal(userId, taskModel.User_ID);
+        Assert.Equal(user, taskModel.User);
     }
 
     [Fact]
@@ -49,9 +49,9 @@ public class TaskModelTests
         string? recurrenceType = null;
         int? recurrenceInterval = null;
         DateTime? nextDueDate = null;
-        int userId = 1;
+        Guid user = new("6B29FC40-CA47-1067-B31D-00DD010662DA");
 
-        var taskModel = new TaskModel(taskId, title, description, points, completed, recurring, recurrenceType, recurrenceInterval, nextDueDate, userId);
+        var taskModel = new TaskModel(taskId, title, description, points, completed, recurring, recurrenceType, recurrenceInterval, nextDueDate, user);
 
         // Act
         taskModel.MarkTask();
@@ -76,9 +76,9 @@ public class TaskModelTests
         string? recurrenceType = RecurrenceType;
         int? recurrenceInterval = RecurrenceInterval;
         DateTime? nextDueDate = null;
-        int userId = 1;
+        Guid user = new("6B29FC40-CA47-1067-B31D-00DD010662DA");
 
-        var taskModel = new TaskModel(taskId, title, description, points, completed, recurring, recurrenceType, recurrenceInterval, nextDueDate, userId);
+        var taskModel = new TaskModel(taskId, title, description, points, completed, recurring, recurrenceType, recurrenceInterval, nextDueDate, user);
 
         // Act
         taskModel.MarkTask();
@@ -101,9 +101,9 @@ public class TaskModelTests
         string? recurrenceType = "invalid";
         int recurrenceInterval = 2;
         DateTime nextDueDate = new(2023, 10, 1, 12, 0, 0);
-        int userId = 1;
+        Guid user = new("6B29FC40-CA47-1067-B31D-00DD010662DA");
 
-        var taskModel = new TaskModel(taskId, title, description, points, completed, recurring, recurrenceType, recurrenceInterval, nextDueDate, userId);
+        var taskModel = new TaskModel(taskId, title, description, points, completed, recurring, recurrenceType, recurrenceInterval, nextDueDate, user);
 
         // Act and Assert
         Assert.Throws<TaskException>(() => taskModel.MarkTask());

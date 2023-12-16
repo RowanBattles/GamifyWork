@@ -10,13 +10,13 @@ namespace GamifyWork.DataAccessLibrary.Entities
 {
     public class RewardEntity
     {
-        public RewardEntity(int reward_ID, string title, string? description, int cost, int user_ID)
+        public RewardEntity(int reward_ID, string title, string? description, int cost, Guid user)
         {
             Reward_ID = reward_ID;
             Title = title;
             Description = description;
             Cost = cost; 
-            User_ID = user_ID;
+            User = user;
         }
 
         [Key]
@@ -34,6 +34,6 @@ namespace GamifyWork.DataAccessLibrary.Entities
         public int Cost { get; private set; }
 
         [Required]
-        public int User_ID { get; private set; }
+        public Guid User { get; private set; }
     }
 }

@@ -3,7 +3,7 @@ function LabelButton() {
     <>
       <button
         data-dropdown-toggle="dropdown"
-        className="bg-white hover:text-blue hover:shadow-xl active:shadow-none active:border-solid active:border-blue active:border focus:border-solid focus:border focus:border-blue transition-all shadow font-medium rounded text-xs px-5 py-0 h-auto text-center inline-flex items-center"
+        className="bg-white hover:text-blue hover:shadow-md active:shadow-none active:border-solid active:border-blue active:border focus:border-solid focus:border focus:border-blue transition-all shadow font-medium rounded text-xs px-5 py-0 h-auto text-center inline-flex items-center"
         type="button"
       >
         Labels

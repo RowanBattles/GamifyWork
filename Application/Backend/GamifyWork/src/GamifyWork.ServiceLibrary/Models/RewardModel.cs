@@ -10,13 +10,13 @@ namespace GamifyWork.ServiceLibrary.Models
 {
     public class RewardModel
     {
-        public RewardModel(int reward_ID, string title, string? description, int? cost, int user_ID)
+        public RewardModel(int reward_ID, string title, string? description, int? cost, Guid user)
         {
             Reward_ID = reward_ID;
             Title = title;
             Description = description;
             Cost = cost;
-            User_ID = user_ID;
+            User = user;
         }
 
         [Key]
@@ -33,6 +33,6 @@ namespace GamifyWork.ServiceLibrary.Models
         public int? Cost { get; set; }
 
         [Required]
-        public int User_ID { get; private set; }
+        public Guid User { get; private set; }
     }
 }

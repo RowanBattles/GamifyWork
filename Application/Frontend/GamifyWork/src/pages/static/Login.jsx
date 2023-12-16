@@ -44,7 +44,7 @@ function LoginPage() {
             something creative everyday.
           </p>
           <button
-            className="blue text-white px-10 py-5 rounded-2xl mt-10 font-bold text-xl w-fit"
+            className="blue text-white px-10 py-5 rounded-2xl mt-10 font-bold text-xl w-fit hover:opacity-80 transition-all"
             onClick={() => keycloak.register()}
           >
             Get started - it's free

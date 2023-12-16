@@ -14,6 +14,8 @@ namespace GamifyWork.MapperLayer.tests
 {
     public class TaskMapperTests
     {
+        Guid user = new("6B29FC40-CA47-1067-B31D-00DD010662DA");
+
         [Fact]
         public void MapModelToDto_ShouldMapCorrectly()
         {
@@ -22,7 +24,7 @@ namespace GamifyWork.MapperLayer.tests
             var mapper = config.CreateMapper();
             var taskMapper = new TaskMapper(mapper);
 
-            var taskModel = new TaskModel(1, "Task 1", null, 10, false, false, null, null, null, 1);
+            var taskModel = new TaskModel(1, "Task 1", null, 10, false, false, null, null, null, user);
 
             // Act
             var taskDto = taskMapper.MapModelToDto(taskModel);
@@ -37,7 +39,7 @@ namespace GamifyWork.MapperLayer.tests
             Assert.Equal(taskModel.RecurrenceInterval, taskDto.RecurrenceInterval);
             Assert.Equal(taskModel.RecurrenceType, taskDto.RecurrenceType);
             Assert.Equal(taskModel.NextDueDate, taskDto.NextDueDate);
-            Assert.Equal(taskModel.User_ID, taskDto.User_ID);
+            Assert.Equal(taskModel.User, taskDto.User);
         }
 
         [Fact]
@@ -48,7 +50,7 @@ namespace GamifyWork.MapperLayer.tests
             var mapper = config.CreateMapper();
             var taskMapper = new TaskMapper(mapper);
 
-            var taskDto = new TaskDto(1, "Task 1", null, 10, false, false, null, null, null, 1);
+            var taskDto = new TaskDto(1, "Task 1", null, 10, false, false, null, null, null, user);
 
             // Act
             var taskEntity = taskMapper.MapDtoToEntity(taskDto);
@@ -62,7 +64,7 @@ namespace GamifyWork.MapperLayer.tests
             Assert.Equal(taskDto.RecurrenceInterval, taskEntity.RecurrenceInterval);
             Assert.Equal(taskDto.RecurrenceType, taskEntity.RecurrenceType);
             Assert.Equal(taskDto.NextDueDate, taskEntity.NextDueDate);
-            Assert.Equal(taskDto.User_ID, taskEntity.User_ID);
+            Assert.Equal(taskDto.User, taskEntity.User);
         }
 
         [Fact]
@@ -75,8 +77,8 @@ namespace GamifyWork.MapperLayer.tests
 
             var taskEntities = new List<TaskEntity>
             {
-                new TaskEntity(1, "Task 1", null, 10, false, false, null, null, null, 1),
-                new TaskEntity(2, "Task 2", null, 20, false, false, null, null, null, 1),
+                new TaskEntity(1, "Task 1", null, 10, false, false, null, null, null, user),
+                new TaskEntity(2, "Task 2", null, 20, false, false, null, null, null, user),
             };
 
             // Act
@@ -95,7 +97,7 @@ namespace GamifyWork.MapperLayer.tests
                 Assert.Equal(taskEntities[i].RecurrenceType, taskDtos[i].RecurrenceType);
                 Assert.Equal(taskEntities[i].RecurrenceInterval, taskDtos[i].RecurrenceInterval);
                 Assert.Equal(taskEntities[i].NextDueDate, taskDtos[i].NextDueDate);
-                Assert.Equal(taskEntities[i].User_ID, taskDtos[i].User_ID);
+                Assert.Equal(taskEntities[i].User, taskDtos[i].User);
             }
         }
 
@@ -109,8 +111,8 @@ namespace GamifyWork.MapperLayer.tests
 
             var taskDtos = new List<TaskDto>
             {
-                new TaskDto(1, "Task 1", null, 10, false, false, null, null, null, 1),
-                new TaskDto(2, "Task 2", null, 20, false, false, null, null, null, 1),
+                new TaskDto(1, "Task 1", null, 10, false, false, null, null, null, user),
+                new TaskDto(2, "Task 2", null, 20, false, false, null, null, null, user),
             };
 
             // Act
@@ -129,7 +131,7 @@ namespace GamifyWork.MapperLayer.tests
                 Assert.Equal(taskModels[i].RecurrenceType, taskDtos[i].RecurrenceType);
                 Assert.Equal(taskModels[i].RecurrenceInterval, taskDtos[i].RecurrenceInterval);
                 Assert.Equal(taskModels[i].NextDueDate, taskDtos[i].NextDueDate);
-                Assert.Equal(taskModels[i].User_ID, taskDtos[i].User_ID);
+                Assert.Equal(taskModels[i].User, taskDtos[i].User);
             }
         }
     }

@@ -15,6 +15,8 @@ namespace GamifyWork.MapperLayer.tests
 {
     public class RewardMapperTests
     {
+        Guid user = new("6B29FC40-CA47-1067-B31D-00DD010662DA");
+
         [Fact]
         public void MapEntityToDtoList_ShouldMapCorrectly()
         {
@@ -25,8 +27,8 @@ namespace GamifyWork.MapperLayer.tests
 
             var rewardEntities = new List<RewardEntity>
             {
-                new RewardEntity(1, "Reward 1", null, 10, 1),
-                new RewardEntity(2, "Reward 2", null, 20, 1),
+                new RewardEntity(1, "Reward 1", null, 10, user),
+                new RewardEntity(2, "Reward 2", null, 20, user),
             };
 
             // Act
@@ -40,7 +42,7 @@ namespace GamifyWork.MapperLayer.tests
                 Assert.Equal(rewardEntities[i].Reward_ID, rewardDtos[i].Reward_ID);
                 Assert.Equal(rewardEntities[i].Title, rewardDtos[i].Title);
                 Assert.Equal(rewardEntities[i].Cost, rewardDtos[i].Cost);
-                Assert.Equal(rewardEntities[i].User_ID, rewardDtos[i].User_ID);
+                Assert.Equal(rewardEntities[i].User, rewardDtos[i].User);
             }
         }
 
@@ -54,8 +56,8 @@ namespace GamifyWork.MapperLayer.tests
 
             var rewardDtos = new List<RewardDto>
             {
-                new RewardDto(1, "Reward 1", null, 10, 1),
-                new RewardDto(1, "Reward 2", null, 10, 1),
+                new RewardDto(1, "Reward 1", null, 10, user),
+                new RewardDto(1, "Reward 2", null, 10, user),
             };
 
             // Act
@@ -69,7 +71,7 @@ namespace GamifyWork.MapperLayer.tests
                 Assert.Equal(rewardModels[i].Reward_ID, rewardDtos[i].Reward_ID);
                 Assert.Equal(rewardModels[i].Title, rewardDtos[i].Title);
                 Assert.Equal(rewardModels[i].Cost, rewardDtos[i].Cost);
-                Assert.Equal(rewardModels[i].User_ID, rewardDtos[i].User_ID);
+                Assert.Equal(rewardModels[i].User, rewardDtos[i].User);
             }
         }
     }

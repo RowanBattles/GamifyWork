@@ -16,7 +16,7 @@ export async function MarkTask(Id) {
   const url = EndPoints.MarkTask + Id;
 
   try {
-    const response = await axios.patch(url);
+    await axios.patch(url);
   } catch (error) {
     throw error;
   }

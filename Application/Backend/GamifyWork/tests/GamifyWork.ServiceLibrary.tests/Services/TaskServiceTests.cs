@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 
 public class TaskServiceTests
 {
+    Guid user = new("6B29FC40-CA47-1067-B31D-00DD010662DA");
     DateTime _currentTime = DateTime.Now;
     Mock<ITaskRepository> _mockRepository;
     Mock<ITaskMapperS> _mockMapper;
@@ -31,9 +32,9 @@ public class TaskServiceTests
         // Arrange
         var taskDtos = new List<TaskDto>
         {
-            new TaskDto(1, "Task 1", "Description 1", 10, false, true, "daily", 3, _currentTime, 1),
-            new TaskDto(2, "Task 2", "Description 2", 20, true, false, null, null, null, 1),
-            new TaskDto(3, "Task 3", "Description 3", 30, false, false, null, null, null, 2)
+            new TaskDto(1, "Task 1", "Description 1", 10, false, true, "daily", 3, _currentTime, user),
+            new TaskDto(2, "Task 2", "Description 2", 20, true, false, null, null, null, user),
+            new TaskDto(3, "Task 3", "Description 3", 30, false, false, null, null, null, user)
         };
 
         _mockRepository.Setup(repo => repo.GetAllTasks()).ReturnsAsync(taskDtos);
@@ -48,7 +49,7 @@ public class TaskServiceTests
                          dto.RecurrenceType,
                          dto.RecurrenceInterval,
                          dto.NextDueDate,
-                         dto.User_ID
+                         dto.User
                      )).ToList());
 
         var taskService = new TaskService(_mockRepository.Object, _mockMapper.Object, _mockLogger.Object);
@@ -88,9 +89,9 @@ public class TaskServiceTests
         Assert.Equal(_currentTime, result[0].NextDueDate);
         Assert.Null(result[1].NextDueDate);
         Assert.Null(result[2].NextDueDate);
-        Assert.Equal(1, result[0].User_ID);
-        Assert.Equal(1, result[1].User_ID);
-        Assert.Equal(2, result[2].User_ID);
+        Assert.Equal(user, result[0].User);
+        Assert.Equal(user, result[1].User);
+        Assert.Equal(user, result[2].User);
     }
 
     [Fact]
@@ -110,7 +111,7 @@ public class TaskServiceTests
                          dto.RecurrenceType,
                          dto.RecurrenceInterval,
                          dto.NextDueDate,
-                         dto.User_ID
+                         dto.User
                      )).ToList());
 
         var taskService = new TaskService(_mockRepository.Object, _mockMapper.Object, _mockLogger.Object);
@@ -137,7 +138,7 @@ public class TaskServiceTests
     public async Task CreateTask_SetsPointsAndCallsRepository()
     {
         // Arrange
-        var taskModel = new TaskModel(1, "Task 1", "Description 1", null, false, true, "daily", 3, DateTime.Now, 1);
+        var taskModel = new TaskModel(1, "Task 1", "Description 1", null, false, true, "daily", 3, DateTime.Now, user);
 
         _mockMapper.Setup(mapper => mapper.MapModelToDto(taskModel))
                   .Returns(new TaskDto(
@@ -150,7 +151,7 @@ public class TaskServiceTests
                       taskModel.RecurrenceType,
                       taskModel.RecurrenceInterval,
                       taskModel.NextDueDate,
-                      taskModel.User_ID
+                      taskModel.User
                   ));
 
         var taskService = new TaskService(_mockRepository.Object, _mockMapper.Object, _mockLogger.Object);
@@ -167,7 +168,7 @@ public class TaskServiceTests
     public async Task CreateTask_CallsSetPointsBeforeMapping()
     {
         // Arrange
-        var taskModel = new TaskModel(1, "Task 1", "Description 1", null, false, true, "daily", 3, DateTime.Now, 1);
+        var taskModel = new TaskModel(1, "Task 1", "Description 1", null, false, true, "daily", 3, DateTime.Now, user);
 
         _mockMapper.Setup(mapper => mapper.MapModelToDto(taskModel))
                   .Returns(new TaskDto(
@@ -180,7 +181,7 @@ public class TaskServiceTests
                       taskModel.RecurrenceType,
                       taskModel.RecurrenceInterval,
                       taskModel.NextDueDate,
-                      taskModel.User_ID
+                      taskModel.User
                   ));
 
         var taskService = new TaskService(_mockRepository.Object, _mockMapper.Object, _mockLogger.Object);
@@ -209,8 +210,8 @@ public class TaskServiceTests
     {
         // Arrange
         var taskId = 1;
-        var taskDto = new TaskDto(1, "Task 1", "Description 1", 30, false, false, null, null, null, 1);
-        var taskModel = new TaskModel(1, "Task 1", "Description 1", 30, false, false, null, null, null, 1);
+        var taskDto = new TaskDto(1, "Task 1", "Description 1", 30, false, false, null, null, null, user);
+        var taskModel = new TaskModel(1, "Task 1", "Description 1", 30, false, false, null, null, null, user);
 
         _mockRepository.Setup(repo => repo.GetTaskById(taskId)).ReturnsAsync(taskDto);
         _mockMapper.Setup(mapper => mapper.MapDtoToModel(taskDto)).Returns(taskModel);
@@ -230,7 +231,7 @@ public class TaskServiceTests
     {
         // Arrange
         var taskId = 1;
-        var taskDto = new TaskDto(taskId, "Task 1", "Description 1", 30, false, false, null, null, null, 1);
+        var taskDto = new TaskDto(taskId, "Task 1", "Description 1", 30, false, false, null, null, null, user);
 
         _mockRepository.Setup(repo => repo.GetTaskById(taskId)).ReturnsAsync(taskDto);
         _mockRepository.Setup(repo => repo.MarkTask(It.IsAny<TaskDto>())).ThrowsAsync(new Exception("Simulated marking error"));
