@@ -33,6 +33,10 @@ namespace GamifyWork.API.Middleware
             {
                 await HandleExceptionAsync(context, rewardEx, rewardEx.Message, rewardEx.ErrorCode);
             }
+            catch (UserException userEx)
+            {
+                await HandleExceptionAsync(context, userEx, userEx.Message, userEx.ErrorCode);
+            }
             catch (Exception ex)
             {
                 await HandleExceptionAsync(context, ex, "An unexpected error occurred", (int)HttpStatusCode.InternalServerError);

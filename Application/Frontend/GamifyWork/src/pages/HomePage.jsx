@@ -5,13 +5,14 @@ import {
 import { useState } from "react";
 import { useTaskContext } from "../hooks/TaskContext.jsx";
 import useFetch from "../hooks/useFetch";
-import { getTasks, getRewards } from "../utils/api";
+import { getRewards, getTasksByUser } from "../utils/api";
 import NavBar from "../components/NavBar";
 import SearchBar from "../components/SearchBar";
 import LabelButton from "../components/Labels";
 import TaskTable from "../components/TaskTable";
 import RewardTable from "../components/RewardTable.jsx";
 import ErrorDisplay from "../components/ErrorDisplay.jsx";
+import keycloak from "../utils/Keycloak.jsx";
 
 function HomePage() {
   const {
@@ -19,15 +20,15 @@ function HomePage() {
     loading: loadingTasks,
     errorHeader: errorHeaderTasks,
     errorBody: errorBodyTasks,
-  } = useFetch(getTasks, "tasks");
+  } = useFetch(getTasksByUser, "tasks", keycloak.subject);
   const {
     data: rewards,
     loading: loadingRewards,
     errorHeader: errorHeaderRewards,
     errorBody: errorBodyRewards,
   } = useFetch(getRewards, "rewards");
-  const context = useTaskContext();
 
+  const context = useTaskContext();
   if (context.tasks.length === 0) {
     context.tasks = tasks;
   }

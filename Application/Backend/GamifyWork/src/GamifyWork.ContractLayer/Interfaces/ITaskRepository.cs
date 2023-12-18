@@ -13,5 +13,6 @@ namespace GamifyWork.ContractLayer.Interfaces
         Task CreateTask(TaskDto taskDto);
         Task<TaskDto> GetTaskById(int Id);
         Task MarkTask(TaskDto taskDto);
+        Task<List<TaskDto>> GetAllTasksByUser(Guid user);
     }
 }

@@ -79,14 +79,17 @@ namespace GamifyWork.ServiceLibrary.Services
             }
         }
 
-        public Task<List<TaskModel>> GetTasksByUser(string user)
+        public async Task<List<TaskModel>> GetTasksByUser(Guid user)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<TaskModel>> GetTasksByUser(Guid user)
-        {
-            throw new NotImplementedException();
+            try
+            {
+                return _taskMapper.MapDtoToModelList(await _taskRepository.GetAllTasksByUser(user));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred while retrieving tasks in service");
+                throw new TaskException("Error retrieving tasks for user" + user, (int)HttpStatusCode.InternalServerError);
+            }
         }
     }
 }

@@ -19,6 +19,8 @@ namespace GamifyWork.MapperLayer
             CreateMap<TaskDto, TaskModel>().ReverseMap();
             CreateMap<RewardDto, RewardEntity>().ReverseMap();
             CreateMap<RewardDto, RewardModel>().ReverseMap();
+            CreateMap<UserDto, UserEntity>().ReverseMap();
+            CreateMap<UserDto, UserModel>().ReverseMap();
         }
     }
 }

@@ -102,6 +102,20 @@ namespace GamifyWork.DataAccessLibrary.Repositories
             }
         }
 
+        public async Task<List<TaskDto>> GetAllTasksByUser(Guid user)
+        {
+            try
+            {
+                return _taskMapper.MapEntityToDtoList(await _dbContext.task
+                    .Where(task => task.User == user)
+                    .ToListAsync());
+            }
+            catch
+            {
+                _logger.LogError("An unexpected error occurred while processing tasks in repository");
+                throw;
+            }
+        }
     }
 }
 

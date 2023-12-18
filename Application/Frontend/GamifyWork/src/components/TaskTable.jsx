@@ -4,6 +4,7 @@ import { CreateTask, MarkTask, getTasks } from "../utils/api";
 import { failed, succes } from "../utils/Helpers/toast";
 import { useTaskContext } from "../hooks/TaskContext";
 import usePatch from "../hooks/usePatch";
+import keycloak from "../utils/Keycloak";
 
 function TaskTable({ tasks, title }) {
   const [activeFilter, setActiveFilter] = useState("Active");
@@ -28,6 +29,7 @@ function TaskTable({ tasks, title }) {
         recurring: recurring,
         recurrenceType: recurrenceType,
         recurrenceInterval: recurrenceInterval,
+        user: keycloak.subject,
       };
       if (newTask.trim() !== "") {
         try {

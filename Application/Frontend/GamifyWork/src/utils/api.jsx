@@ -12,6 +12,18 @@ export async function getTasks() {
   }
 }
 
+export async function getTasksByUser(id) {
+  const url = EndPoints.GetTasksByUser(id);
+  console.log(url);
+
+  try {
+    const response = await axios.get(url, id);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function MarkTask(Id) {
   const url = EndPoints.MarkTask + Id;
 

@@ -27,5 +27,6 @@ namespace GamifyWork.DataAccessLibrary.Data
 
         public DbSet<TaskEntity> task { get; set; }
         public DbSet<RewardEntity> reward { get; set; }
+        public DbSet<UserEntity> user { get; set; }
     }
 }

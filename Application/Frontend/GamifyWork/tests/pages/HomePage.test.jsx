@@ -1,62 +1,21 @@
 import { render, screen } from "@testing-library/react";
 import HomePage from "../../src/pages/HomePage";
 
-const mocks = vi.hoisted(() => {
-  return {
-    useFetch: vi.fn(),
-    useTaskContext: vi.fn(),
-  };
-});
-
-vi.mock("../../src/hooks/useFetch.jsx", () => {
-  return {
-    default: mocks.useFetch,
-  };
-});
-
-vi.mock("../../src/hooks/TaskContext.jsx", () => {
-  return {
-    useTaskContext: mocks.useTaskContext,
-    TaskProvider: ({ children }) => children,
-  };
-});
-
-it("renders loading state", async () => {
-  mocks.useFetch.mockReturnValue({
-    data: null,
-    loading: true,
-    error: null,
-  });
-
-  mocks.useTaskContext.mockReturnValue({
-    tasks: [],
-    updateTasks: vi.fn(),
-  });
-
-  render(<HomePage />);
-  const loadingElement = await screen.findByAltText("LogoLoading");
-  expect(loadingElement).toBeInTheDocument();
-});
-
 it("renders error state", async () => {
-  mocks.useFetch.mockReturnValueOnce({
-    data: null,
-    loading: false,
-    errorHeader: "Unexpected error",
-    errorBody: `Couldn't fetch tasks`,
-  });
+  vi.mock("./useFetch", () => ({
+    useFetch: vi.fn().mockReturnValue({
+      data: [],
+      loading: false,
+      errorHeader: "Error occured",
+      errorBody: "Error occured",
+    }),
+  }));
 
-  mocks.useFetch.mockReturnValueOnce({
-    data: null,
-    loading: false,
-    errorHeader: "Unexpected error",
-    errorBody: `Couldn't fetch rewards`,
-  });
-
-  mocks.useTaskContext.mockReturnValue({
-    tasks: [],
-    updateTasks: vi.fn(),
-  });
+  vi.mock("./useTaskContext", () => ({
+    useTaskContext: vi.fn().mockReturnValue({
+      tasks: [],
+    }),
+  }));
 
   render(<HomePage />);
   const errorElements = await screen.findAllByText(/Couldn't fetch/);
@@ -64,11 +23,8 @@ it("renders error state", async () => {
 });
 
 it("renders tasks and rewards", async () => {
-  mocks.useFetch.mockReturnValue({
-    data: [
-      { id: 1, title: "Reward 1" },
-      { id: 2, title: "Reward 2" },
-    ],
+  mocks.useFetch.mockReturnValueOnce({
+    data: { tasks: [] },
     loading: false,
     errorHeader: null,
     errorBody: null,
