@@ -22,5 +22,12 @@ namespace GamifyWork.API.Controllers
             var User = await _userService.GetUserById(Id);
             return Ok(User);
         }
+
+        [HttpPost("{Id}")]
+        public async Task<IActionResult> CreateUser(Guid Id)
+        {
+            await _userService.CreateUser(Id);
+            return Ok();
+        }
     }
 }

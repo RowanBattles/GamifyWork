@@ -1,6 +1,17 @@
 import axios from "axios";
 import EndPoints from "./Constants";
 
+export async function getUser(id) {
+  const url = EndPoints.GetUser(id);
+
+  try {
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function getTasks() {
   const url = EndPoints.GetAllTasks;
 
@@ -14,7 +25,6 @@ export async function getTasks() {
 
 export async function getTasksByUser(id) {
   const url = EndPoints.GetTasksByUser(id);
-  console.log(url);
 
   try {
     const response = await axios.get(url, id);

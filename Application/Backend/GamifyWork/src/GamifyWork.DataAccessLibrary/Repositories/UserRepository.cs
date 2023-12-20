@@ -1,6 +1,7 @@
 ﻿using GamifyWork.ContractLayer.Dto;
 using GamifyWork.ContractLayer.Interfaces;
 using GamifyWork.DataAccessLibrary.Data;
+using GamifyWork.DataAccessLibrary.Entities;
 using GamifyWork.MapperLayer.Mappers;
 using Microsoft.Extensions.Logging;
 using System;
@@ -22,6 +23,21 @@ namespace GamifyWork.DataAccessLibrary.Repositories
             _dbContext = dbContext;
             _userMapper = userMapperD;
             _logger = logger;
+        }
+
+        public async Task CreateUser(UserDto userDto)
+        {
+            try
+            {
+                UserEntity userEntity = _userMapper.MapDtoToEntity(userDto);
+                await _dbContext.user.AddAsync(userEntity);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch
+            {
+                _logger.LogError("An unexpected error occurred while creating an user in repository");
+                throw;
+            }
         }
 
         public async Task<UserDto> GetUserById(Guid Id)

@@ -26,13 +26,24 @@ namespace GamifyWork.ServiceLibrary.Services
             _logger = logger;
         }
 
+        public async Task CreateUser(Guid id)
+        {
+            try
+            {
+                await _userRepository.CreateUser(_userMapper.MapModelToDto(new UserModel(id, 0)));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "User could not be created in servicde");
+                throw new UserException("User could not be created", (int)HttpStatusCode.InternalServerError);
+            }
+        }
+
         public async Task<UserModel> GetUserById(Guid Id)
         {
             try
             {
-                UserDto user = await _userRepository.GetUserById(Id);
-                UserModel uer2 = _userMapper.MapDtoToModel(user);
-                return uer2;
+                return _userMapper.MapDtoToModel(await _userRepository.GetUserById(Id));
             }
             catch (Exception ex)
             {

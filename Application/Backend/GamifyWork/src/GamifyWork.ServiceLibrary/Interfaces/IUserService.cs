@@ -9,6 +9,7 @@ namespace GamifyWork.ServiceLibrary.Interfaces
 {
     public interface IUserService
     {
+        Task CreateUser(Guid id);
         Task<UserModel> GetUserById(Guid Id);
     }
 }

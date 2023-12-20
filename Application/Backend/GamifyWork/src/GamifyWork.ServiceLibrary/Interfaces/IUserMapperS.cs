@@ -12,5 +12,6 @@ namespace GamifyWork.ServiceLibrary.Interfaces
     public interface IUserMapperS
     {
         UserModel MapDtoToModel(UserDto user);
+        UserDto MapModelToDto(UserModel user);
     }
 }

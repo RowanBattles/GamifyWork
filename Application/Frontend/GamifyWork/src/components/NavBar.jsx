@@ -1,11 +1,13 @@
 import { Tooltip } from "flowbite-react";
 import { useState, useEffect, useRef } from "react";
 import { useKeycloak } from "@react-keycloak/web";
+import { getUser } from "../utils/api";
 
 function NavBar() {
   const { keycloak } = useKeycloak();
   const [dropDownOpen, setDropDownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const [points, setPoints] = useState(0);
 
   const handleToggleDropDown = () => {
     setDropDownOpen(!dropDownOpen);
@@ -17,16 +19,22 @@ function NavBar() {
     }
   };
 
+  const data = async () => {
+    try {
+      const userData = await getUser(keycloak.subject);
+      setPoints(userData.points);
+    } catch (error) {
+      alert(
+        "Something went wrong with loading the user, you're being logged out."
+      );
+      console.error("Error fetching user data:", error);
+      keycloak.logout();
+    }
+  };
+
   useEffect(() => {
-    console.log(keycloak.subject);
-    console.log(keycloak.idTokenParsed.preferred_username);
-    console.log(keycloak.idTokenParsed.email);
-    console.log(keycloak.idTokenParsed.name);
-    console.log(keycloak.idTokenParsed.given_name);
-    console.log(keycloak.idTokenParsed.family_name);
-
+    data();
     document.addEventListener("click", handleClickOutside);
-
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
@@ -54,7 +62,7 @@ function NavBar() {
               className="h-6"
               alt="coin-icon"
             />
-            <span>112</span>
+            <span>{points}</span>
           </div>
           <Tooltip
             className="px-5 mt-[3px] rounded-md shadow-lg bg-gray-700 ml-[-20px] hover:hidden"
