@@ -3,7 +3,10 @@ import React from "react";
 function ErrorDisplay({ errorHeader, errorBody }) {
   return (
     <>
-      <div className="border border-gray-400 bg-white border-solid mt-5 p-5">
+      <div
+        className="border border-gray-400 bg-white border-solid mt-5 p-5"
+        data-testid="ErrorDisplayId"
+      >
         <div className="text-red-500 font-extrabold text-2xl mb-2">
           {errorHeader}
         </div>

@@ -29,13 +29,14 @@ function HomePage() {
   } = useFetch(getRewards, "rewards");
 
   const context = useTaskContext();
-  if (context.tasks.length === 0) {
+  const contextTasks = context?.tasks || [];
+  if (contextTasks === 0) {
     context.tasks = tasks;
   }
 
   const [searchQuery, setSearchQuery] = useState("");
-  const recurringTasks = filterTasksByRecurring(context.tasks, true);
-  const todoTasks = filterTasksByRecurring(context.tasks, false);
+  const recurringTasks = filterTasksByRecurring(contextTasks, true);
+  const todoTasks = filterTasksByRecurring(contextTasks, false);
   const searchedRecurringTasks = filterTasksByTitle(
     recurringTasks,
     searchQuery
@@ -62,6 +63,7 @@ function HomePage() {
             </div>
             {(errorHeaderTasks || errorHeaderRewards) !== null ? (
               <ErrorDisplay
+                data-testid="error-display"
                 errorHeader={errorHeaderTasks || errorHeaderRewards}
                 errorBody={
                   (errorBodyTasks || "") + " " + (errorBodyRewards || "")

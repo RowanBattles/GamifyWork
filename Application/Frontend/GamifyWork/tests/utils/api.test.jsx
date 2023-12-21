@@ -1,4 +1,4 @@
-import { getTasks, CreateTask, getRewards } from "../../src/utils/api";
+import { getTasksByUser, CreateTask, getRewards } from "../../src/utils/api";
 import axios from "axios";
 
 vi.mock("axios");
@@ -11,7 +11,7 @@ describe("getTasks", () => {
     ];
     axios.get.mockResolvedValue({ data: mockData });
 
-    const tasks = await getTasks();
+    const tasks = await getTasksByUser(1);
     expect(tasks).toEqual(mockData);
   });
 
@@ -20,7 +20,7 @@ describe("getTasks", () => {
     axios.get.mockRejectedValue(new Error(errorMessage));
 
     try {
-      await getTasks();
+      await getTasksByUser(1);
     } catch (error) {
       expect(error.message).toEqual(errorMessage);
     }
