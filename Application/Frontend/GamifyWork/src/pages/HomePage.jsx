@@ -63,7 +63,9 @@ function HomePage() {
             {(errorHeaderTasks || errorHeaderRewards) !== null ? (
               <ErrorDisplay
                 errorHeader={errorHeaderTasks || errorHeaderRewards}
-                errorBody={errorBodyTasks + " " + errorBodyRewards}
+                errorBody={
+                  (errorBodyTasks || "") + " " + (errorBodyRewards || "")
+                }
               />
             ) : (
               <div className="grid-cols-3 grid">

@@ -19,26 +19,29 @@ function NavBar() {
     }
   };
 
-  const data = async () => {
-    try {
-      const userData = await getUser(keycloak.subject);
-      setPoints(userData.points);
-    } catch (error) {
-      alert(
-        "Something went wrong with loading the user, you're being logged out."
-      );
-      console.error("Error fetching user data:", error);
-      keycloak.logout();
-    }
-  };
-
   useEffect(() => {
-    data();
+    const getPoints = async () => {
+      try {
+        const userData = await getUser(keycloak.subject);
+        setPoints(userData.points);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    const handleAuthentication = async () => {
+      if (keycloak.authenticated) {
+        await getPoints();
+      }
+    };
+
+    handleAuthentication();
+
     document.addEventListener("click", handleClickOutside);
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, []);
+  }, [keycloak.authenticated]);
 
   return (
     <>
@@ -87,7 +90,7 @@ function NavBar() {
               <div
                 className={`${
                   dropDownOpen ? "absolute" : "hidden"
-                } top-12 right-8 z-50 w-60 bg-white text-black font-normal shadow-lg rounded border border-gray-20 cursor-pointer`}
+                } top-12 right-8 z-50 min-w-[20rem] bg-white text-black font-normal shadow-lg rounded border border-gray-20 cursor-pointer`}
               >
                 <div className="text-center p-4 cursor-default">
                   <div className="font-bold">

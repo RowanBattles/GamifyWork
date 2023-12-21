@@ -12,16 +12,27 @@ export async function getUser(id) {
   }
 }
 
-export async function getTasks() {
-  const url = EndPoints.GetAllTasks;
+export async function createUser(id) {
+  const url = EndPoints.CreateUser(id);
 
   try {
-    const response = await axios.get(url);
+    const response = await axios.post(url);
     return response.data;
   } catch (error) {
     throw error;
   }
 }
+
+// export async function getTasks() {
+//   const url = EndPoints.GetAllTasks;
+
+//   try {
+//     const response = await axios.get(url);
+//     return response.data;
+//   } catch (error) {
+//     throw error;
+//   }
+// }
 
 export async function getTasksByUser(id) {
   const url = EndPoints.GetTasksByUser(id);
