@@ -2,7 +2,9 @@ function RewardTable({ rewards, title }) {
   return (
     <div className="px-4 pt-5 min-h-[556px]">
       <div className="flex justify-between items-center">
-        <div className="text-lg font-bold">{title}</div>
+        <div className="text-lg font-bold" data-testid="RewardTable">
+          {title}
+        </div>
       </div>
       <div className="p-2 bg-neutral-100 h-full">
         <textarea

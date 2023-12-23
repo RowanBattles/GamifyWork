@@ -10,6 +10,7 @@ namespace GamifyWork.ContractLayer.Interfaces
     public interface IUserRepository
     {
         Task CreateUser(UserDto userDto);
+        Task<List<UserDto>> GetAllUsers();
         Task<UserDto> GetUserById(Guid Id);
     }
 }

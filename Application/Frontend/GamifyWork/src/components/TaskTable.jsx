@@ -37,14 +37,18 @@ function TaskTable({ tasks, title }) {
           succes("created task succesfully!");
           setNewTask("");
         } catch (error) {
-          failed("failed creating task");
+          const data = error.response.data;
+          const errorMessage = data.Message || "failed creating task.";
+          failed(`${data.ErrorCode || "Error"}: ${errorMessage}`);
         }
 
         try {
           const updatedTasks = await getTasksByUser(keycloak.subject);
           updateTasks(updatedTasks);
-        } catch {
-          failed("failed updating tasks");
+        } catch (error) {
+          const data = error.response.data;
+          const errorMessage = data.Message || "failed updating tasks.";
+          failed(`${data.ErrorCode || "Error"}: ${errorMessage}`);
         }
       }
       event.target.blur();
@@ -53,11 +57,15 @@ function TaskTable({ tasks, title }) {
 
   const markTask = async (id) => {
     try {
-      await usePatch(MarkTask, id, "tasks");
+      var error = await usePatch(MarkTask, id, "tasks");
       const updatedTasks = await getTasksByUser(keycloak.subject);
       updateTasks(updatedTasks);
+      if (errorMessage != null) {
+        throw err;
+      }
     } catch (err) {
-      failed("failed marking task");
+      console.log(err);
+      failed(error.errorMessage);
     }
   };
 
@@ -73,7 +81,9 @@ function TaskTable({ tasks, title }) {
     <>
       <div className="px-4 pt-5 min-h-[556px]">
         <div className="flex justify-between items-center">
-          <div className="text-lg font-bold">{title}</div>
+          <div className="text-lg font-bold" data-testid={`TaskTable-${title}`}>
+            {title}
+          </div>
           <div className="text-xs flex font-bold text-gray-600">
             <div
               className={`pb-2 px-2 cursor-pointer hover:text-blue ${
@@ -113,6 +123,7 @@ function TaskTable({ tasks, title }) {
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             maxLength={60}
+            data-testid="addTaskTextarea"
           ></textarea>
           {filteredTasks.map((task) => (
             <div key={task.task_ID}>
@@ -148,7 +159,10 @@ function TaskTable({ tasks, title }) {
                     </div>
                   </div>
                 </div>
-                <div className="bg-white rounded-r w-full p-2 overflow-hidden">
+                <div
+                  className="bg-white rounded-r w-full p-2 overflow-hidden"
+                  data-testid={`task-${task.task_ID}`}
+                >
                   <p
                     className={`break-normal ${
                       task.completed ? "text-gray-600" : ""

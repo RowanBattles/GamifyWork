@@ -23,12 +23,14 @@ function LoginPage() {
           <button
             className="border-blue border-b-4 py-4 hover:border-white  transition-all"
             onClick={() => keycloak.login()}
+            data-testid="SignInButton"
           >
             Sign in
           </button>
           <button
             className="border border-slate-400 p-4 rounded-xl hover:border-white  transition-all"
             onClick={() => keycloak.register()}
+            data-testid="SignUpForFreeButton"
           >
             Sign up for free
           </button>
@@ -36,7 +38,10 @@ function LoginPage() {
       </nav>
       <div className="px-80 flex w-full pt-60">
         <div className="w-1/2 flex flex-col justify-center">
-          <p className="text-6xl font-['Open_Sans'] font-bold">
+          <p
+            className="text-6xl font-['Open_Sans'] font-bold"
+            data-testid="HeaderTextIntroduction"
+          >
             Turning tasks into triumphs!
           </p>
           <p className="text-xl mt-10">
@@ -46,6 +51,7 @@ function LoginPage() {
           <button
             className="blue text-white px-10 py-5 rounded-2xl mt-10 font-bold text-xl w-fit hover:opacity-80 transition-all"
             onClick={() => keycloak.register()}
+            data-testid="GetStartedItsFreeButton"
           >
             Get started - it's free
           </button>
@@ -54,6 +60,7 @@ function LoginPage() {
           <img
             src="https://d107mjio2rjf74.cloudfront.net/sites/res/home/common/header.png"
             className="w-3/4"
+            data-testid="IntroductionImage"
           />
         </div>
       </div>

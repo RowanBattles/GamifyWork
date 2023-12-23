@@ -3,6 +3,7 @@ using GamifyWork.ContractLayer.Interfaces;
 using GamifyWork.DataAccessLibrary.Data;
 using GamifyWork.DataAccessLibrary.Entities;
 using GamifyWork.MapperLayer.Mappers;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,20 @@ namespace GamifyWork.DataAccessLibrary.Repositories
             catch
             {
                 _logger.LogError("An unexpected error occurred while creating an user in repository");
+                throw;
+            }
+        }
+
+        public async Task<List<UserDto>> GetAllUsers()
+        {
+            try
+            {
+                var users = await _dbContext.user.ToListAsync();
+                return _userMapper.MapEntitiesToDtos(users);
+            }
+            catch
+            {
+                _logger.LogError("An unexpected error occurred while retrieving users in repository");
                 throw;
             }
         }

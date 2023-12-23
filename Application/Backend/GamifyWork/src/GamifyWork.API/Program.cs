@@ -1,3 +1,4 @@
+using GamifyWork.API.Hubs;
 using GamifyWork.API.Middleware;
 using GamifyWork.ContractLayer.Interfaces;
 using GamifyWork.DataAccessLibrary.Data;
@@ -5,9 +6,9 @@ using GamifyWork.DataAccessLibrary.Interfaces;
 using GamifyWork.DataAccessLibrary.Repositories;
 using GamifyWork.MapperLayer;
 using GamifyWork.MapperLayer.Mappers;
+using GamifyWork.ServiceLibrary.Helpers;
 using GamifyWork.ServiceLibrary.Interfaces;
 using GamifyWork.ServiceLibrary.Services;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,9 +23,14 @@ builder.Services.AddCors(options =>
         .AllowAnyOrigin()
         .AllowAnyMethod()
         .AllowAnyHeader()
-        .WithOrigins("http://localhost:5173");
+        .WithOrigins("http://localhost:5173")
+        .AllowCredentials();
     });
 });
+
+builder.Services.AddHttpClient();
+
+builder.Services.AddSignalR();
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -46,6 +52,7 @@ builder.Services.AddScoped<IUserMapperD, UserMapper>();
 builder.Services.AddScoped<IRewardMapperS, RewardMapper>();
 builder.Services.AddScoped<IRewardMapperD, RewardMapper>();
 builder.Services.AddScoped<IUserMapperS, UserMapper>();
+builder.Services.AddScoped<IKeycloakLogic, KeycloakLogic>();
 
 
 
@@ -59,6 +66,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.MapHub<ChatHub>("/chatHub");
 
 app.UseHttpsRedirection();
 

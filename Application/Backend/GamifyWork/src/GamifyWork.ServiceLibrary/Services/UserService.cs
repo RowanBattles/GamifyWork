@@ -1,6 +1,7 @@
 ﻿using GamifyWork.ContractLayer.Dto;
 using GamifyWork.ContractLayer.Interfaces;
 using GamifyWork.ServiceLibrary.Exceptions;
+using GamifyWork.ServiceLibrary.Helpers;
 using GamifyWork.ServiceLibrary.Interfaces;
 using GamifyWork.ServiceLibrary.Models;
 using Microsoft.Extensions.Logging;
@@ -17,12 +18,14 @@ namespace GamifyWork.ServiceLibrary.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IUserMapperS _userMapper;
+        private readonly IKeycloakLogic _keycloakLogic;
         private readonly ILogger<UserService> _logger;
-
-        public UserService(IUserRepository userRepository, IUserMapperS userMapperS, ILogger<UserService> logger)
+        
+        public UserService(IKeycloakLogic keycloakLogic, IUserRepository userRepository, IUserMapperS userMapperS, ILogger<UserService> logger)
         {
             _userRepository = userRepository;
             _userMapper = userMapperS;
+            _keycloakLogic = keycloakLogic;
             _logger = logger;
         }
 
@@ -36,6 +39,22 @@ namespace GamifyWork.ServiceLibrary.Services
             {
                 _logger.LogError(ex, "User could not be created in servicde");
                 throw new UserException("User could not be created", (int)HttpStatusCode.InternalServerError);
+            }
+        }
+
+        public async Task<List<UserModel>> GetAllUsers()
+        {
+            try
+            {
+                var userDtos = await _userRepository.GetAllUsers();
+                var userModels = _userMapper.MapDtosToModels(userDtos);
+                var userModels2  = await _keycloakLogic.AddUsernamesForUsers(userModels);
+                return userModels2;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Users could not be found in service");
+                throw new UserException("Users could not be found", (int)HttpStatusCode.NotFound);
             }
         }
 

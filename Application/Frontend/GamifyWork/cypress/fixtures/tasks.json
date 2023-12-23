@@ -1,0 +1,14 @@
+[
+  {
+    "task_ID": 1,
+    "title": "Recurring task - Cypress",
+    "completed": false,
+    "recurring": true
+  },
+  {
+    "task_ID": 2,
+    "title": "To do task - Cypress",
+    "completed": false,
+    "recurring": false
+  }
+]

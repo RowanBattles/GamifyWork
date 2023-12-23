@@ -29,5 +29,11 @@ namespace GamifyWork.API.Controllers
             await _userService.CreateUser(Id);
             return Ok();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            return Ok(await _userService.GetAllUsers());
+        }
     }
 }

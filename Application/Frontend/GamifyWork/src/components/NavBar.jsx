@@ -2,12 +2,22 @@ import { Tooltip } from "flowbite-react";
 import { useState, useEffect, useRef } from "react";
 import { useKeycloak } from "@react-keycloak/web";
 import { getUser } from "../utils/api";
+import { useNavigate } from "react-router-dom";
 
-function NavBar() {
+function NavBar({ title }) {
+  const navigate = useNavigate();
   const { keycloak } = useKeycloak();
   const [dropDownOpen, setDropDownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [points, setPoints] = useState(0);
+
+  const handleTabClick = (title) => {
+    if (title === "tasks") {
+      navigate("/");
+    } else if (title === "friends") {
+      navigate("/friends");
+    }
+  };
 
   const handleToggleDropDown = () => {
     setDropDownOpen(!dropDownOpen);
@@ -46,10 +56,10 @@ function NavBar() {
   return (
     <>
       <nav className="blue px-24 py-2 flex justify-between items-center h-14 text-white font-sans text-lg font-semibold">
-        <div className="flex items-center">
+        <div className="flex items-center gap-5">
           <img
             src="/src/assets/GamifyWorkLogoWhite.png"
-            className="h-8 mr-5"
+            className="h-8"
             alt="LogoImage"
           />
           <img
@@ -57,6 +67,24 @@ function NavBar() {
             className="h-6"
             alt="LogoText"
           />
+          <div className="pl-10 flex justify-center">
+            <div
+              className={`px-5 pb-[7px] pt-[15px] border-blue-600 cursor-pointer hover:bg-blue-600 ${
+                title == "tasks" ? "border-b-[6px]" : "border-none"
+              }`}
+              onClick={() => handleTabClick("tasks")}
+            >
+              Tasks
+            </div>
+            <div
+              className={`px-5 pb-[7px] pt-[15px] border-blue-600 cursor-pointer hover:bg-blue-600 ${
+                title == "friends" ? "border-b-[6px]" : "border-none"
+              }`}
+              onClick={() => handleTabClick("friends")}
+            >
+              Friends
+            </div>
+          </div>
         </div>
         <div className="flex items-center gap-10">
           <div className="flex items-center gap-2">
@@ -93,18 +121,26 @@ function NavBar() {
                 } top-12 right-8 z-50 min-w-[20rem] bg-white text-black font-normal shadow-lg rounded border border-gray-20 cursor-pointer`}
               >
                 <div className="text-center p-4 cursor-default">
-                  <div className="font-bold">
+                  <div className="font-bold" data-testid="KeycloakUsername">
                     {keycloak.tokenParsed.preferred_username}
                   </div>
-                  <div>{keycloak.tokenParsed.email}</div>
+                  <div data-testid="KeycloakEmail">
+                    {keycloak.tokenParsed.email}
+                  </div>
                 </div>
                 <hr />
-                <div className="px-6 py-2 hover:text-blue hover:underline hover:bg-blue-50">
+                <div
+                  className="px-6 py-2 hover:text-blue hover:underline hover:bg-blue-50"
+                  onClick={() => {
+                    window.location.href = keycloak.createAccountUrl();
+                  }}
+                >
                   profile
                 </div>
                 <div
                   className="px-6 py-2 hover:text-blue hover:underline hover:bg-blue-50"
                   onClick={() => keycloak.logout()}
+                  data-testid="KeycloakLogoutButton"
                 >
                   logout
                 </div>

@@ -7,11 +7,17 @@ function ErrorDisplay({ errorHeader, errorBody }) {
         className="border border-gray-400 bg-white border-solid mt-5 p-5"
         data-testid="ErrorDisplayId"
       >
-        <div className="text-red-500 font-extrabold text-2xl mb-2">
+        <div
+          className="text-red-500 font-extrabold text-2xl mb-2"
+          data-testid="errorHeader"
+        >
           {errorHeader}
         </div>
-        <div className="text-s font-semibold break-words">
-          <div>{errorBody}</div>
+        <div
+          className="text-s font-semibold break-words"
+          data-testid="errorBody"
+        >
+          {errorBody}
         </div>
       </div>
       <span className="px-5">

@@ -15,7 +15,12 @@ namespace GamifyWork.DataAccessLibrary.Data
         private readonly string _connectionString;
         public dbContext(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            var connectionstring = configuration.GetConnectionString("DefaultConnection");
+            if (string.IsNullOrEmpty(connectionstring))
+            {
+                throw new ArgumentNullException("Connection string is null");
+            }
+            _connectionString = connectionstring;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

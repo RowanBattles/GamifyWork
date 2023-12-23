@@ -10,6 +10,7 @@ namespace GamifyWork.ServiceLibrary.Interfaces
     public interface IUserService
     {
         Task CreateUser(Guid id);
+        Task<List<UserModel>> GetAllUsers();
         Task<UserModel> GetUserById(Guid Id);
     }
 }

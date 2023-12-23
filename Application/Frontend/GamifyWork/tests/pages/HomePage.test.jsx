@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import HomePage from "../../src/pages/HomePage";
 import { vi } from "vitest";
 import useFetch from "../../src/hooks/useFetch";
+import { useTaskContext } from "../../src/hooks/TaskContext";
 
 vi.mock("@react-keycloak/web", () => ({
   ...vi.importActual("@react-keycloak/web"),
@@ -12,7 +13,12 @@ vi.mock("@react-keycloak/web", () => ({
     },
   }),
 }));
+vi.mock("../../src/hooks/TaskContext");
 vi.mock("../../src/hooks/useFetch");
+
+useTaskContext.mockReturnValue({
+  tasks: [],
+});
 
 it("renders loading state", async () => {
   useFetch.mockReturnValue({
@@ -40,4 +46,24 @@ it("renders error state", async () => {
 
   const errorDisplay = screen.getByTestId("ErrorDisplayId");
   expect(errorDisplay).toBeInTheDocument();
+});
+
+it("renders tasks and rewards", async () => {
+  useFetch.mockReturnValue({
+    data: [],
+    loading: false,
+    errorHeader: null,
+    errorBody: null,
+  });
+
+  console.log(screen.debug());
+
+  render(<HomePage />);
+
+  const TodoTasks = screen.getByTestId("TaskTable-Recurring");
+  expect(TodoTasks).toBeInTheDocument();
+  const RecurringTasks = screen.getByTestId("TaskTable-To do");
+  expect(RecurringTasks).toBeInTheDocument();
+  const Rewards = screen.getByTestId("RewardTable");
+  expect(Rewards).toBeInTheDocument();
 });

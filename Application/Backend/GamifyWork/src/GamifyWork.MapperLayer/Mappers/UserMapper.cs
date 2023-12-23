@@ -19,6 +19,11 @@ namespace GamifyWork.MapperLayer.Mappers
             _mapper = mapper;
         }
 
+        public List<UserModel> MapDtosToModels(List<UserDto> userDtos)
+        {
+            return _mapper.Map<List<UserModel>>(userDtos);
+        }
+
         public UserEntity MapDtoToEntity(UserDto userDto)
         {
             return _mapper.Map<UserEntity>(userDto);
@@ -27,6 +32,11 @@ namespace GamifyWork.MapperLayer.Mappers
         public UserModel MapDtoToModel(UserDto user)
         {
             return _mapper.Map<UserModel>(user);
+        }
+
+        public List<UserDto> MapEntitiesToDtos(List<UserEntity> users)
+        {
+            return _mapper.Map<List<UserDto>>(users);
         }
 
         public UserDto MapEntityToDto(UserEntity userEntity)
