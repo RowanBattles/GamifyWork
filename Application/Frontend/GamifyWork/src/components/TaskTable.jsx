@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { filterTasksByStatus } from "../utils/Filters/taskFilters";
-import { CreateTask, MarkTask, getTasks } from "../utils/api";
+import { CreateTask, MarkTask, getTasksByUser } from "../utils/api";
 import { failed, succes } from "../utils/Helpers/toast";
 import { useTaskContext } from "../hooks/TaskContext";
 import usePatch from "../hooks/usePatch";
@@ -36,10 +36,15 @@ function TaskTable({ tasks, title }) {
           await CreateTask(taskData);
           succes("created task succesfully!");
           setNewTask("");
-          const updatedTasks = await getTasks();
-          updateTasks(updatedTasks);
         } catch (error) {
           failed("failed creating task");
+        }
+
+        try {
+          const updatedTasks = await getTasksByUser(keycloak.subject);
+          updateTasks(updatedTasks);
+        } catch {
+          failed("failed updating tasks");
         }
       }
       event.target.blur();
@@ -49,7 +54,7 @@ function TaskTable({ tasks, title }) {
   const markTask = async (id) => {
     try {
       await usePatch(MarkTask, id, "tasks");
-      const updatedTasks = await getTasks();
+      const updatedTasks = await getTasksByUser(keycloak.subject);
       updateTasks(updatedTasks);
     } catch (err) {
       failed("failed marking task");

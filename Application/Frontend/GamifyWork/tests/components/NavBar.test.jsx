@@ -1,7 +1,18 @@
 import { render, screen } from "@testing-library/react";
 import NavBar from "../../src/components/NavBar";
+import { useKeycloak } from "@react-keycloak/web";
+
+vi.mock("@react-keycloak/web");
 
 it("renders NavBar component", () => {
+  useKeycloak.mockReturnValue({
+    keycloak: {
+      tokenParsed: {
+        username: "test",
+      },
+    },
+  });
+
   render(<NavBar />);
 
   // Check if the logo images, coin icon, and user icon are rendered
@@ -15,5 +26,3 @@ it("renders NavBar component", () => {
   expect(coinIcon).toBeInTheDocument();
   expect(userIcon).toBeInTheDocument();
 });
-
-// You can add more specific tests for interactions, events, and other aspects as needed.

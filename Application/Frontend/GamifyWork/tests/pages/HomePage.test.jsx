@@ -1,49 +1,43 @@
 import { render, screen } from "@testing-library/react";
 import HomePage from "../../src/pages/HomePage";
+import { vi } from "vitest";
+import useFetch from "../../src/hooks/useFetch";
 
-it("renders error state", async () => {
-  vi.mock("./useFetch", () => ({
-    useFetch: vi.fn().mockReturnValue({
-      data: [],
-      loading: false,
-      errorHeader: "Error occured",
-      errorBody: "Error occured",
-    }),
-  }));
+vi.mock("@react-keycloak/web", () => ({
+  ...vi.importActual("@react-keycloak/web"),
+  useKeycloak: () => ({
+    keycloak: {
+      subject: "dummysubject",
+      tokenParsed: { preferred_username: "dummyname" },
+    },
+  }),
+}));
+vi.mock("../../src/hooks/useFetch");
 
-  vi.mock("./useTaskContext", () => ({
-    useTaskContext: vi.fn().mockReturnValue({
-      tasks: [],
-    }),
-  }));
-
-  render(<HomePage />);
-  const errorElements = await screen.findAllByText(/Couldn't fetch/);
-  expect(errorElements.length).toBe(1);
-});
-
-it("renders tasks and rewards", async () => {
-  mocks.useFetch.mockReturnValueOnce({
-    data: { tasks: [] },
-    loading: false,
+it("renders loading state", async () => {
+  useFetch.mockReturnValue({
+    data: null,
+    loading: true,
     errorHeader: null,
     errorBody: null,
   });
 
-  mocks.useTaskContext.mockReturnValue({
-    tasks: [],
-    updateTasks: vi.fn(),
+  render(<HomePage />);
+
+  const loadingIndicator = screen.getByAltText("LogoLoading");
+  expect(loadingIndicator).toBeInTheDocument();
+});
+
+it("renders error state", async () => {
+  useFetch.mockReturnValue({
+    data: null,
+    loading: false,
+    errorHeader: "error",
+    errorBody: "error",
   });
 
   render(<HomePage />);
 
-  // Assert on rewards
-  const rewardElement = await screen.getByText("Reward 1");
-  const rewardElement2 = await screen.getByText("Reward 2");
-  const RecurringTasks = await screen.getByText("To do");
-  const TodoTasks = await screen.getByText("Recurring");
-  expect(rewardElement).toBeInTheDocument();
-  expect(rewardElement2).toBeInTheDocument();
-  expect(RecurringTasks).toBeInTheDocument();
-  expect(TodoTasks).toBeInTheDocument();
+  const errorDisplay = screen.getByTestId("ErrorDisplayId");
+  expect(errorDisplay).toBeInTheDocument();
 });
