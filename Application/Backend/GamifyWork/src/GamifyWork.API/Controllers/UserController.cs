@@ -30,10 +30,10 @@ namespace GamifyWork.API.Controllers
             return Ok();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllUsers()
+        [HttpGet("Friends/{Id}")]
+        public async Task<IActionResult> GetAllFriendsByUser(Guid Id)
         {
-            return Ok(await _userService.GetAllUsers());
+            return Ok(await _userService.GetAllFriendsByUser(Id));
         }
     }
 }

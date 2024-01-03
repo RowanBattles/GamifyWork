@@ -1,8 +1,20 @@
 import axios from "axios";
 import EndPoints from "./Constants";
 
-export async function getUser(id) {
-  const url = EndPoints.GetUser(id);
+export async function getFriends(id) {
+  const url = EndPoints.getFriends(id);
+  try {
+    const response = await axios.get(url);
+    console.log("response", response);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getUserById(id) {
+  const url = EndPoints.GetUserById(id);
 
   try {
     const response = await axios.get(url);

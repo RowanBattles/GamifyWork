@@ -1,7 +1,7 @@
 import { Tooltip } from "flowbite-react";
 import { useState, useEffect, useRef } from "react";
 import { useKeycloak } from "@react-keycloak/web";
-import { getUser } from "../utils/api";
+import { getUserById } from "../utils/api";
 import { useNavigate } from "react-router-dom";
 
 function NavBar({ title }) {
@@ -32,7 +32,7 @@ function NavBar({ title }) {
   useEffect(() => {
     const getPoints = async () => {
       try {
-        const userData = await getUser(keycloak.subject);
+        const userData = await getUserById(keycloak.subject);
         setPoints(userData.points);
       } catch (error) {
         console.error("Error fetching user data:", error);

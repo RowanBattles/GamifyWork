@@ -21,8 +21,9 @@ const useFetch = (fetchFunction, dataMessage, id) => {
           errorBody += `${Message}. `;
           if (ErrorCode === 500) {
             errorHeader += " - Internal Server Error";
-            errorBody +=
-              "There is a problem with the resource you are looking for, and it cannot be displayed.";
+          }
+          if (ErrorCode === 404) {
+            errorHeader += " - Not Found";
           }
         } else {
           errorHeader += "Unexpected error";

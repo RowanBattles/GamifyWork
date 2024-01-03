@@ -41,7 +41,7 @@ namespace GamifyWork.DataAccessLibrary.Repositories
             }
         }
 
-        public async Task<List<UserDto>> GetAllUsers()
+        public async Task<List<UserDto>> GetAllFriendsByUser()
         {
             try
             {

@@ -14,6 +14,10 @@ class SignalRService {
     });
   };
 
+  stopConnection = () => {
+    this.connection.stop();
+  };
+
   receiveMessage = (callback) => {
     this.connection.on("ReceiveMessage", (message) => {
       callback(message);

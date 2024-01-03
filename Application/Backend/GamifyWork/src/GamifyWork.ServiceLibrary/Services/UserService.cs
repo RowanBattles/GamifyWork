@@ -42,14 +42,23 @@ namespace GamifyWork.ServiceLibrary.Services
             }
         }
 
-        public async Task<List<UserModel>> GetAllUsers()
+        public async Task<List<UserModel>> GetAllFriendsByUser(Guid Id)
         {
             try
             {
-                var userDtos = await _userRepository.GetAllUsers();
+                await GetUserById(Id);
+
+                var userDtos = await _userRepository.GetAllFriendsByUser();
                 var userModels = _userMapper.MapDtosToModels(userDtos);
-                var userModels2  = await _keycloakLogic.AddUsernamesForUsers(userModels);
-                return userModels2;
+
+                userModels.RemoveAll(user => user.User_ID == Id);
+
+                var keycloakModels  = await _keycloakLogic.AddUsernamesForUsers(userModels);
+                return keycloakModels;
+            }
+            catch (UserException)
+            {
+                throw;
             }
             catch (Exception ex)
             {

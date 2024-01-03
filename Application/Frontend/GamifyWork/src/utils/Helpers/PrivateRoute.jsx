@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useKeycloak } from "@react-keycloak/web";
 import Login from "../../pages/static/Login";
-import { createUser, getUser } from "../api";
+import { createUser, getUserById } from "../api";
 
 const PrivateRoute = ({ children }) => {
   const { keycloak, initialized } = useKeycloak();
@@ -11,7 +11,7 @@ const PrivateRoute = ({ children }) => {
   useEffect(() => {
     const validateUser = async () => {
       try {
-        const data = await getUser(keycloak.subject);
+        await getUserById(keycloak.subject);
         setLoading(false);
       } catch (error) {
         await createOrValidateUser();
@@ -20,7 +20,7 @@ const PrivateRoute = ({ children }) => {
 
     const createOrValidateUser = async () => {
       try {
-        const data = await createUser(keycloak.subject);
+        await createUser(keycloak.subject);
         await validateUser();
       } catch (error) {
         setError(error);
@@ -48,7 +48,7 @@ const PrivateRoute = ({ children }) => {
   }
 
   if (error) {
-    alert("something went wrong");
+    alert("User couldn't be loaded, you're being logged out.");
     keycloak.logout();
     return <Login />;
   }
