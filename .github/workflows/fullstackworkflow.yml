@@ -7,12 +7,12 @@ on:
     branches: ["main"]
 
 jobs:
-  api:
+  backend:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
       - name: Setup .NET core
         uses: actions/setup-dotnet@v3
@@ -28,7 +28,7 @@ jobs:
       - name: Run backend UnitTests
         run: dotnet test ./Application/Backend/GamifyWork/GamifyWork.sln
 
-  ui:
+  frontend:
     runs-on: ubuntu-latest
 
     steps:
@@ -41,31 +41,35 @@ jobs:
           node-version: '18'
 
       - name: Restore frontend dependencies
-        run: yarn install
-        working-directory: ./Application/Frontend/GamifyWork
+        run: yarn install ./Application/Frontend/GamifyWork
 
       - name: Run frontend unit tests
-        run: yarn test
-        working-directory: ./Application/Frontend/GamifyWork
+        run: yarn test ./Application/Frontend/GamifyWork
 
       - name: Start frontend development server
         run: nohup yarn dev &
-        working-directory: ./Application/Frontend/GamifyWork
 
-      - name: Wait for frontend server to start
-        run: sleep 10
-
-  e2e:
+  keycloak:
+    needs: frontend 
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+      - name: Pull Docker image
+        run: docker pull rowanbattles/keywork
+
+      - name: Run Docker container
+        run: docker run -d -p 8080:8080 rowanbattles/keywork
+
+  e2e-testing:
+    needs: docker
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
       - name: Restore frontend dependencies for e2e
         run: yarn install
