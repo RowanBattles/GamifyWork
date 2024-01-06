@@ -64,7 +64,7 @@ jobs:
         run: docker run -d -p 8080:8080 rowanbattles/keywork
 
   e2e-testing:
-    needs: docker
+    needs: keycloak
     runs-on: ubuntu-latest
 
     steps:
