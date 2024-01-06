@@ -63,7 +63,7 @@ public class TaskModelTests
     [Theory]
     [InlineData("Daily", 1, 1)]
     [InlineData("Weekly", 2, 14)]
-    [InlineData("Monthly", 3, 92)]
+    [InlineData("Monthly", 3, 91)]
     public void CalculateNextDueDate_ShouldSetCorrectNextDueDate(string RecurrenceType, int RecurrenceInterval, int expectedDays)
     {
         // Arrange

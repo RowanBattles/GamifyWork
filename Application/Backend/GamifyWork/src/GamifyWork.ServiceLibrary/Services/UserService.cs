@@ -71,7 +71,9 @@ namespace GamifyWork.ServiceLibrary.Services
         {
             try
             {
-                return _userMapper.MapDtoToModel(await _userRepository.GetUserById(Id));
+                var userModels = _userMapper.MapDtoToModel(await _userRepository.GetUserById(Id));
+                var keycloakModel = await _keycloakLogic.AddUsernameForUser(userModels);
+                return userModels;
             }
             catch (Exception ex)
             {

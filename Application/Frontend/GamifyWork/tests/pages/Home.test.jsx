@@ -1,8 +1,10 @@
 import { render, screen } from "@testing-library/react";
-import HomePage from "../../src/pages/HomePage";
+import HomePage from "../../src/pages/Home";
 import { vi } from "vitest";
 import useFetch from "../../src/hooks/useFetch";
 import { useTaskContext } from "../../src/hooks/TaskContext";
+
+vi.mock("react-router-dom");
 
 vi.mock("@react-keycloak/web", () => ({
   ...vi.importActual("@react-keycloak/web"),

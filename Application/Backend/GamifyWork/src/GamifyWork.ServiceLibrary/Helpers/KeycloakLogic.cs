@@ -14,6 +14,7 @@ namespace GamifyWork.ServiceLibrary.Helpers
     public interface IKeycloakLogic
     {
         Task<List<UserModel>> AddUsernamesForUsers(List<UserModel> userModels);
+        Task<UserModel> AddUsernameForUser(UserModel userModel);
     }
 
     public class KeycloakLogic : IKeycloakLogic
@@ -29,6 +30,21 @@ namespace GamifyWork.ServiceLibrary.Helpers
             _logger = logger;
         }
 
+        public async Task<UserModel> AddUsernameForUser(UserModel userModel) 
+        {
+            try
+            {
+                string accessToken = await GetAccessToken();
+                await SetUsernameForUser(accessToken, userModel);
+                return userModel;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving username from userId");
+                throw;
+            }
+        }
+
         public async Task<List<UserModel>> AddUsernamesForUsers(List<UserModel> userModels)
         {
             try
@@ -38,8 +54,7 @@ namespace GamifyWork.ServiceLibrary.Helpers
 
                 foreach(UserModel user in userModels)
                 {
-                    string? username = await GetUsernameByUserId(user.User_ID, accessToken);
-                    user.SetUsername(username);
+                    await SetUsernameForUser(accessToken, user);
                     users.Add(user);
                 }
 
@@ -52,13 +67,19 @@ namespace GamifyWork.ServiceLibrary.Helpers
             }
         }
 
+        private async Task SetUsernameForUser(string accessToken, UserModel userModel)
+        {
+            string? username = await GetUsernameByUserId(userModel.User_ID, accessToken);
+            userModel.SetUsername(username);
+        }
+
         private async Task<string?> GetUsernameByUserId(Guid user_ID, string accessToken)
         {
             try
             {
                 var httpClient = _httpClient.CreateClient();
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-                var response = await httpClient.GetAsync($"http://localhost:8080/auth/admin/realms/GamifyWork/users/{user_ID}");
+                var response = await httpClient.GetAsync($"http://keycloak:8080/auth/admin/realms/GamifyWork/users/{user_ID}");
                 var responseContent = await response.Content.ReadAsStringAsync();
                 using var jsonDoc = JsonDocument.Parse(responseContent);
                 var username = jsonDoc.RootElement.GetProperty("username").GetString();
@@ -93,7 +114,7 @@ namespace GamifyWork.ServiceLibrary.Helpers
                 };
 
                 var httpClient = _httpClient.CreateClient();
-                var response = await httpClient.PostAsync("http://localhost:8080/auth/realms/GamifyWork/protocol/openid-connect/token", new FormUrlEncodedContent(tokenRequest));
+                var response = await httpClient.PostAsync("http://keycloak:8080/auth/realms/GamifyWork/protocol/openid-connect/token", new FormUrlEncodedContent(tokenRequest));
                 var responseContent = await response.Content.ReadAsStringAsync();
                 using var jsonDoc = JsonDocument.Parse(responseContent);
                 var accessToken = jsonDoc.RootElement.GetProperty("access_token").GetString();

@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamifyWork.Api.tests", "tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamifyWork.ServiceLibrary.tests", "tests\GamifyWork.ServiceLibrary.tests\GamifyWork.ServiceLibrary.tests.csproj", "{FC7CB14C-49BC-407C-9BD5-7FC2189B4B8E}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1CCF79B2-632B-4662-8B7F-E7592087B9A5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamifyWork.ContractLayer", "src\GamifyWork.ContractLayer\GamifyWork.ContractLayer.csproj", "{D41CD688-A3CC-40E5-960A-D51AA2EBF9C1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamifyWork.MapperLayer", "src\GamifyWork.MapperLayer\GamifyWork.MapperLayer.csproj", "{4A6F641E-D7A4-4923-9414-8D62F80C4527}"
@@ -24,6 +22,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamifyWork.DataAccessLibrary", "src\GamifyWork.DataAccessLibrary\GamifyWork.DataAccessLibrary.csproj", "{CBB6169E-DA69-4CDB-980F-F617C110CA97}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamifyWork.MapperLayer.tests", "tests\GamifyWork.MapperLayer.tests\GamifyWork.MapperLayer.tests.csproj", "{47007294-500A-4944-9575-D388BD3193D8}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B4B57AE2-ADF2-4C56-82A4-49F37A5FE2E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +47,6 @@ Global
 		{FC7CB14C-49BC-407C-9BD5-7FC2189B4B8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC7CB14C-49BC-407C-9BD5-7FC2189B4B8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC7CB14C-49BC-407C-9BD5-7FC2189B4B8E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1CCF79B2-632B-4662-8B7F-E7592087B9A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1CCF79B2-632B-4662-8B7F-E7592087B9A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1CCF79B2-632B-4662-8B7F-E7592087B9A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1CCF79B2-632B-4662-8B7F-E7592087B9A5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D41CD688-A3CC-40E5-960A-D51AA2EBF9C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D41CD688-A3CC-40E5-960A-D51AA2EBF9C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D41CD688-A3CC-40E5-960A-D51AA2EBF9C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -67,6 +63,10 @@ Global
 		{47007294-500A-4944-9575-D388BD3193D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47007294-500A-4944-9575-D388BD3193D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47007294-500A-4944-9575-D388BD3193D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4B57AE2-ADF2-4C56-82A4-49F37A5FE2E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4B57AE2-ADF2-4C56-82A4-49F37A5FE2E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4B57AE2-ADF2-4C56-82A4-49F37A5FE2E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4B57AE2-ADF2-4C56-82A4-49F37A5FE2E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

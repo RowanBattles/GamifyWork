@@ -1,0 +1,10 @@
+node_modules
+npm-debug.log
+.gitignore
+.dockerignore
+.vscode
+cypress
+tests
+yarn.lock
+yarn-error.log
+cypress.config.js

@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>1ccf79b2-632b-4662-8b7f-e7592087b9a5</ProjectGuid>
+    <ProjectGuid>b4b57ae2-adf2-4c56-82a4-49f37a5fe2e7</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
     <DockerServiceName>gamifywork.api</DockerServiceName>

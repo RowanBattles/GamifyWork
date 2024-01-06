@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import NavBar from "../../src/components/NavBar";
 import { useKeycloak } from "@react-keycloak/web";
 
+vi.mock("react-router-dom");
 vi.mock("@react-keycloak/web");
 
 it("renders NavBar component", () => {

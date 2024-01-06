@@ -1,4 +1,4 @@
-name: Deploy Vite
+name: React + Vite
 
 on:
   push:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo 🔔
+      - name: Checkout repo
         uses: actions/checkout@v2
 
       - name: Setup Node 🔧🔩
@@ -19,35 +19,16 @@ jobs:
         with:
           node-version: 16
 
-      - name: Restore dependencies 💉
+      - name: Restore dependencies
         run: yarn install
         working-directory: ./Application/Frontend/GamifyWork
 
-      - name: Build project 👷‍♂️🧱
-        run: npm run build
+      - name: Build project
+        run: yarn build
         working-directory: ./Application/Frontend/GamifyWork
 
-      - name: Upload production-ready build files 🔼🚀
+      - name: Upload production-ready build files
         uses: actions/upload-artifact@v2
         with:
           name: production-files
           path: ./Application/Frontend/GamifyWork/dist
-
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: production-files
-          path: ./Application/Frontend/GamifyWork/dist
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./Application/Frontend/GamifyWork/dist

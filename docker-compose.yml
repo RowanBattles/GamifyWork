@@ -1,18 +1,37 @@
 version: '3.4'
 
 services:
-  gamifywork.api:
+  api:
     container_name: gamifywork.api
     image: ${DOCKER_REGISTRY-}gamifyworkapi
     build:
-      context: .
+      context: ./Application/Backend/GamifyWork
       dockerfile: src/GamifyWork.API/Dockerfile
     restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
       - "7018:80"
       - "7017:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
     depends_on:
       - database
+      - keycloak
+      
+  ui:
+    container_name: gamifywork.ui
+    image: ${DOCKER_REGISTRY-}gamifyworkfrontend
+    build:
+      context: ./Application/Frontend/GamifyWork
+      dockerfile: Dockerfile
+    restart: on-failure
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
       
   keycloak:
     container_name: gamifywork.keycloak
@@ -32,8 +51,7 @@ services:
       - "3307:3306"
     volumes:
       - GamifyworkDatabaseVolume:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./Application/Backend/GamifyWork/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
   GamifyworkDatabaseVolume:
-

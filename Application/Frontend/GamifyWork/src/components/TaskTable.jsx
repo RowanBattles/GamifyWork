@@ -37,18 +37,26 @@ function TaskTable({ tasks, title }) {
           succes("created task succesfully!");
           setNewTask("");
         } catch (error) {
-          const data = error.response.data;
-          const errorMessage = data.Message || "failed creating task.";
-          failed(`${data.ErrorCode || "Error"}: ${errorMessage}`);
+          if (error.response && error.response.data) {
+            const data = error.response.data;
+            const errorMessage = data.Message || "failed creating task.";
+            failed(`${data.ErrorCode || "Error"}: ${errorMessage}`);
+          } else {
+            failed("Failed creating task. An unexpected error occurred.");
+          }
         }
 
         try {
           const updatedTasks = await getTasksByUser(keycloak.subject);
           updateTasks(updatedTasks);
         } catch (error) {
-          const data = error.response.data;
-          const errorMessage = data.Message || "failed updating tasks.";
-          failed(`${data.ErrorCode || "Error"}: ${errorMessage}`);
+          if (error.response && error.response.data) {
+            const data = error.response.data;
+            const errorMessage = data.Message || "failed updating task.";
+            failed(`${data.ErrorCode || "Error"}: ${errorMessage}`);
+          } else {
+            failed("Failed updating task. An unexpected error occurred.");
+          }
         }
       }
       event.target.blur();
