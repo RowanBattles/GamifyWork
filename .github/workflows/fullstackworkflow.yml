@@ -41,13 +41,19 @@ jobs:
           node-version: '18'
 
       - name: Restore frontend dependencies
-        run: yarn install ./Application/Frontend/GamifyWork
+        run: yarn install
+        working-directory: ./Application/Frontend/GamifyWork
 
       - name: Run frontend unit tests
-        run: yarn test ./Application/Frontend/GamifyWork
+        run: yarn test
+        working-directory: ./Application/Frontend/GamifyWork
 
       - name: Start frontend development server
         run: nohup yarn dev &
+        working-directory: ./Application/Frontend/GamifyWork
+
+      - name: Wait for frontend server to start
+        run: sleep 10
 
   keycloak:
     needs: frontend 
