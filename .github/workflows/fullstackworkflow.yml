@@ -52,9 +52,8 @@ jobs:
         working-directory: ./Application/Frontend/GamifyWork
 
       - name: Start frontend development server
-        run: yarn dev
+        run: nohup yarn dev &
         working-directory: ./Application/Frontend/GamifyWork
-        background: true
 
       - name: Wait for frontend server to start
         run: sleep 10
