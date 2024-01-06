@@ -20,16 +20,16 @@ jobs:
           dotnet-version: "6.0.x"
 
       - name: Restore backend dependencies
-        run: dotnet restore ./GamifyWork.sln
-        working-directory: ./Application/Backend/GamifyWork
+        run: dotnet restore
+        working-directory: ./Application/Backend/GamifyWork/GamifyWork.sln
 
       - name: Build backend
-        run: dotnet build -c Release --no-restore ./Application/Backend/GamifyWork/GamifyWork.sln
-        working-directory: ./Application/Backend/GamifyWork
+        run: dotnet build -c Release --no-restore
+        working-directory: ./Application/Backend/GamifyWork/GamifyWork.sln
 
       - name: Run backend UnitTests
-        run: dotnet test ./Application/Backend/GamifyWork/GamifyWork.sln
-        working-directory: ./Application/Backend/GamifyWork
+        run: dotnet test 
+        working-directory: ./Application/Backend/GamifyWork/GamifyWork.sln
 
   ui:
     runs-on: ubuntu-latest
