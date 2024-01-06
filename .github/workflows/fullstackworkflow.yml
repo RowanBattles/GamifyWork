@@ -9,7 +9,6 @@ on:
 jobs:
   api:
     runs-on: ubuntu-latest
-    working-directory: ./Application/Backend/GamifyWork
 
     steps:
       - name: Checkout code
@@ -21,17 +20,19 @@ jobs:
           dotnet-version: "6.0.x"
 
       - name: Restore backend dependencies
-        run: dotnet restore ./GamifyWork.sln
+        run: dotnet restore ./Application/Backend/GamifyWork/GamifyWork.sln
+        working-directory: ./Application/Backend/GamifyWork
 
       - name: Build backend
-        run: dotnet build -c Release --no-restore ./GamifyWork.sln
+        run: dotnet build -c Release --no-restore ./Application/Backend/GamifyWork/GamifyWork.sln
+        working-directory: ./Application/Backend/GamifyWork
 
       - name: Run backend UnitTests
-        run: dotnet test ./GamifyWork.sln
+        run: dotnet test ./Application/Backend/GamifyWork/GamifyWork.sln
+        working-directory: ./Application/Backend/GamifyWork
 
   ui:
     runs-on: ubuntu-latest
-    working-directory: ./Application/Frontend/GamifyWork
 
     steps:
       - name: Checkout code
@@ -44,12 +45,15 @@ jobs:
 
       - name: Restore frontend dependencies
         run: yarn install
+        working-directory: ./Application/Frontend/GamifyWork
 
       - name: Run frontend unit tests
         run: yarn test
+        working-directory: ./Application/Frontend/GamifyWork
 
       - name: Start frontend development server
         run: yarn dev
+        working-directory: ./Application/Frontend/GamifyWork
         background: true
 
       - name: Wait for frontend server to start
@@ -57,7 +61,6 @@ jobs:
 
   e2e:
     runs-on: ubuntu-latest
-    working-directory: ./Application/Frontend/GamifyWork
 
     steps:
       - name: Checkout code
@@ -70,6 +73,8 @@ jobs:
 
       - name: Restore frontend dependencies for e2e
         run: yarn install
+        working-directory: ./Application/Frontend/GamifyWork
 
       - name: Run Cypress e2e tests ðŸŒŠ
         run: yarn cypress run
+        working-directory: ./Application/Frontend/GamifyWork
