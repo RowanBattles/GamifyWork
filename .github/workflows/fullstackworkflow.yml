@@ -7,8 +7,9 @@ on:
     branches: ["main"]
 
 jobs:
-  backend:
+  api:
     runs-on: ubuntu-latest
+    working-directory: ./Application/Backend/GamifyWork
 
     steps:
       - name: Checkout code
@@ -20,37 +21,55 @@ jobs:
           dotnet-version: "6.0.x"
 
       - name: Restore backend dependencies
-        run: dotnet restore ./Application/Backend/GamifyWork/GamifyWork.sln
+        run: dotnet restore ./GamifyWork.sln
 
       - name: Build backend
-        run: dotnet build -c Release --no-restore ./Application/Backend/GamifyWork/GamifyWork.sln
+        run: dotnet build -c Release --no-restore ./GamifyWork.sln
 
       - name: Run backend UnitTests
-        run: dotnet test ./Application/Backend/GamifyWork/GamifyWork.sln
+        run: dotnet test ./GamifyWork.sln
 
-  frontend:
+  ui:
     runs-on: ubuntu-latest
+    working-directory: ./Application/Frontend/GamifyWork
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Node
-        uses: actions/setup-node@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '18'
 
       - name: Restore frontend dependencies
         run: yarn install
-        working-directory: ./Application/Frontend/GamifyWork
 
-      - name: Build frontend
-        run: yarn build
-        working-directory: ./Application/Frontend/GamifyWork
+      - name: Run frontend unit tests
+        run: yarn test
 
-      - name: Upload production-ready frontend files
-        uses: actions/upload-artifact@v2
+      - name: Start frontend development server
+        run: yarn dev
+        background: true
+
+      - name: Wait for frontend server to start
+        run: sleep 10
+
+  e2e:
+    runs-on: ubuntu-latest
+    working-directory: ./Application/Frontend/GamifyWork
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          name: frontend-files
-          path: ./Application/Frontend/GamifyWork/dist
+          node-version: '18'
 
+      - name: Restore frontend dependencies for e2e
+        run: yarn install
+
+      - name: Run Cypress e2e tests ðŸŒŠ
+        run: yarn cypress run
