@@ -67,22 +67,8 @@ jobs:
         run: docker pull rowanbattles/keywork
 
       - name: Run Keycloak Docker container
+        id: keycloak
         run: docker run -d -p 8080:8080 rowanbattles/keywork
-
-      - name: Wait for Keycloak server to start
-        run: |
-          timeout=300
-          while [ $timeout -gt 0 ]; do
-            if docker exec CONTAINER_ID curl -s -o /dev/null http://localhost:8080/auth; then
-              break
-            fi
-            sleep 1
-            ((timeout--))
-          done
-          if [ $timeout -eq 0 ]; then
-            echo "Timeout waiting for Keycloak server to start"
-            exit 1
-          fi
 
   End-to-end_tests:
     needs: keycloak
@@ -120,8 +106,24 @@ jobs:
           exit 1
         fi
 
+    - name: Wait for Keycloak server to start
+      run: |
+        timeout=300
+        while [ $timeout -gt 0 ]; do
+          if docker exec $(docker ps -q --filter ancestor=rowanbattles/keywork) curl -s -o /dev/null http://localhost:8080; then
+            break
+          fi
+          sleep 1
+          ((timeout--))
+        done
+        if [ $timeout -eq 0 ]; then
+          echo "Timeout waiting for Keycloak server to start"
+          exit 1
+        fi
+
     - name: Cypress run
       uses: cypress-io/github-action@v6
       with:
         working-directory: ./Application/Frontend/GamifyWork
+
 
