@@ -80,4 +80,3 @@ jobs:
 
       - name: Cypress run
         uses: cypress-io/github-actions@v5
-        working-directory: ./Application/Frontend/GamifyWork
