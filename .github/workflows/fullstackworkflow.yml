@@ -55,75 +55,82 @@ jobs:
       - name: Wait for frontend server to start
         run: sleep 10
 
-  keycloak:
-    needs: frontend
-    runs-on: ubuntu-latest
+    keycloak:
+      runs-on: ubuntu-latest
+      needs: frontend
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      outputs:
+        keycloak-container-id: ${{ steps.set-container-id.outputs.container-id }}
 
-      - name: Pull Keycloak Docker image
-        run: docker pull rowanbattles/keywork
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
 
-      - name: Run Keycloak Docker container
-        id: keycloak
-        run: docker run -d -p 8080:8080 rowanbattles/keywork
+        - name: Pull Keycloak Docker image
+          run: docker pull rowanbattles/keywork
 
-  End-to-end_tests:
-    needs: keycloak
-    runs-on: ubuntu-latest
+        - name: Run Keycloak Docker container
+          id: set-container-id
+          run: |
+            container_id=$(docker run -d -p 8080:8080 rowanbattles/keywork)
+            echo "container-id=$container_id" >> $GITHUB_ENV
 
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+    End-to-end_tests:
+      needs: keycloak
+      runs-on: ubuntu-latest
 
-    - name: Install Node.js and Yarn
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
 
-    - name: Install frontend dependencies
-      run: yarn install
-      working-directory: ./Application/Frontend/GamifyWork
+        - name: Set up Node.js and Yarn
+          uses: actions/setup-node@v3
+          with:
+            node-version: '18'
 
-    - name: Build frontend
-      run: yarn dev &
-      working-directory: ./Application/Frontend/GamifyWork
+        - name: Install frontend dependencies
+          run: yarn install
+          working-directory: ./Application/Frontend/GamifyWork
 
-    - name: Wait for frontend server to start
-      run: |
-        timeout=300
-        while [ $timeout -gt 0 ]; do
-          if nc -z localhost 5173; then
-            break
-          fi
-          sleep 1
-          ((timeout--))
-        done
-        if [ $timeout -eq 0 ]; then
-          echo "Timeout waiting for frontend server to start"
-          exit 1
-        fi
+        - name: Build frontend
+          run: yarn dev &
+          working-directory: ./Application/Frontend/GamifyWork
 
-    - name: Wait for Keycloak server to start
-      run: |
-        timeout=300
-        while [ $timeout -gt 0 ]; do
-          if docker exec $(docker ps -q --filter ancestor=rowanbattles/keywork) curl -s -o /dev/null http://localhost:8080; then
-            break
-          fi
-          sleep 1
-          ((timeout--))
-        done
-        if [ $timeout -eq 0 ]; then
-          echo "Timeout waiting for Keycloak server to start"
-          exit 1
-        fi
+        - name: Wait for frontend server to start
+          run: |
+            timeout=300
+            while [ $timeout -gt 0 ]; do
+              if nc -z localhost 5173; then
+                break
+              fi
+              sleep 1
+              ((timeout--))
+            done
+            if [ $timeout -eq 0 ]; then
+              echo "Timeout waiting for frontend server to start"
+              exit 1
+            fi
 
-    - name: Cypress run
-      uses: cypress-io/github-action@v6
-      with:
-        working-directory: ./Application/Frontend/GamifyWork
+        - name: Wait for Keycloak server to start
+          run: |
+            timeout=300
+            while [ $timeout -gt 0 ]; do
+              container_id=$(echo "container-id=$(cat $GITHUB_ENV | grep 'container-id' | cut -d'=' -f2)")
+              if docker exec $container_id curl -s -o /dev/null http://localhost:8080; then
+                break
+              fi
+              sleep 1
+              ((timeout--))
+            done
+            if [ $timeout -eq 0 ]; then
+              echo "Timeout waiting for Keycloak server to start"
+              exit 1
+            fi
+
+        - name: Cypress run
+          uses: cypress-io/github-action@v6
+          with:
+            working-directory: ./Application/Frontend/GamifyWork
+
 
 
