@@ -75,11 +75,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
 
-      - name: Cypress run
-        uses: cypress-io/github-action@v6
-        with:
-            working-directory: ./Application/Frontend/GamifyWork
+    - name: Install Node.js and Yarn
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install frontend dependencies
+      run: yarn install
+      working-directory: ./Application/Frontend/GamifyWork
+
+    - name: Build frontend
+      run: yarn dev
+      working-directory: ./Application/Frontend/GamifyWork
+
+    - name: Cypress run
+      uses: cypress-io/github-action@v6
+      with:
+        working-directory: ./Application/Frontend/GamifyWork
 
