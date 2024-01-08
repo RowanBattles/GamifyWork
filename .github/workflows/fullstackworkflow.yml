@@ -83,10 +83,8 @@ jobs:
         working-directory: ./Application/Frontend/GamifyWork
 
       - name: Start frontend development server
-        run: yarn dev ./Application/Frontend/GamifyWork &
-
-      - name: Wait for frontend server to start
-        run: sleep 10
+        run: yarn dev & wait-on http://localhost:5173
+        working-directory: ./Application/Frontend/GamifyWork
 
       - name: Run Cypress e2e tests
         run: yarn cypress run
