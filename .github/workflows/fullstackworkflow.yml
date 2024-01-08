@@ -115,7 +115,7 @@ jobs:
           timeout=300
           while [ $timeout -gt 0 ]; do
             container_id=$(echo "container-id=$(cat $GITHUB_ENV | grep 'container-id' | cut -d'=' -f2)")
-            if docker exec $container_id curl -s -o /dev/null http://localhost:8080; then
+            if docker exec $container_id curl -s -o /dev/null http://localhost:8080/auth; then
               break
             fi
             sleep 1
