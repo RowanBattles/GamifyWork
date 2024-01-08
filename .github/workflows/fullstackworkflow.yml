@@ -56,7 +56,6 @@ jobs:
         run: sleep 10
 
   keycloak:
-    needs: frontend
     runs-on: ubuntu-latest
 
     steps:
@@ -69,6 +68,20 @@ jobs:
       - name: Run Keycloak Docker container
         run: docker run -d -p 8080:8080 rowanbattles/keywork
 
+      - name: Wait for Keycloak server to start
+        run: |
+          timeout=300
+          while [ $timeout -gt 0 ]; do
+            if docker exec CONTAINER_ID curl -s -o /dev/null http://localhost:8080; then
+              break
+            fi
+            sleep 1
+            ((timeout--))
+          done
+          if [ $timeout -eq 0 ]; then
+            echo "Timeout waiting for Keycloak server to start"
+            exit 1
+          fi
 
   End-to-end_tests:
     needs: keycloak
@@ -90,6 +103,21 @@ jobs:
     - name: Build frontend
       run: yarn dev &
       working-directory: ./Application/Frontend/GamifyWork
+
+    - name: Wait for frontend server to start
+      run: |
+        timeout=300
+        while [ $timeout -gt 0 ]; do
+          if nc -z localhost 5173; then
+            break
+          fi
+          sleep 1
+          ((timeout--))
+        done
+        if [ $timeout -eq 0 ]; then
+          echo "Timeout waiting for frontend server to start"
+          exit 1
+        fi
 
     - name: Cypress run
       uses: cypress-io/github-action@v6
