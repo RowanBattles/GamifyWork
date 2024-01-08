@@ -88,7 +88,7 @@ jobs:
       working-directory: ./Application/Frontend/GamifyWork
 
     - name: Build frontend
-      run: yarn dev
+      run: yarn dev &
       working-directory: ./Application/Frontend/GamifyWork
 
     - name: Cypress run
