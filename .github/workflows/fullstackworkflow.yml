@@ -72,14 +72,16 @@ jobs:
         run: yarn install
         working-directory: ./Application/Frontend/GamifyWork
 
-      - name: Build frontend
+      - name: Run frontend
         run: yarn dev &
         working-directory: ./Application/Frontend/GamifyWork
 
-      - name: Build and run Docker container
+      - name: Pull Keycloak Docker image
+        run: docker pull rowanbattles/keywork
+
+      - name: Run Keycloak Docker container
         run: |
-          docker build -t gamify-work .
-          docker run -d -p 5173:5173 -p 8080:8080 --name gamify-container gamify-work
+          docker run -d -p 8080:8080 --name keycloak-container rowanbattles/keywork
 
       - name: Wait for frontend server to start
         run: |
