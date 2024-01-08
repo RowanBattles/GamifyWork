@@ -82,8 +82,7 @@ jobs:
         run: yarn install ./Application/Frontend/GamifyWork
 
       - name: Start frontend development server
-        run: yarn dev ./Application/Frontend/GamifyWork
-        background: true
+        run: yarn dev ./Application/Frontend/GamifyWork &
 
       - name: Wait for frontend server to start
         run: sleep 10
