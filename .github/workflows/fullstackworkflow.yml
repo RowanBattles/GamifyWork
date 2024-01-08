@@ -70,7 +70,7 @@ jobs:
         run: docker run -d -p 8080:8080 rowanbattles/keywork
 
 
-  e2e-testing:
+  End-to-end tests:
     needs: keycloak
     runs-on: ubuntu-latest
 
@@ -78,10 +78,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Restore frontend dependencies for e2e
-        run: yarn install
-        working-directory: ./Application/Frontend/GamifyWork
+      - name: Restore dependencies
+        run: yarn install ./Application/Frontend/GamifyWork
 
-      - name: Run Cypress e2e tests ðŸŒŠ
-        run: yarn cypress run
-        working-directory: ./Application/Frontend/GamifyWork
+      - name: Start frontend development server
+        run: yarn dev ./Application/Frontend/GamifyWork
+        background: true
+
+      - name: Wait for frontend server to start
+        run: sleep 10
+
+      - name: Run Cypress e2e tests
+        run: yarn cypress run ./Application/Frontend/GamifyWork
