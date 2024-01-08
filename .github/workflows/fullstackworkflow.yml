@@ -57,6 +57,7 @@ jobs:
 
   End-to-end_tests:
     runs-on: ubuntu-latest
+    needs: frontend
 
     steps:
       - name: Checkout code
@@ -72,7 +73,7 @@ jobs:
         working-directory: ./Application/Frontend/GamifyWork
 
       - name: Build frontend
-        run: yarn dev
+        run: yarn dev &
         working-directory: ./Application/Frontend/GamifyWork
 
       - name: Install Docker
