@@ -76,18 +76,8 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Restore dependencies
-        run: yarn install
-        working-directory: ./Application/Frontend/GamifyWork
-
-      - name: Start frontend development server
-        with:
-            run: yarn dev
-            wait-on: "http://localhost:5173"
-            working-directory: ./Application/Frontend/GamifyWork
-
-      - name: Run Cypress e2e tests
-        run: yarn cypress run
+      - name: Cypress run
+        uses: cypress-io/github-actions@v5
         working-directory: ./Application/Frontend/GamifyWork
