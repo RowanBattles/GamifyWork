@@ -56,18 +56,21 @@ jobs:
         run: sleep 10
 
   keycloak:
-    needs: frontend 
+    needs: frontend
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Pull Docker image
+      - name: Pull Keycloak Docker image
         run: docker pull rowanbattles/keywork
 
-      - name: Run Docker container
+      - name: Run Keycloak Docker container
         run: docker run -d -p 8080:8080 rowanbattles/keywork
+
+    steps:
+
 
   e2e-testing:
     needs: keycloak

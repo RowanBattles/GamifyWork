@@ -1,6 +1,4 @@
 describe("Account managment", () => {
-  beforeEach;
-
   it("Visits the app", () => {
     cy.visit("/");
     cy.get('[data-testid="HeaderTextIntroduction"]').should(
@@ -41,6 +39,14 @@ describe("Account managment", () => {
   });
 
   it("Should LogIn", () => {
+    cy.intercept(
+      "POST",
+      "https://localhost:7017/api/user/60ad8b86-edf7-4e40-87d0-90a153732e8a",
+      {
+        statusCode: 200,
+      }
+    ).as("login");
+
     cy.kcLogin("user");
     cy.visit("/");
     cy.get(".invert").should("have.attr", "alt", "user-icon");
@@ -60,6 +66,14 @@ describe("Account managment", () => {
   });
 
   it("Should LogOut", () => {
+    cy.intercept(
+      "POST",
+      "https://localhost:7017/api/user/60ad8b86-edf7-4e40-87d0-90a153732e8a",
+      {
+        statusCode: 200,
+      }
+    ).as("login");
+
     cy.kcLogout();
     cy.kcLogin("user");
     cy.visit("/");

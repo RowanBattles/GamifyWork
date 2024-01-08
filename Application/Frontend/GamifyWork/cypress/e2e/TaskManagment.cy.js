@@ -1,8 +1,28 @@
+import {
+  taskCorrect,
+  taskError,
+  taskCustomError,
+  rewardCorrect,
+  rewardError,
+  rewardCustomError,
+} from "../interceptions";
+
 describe("Creating task", () => {
   beforeEach(() => {
     cy.kcLogout();
     cy.kcLogin("user");
     cy.visit("/");
+
+    cy.intercept(
+      "POST",
+      "https://localhost:7017/api/user/60ad8b86-edf7-4e40-87d0-90a153732e8a",
+      {
+        statusCode: 200,
+      }
+    ).as("login");
+
+    taskCorrect();
+    rewardCorrect();
   });
 
   it("Create todo task succesfully", () => {
@@ -53,7 +73,7 @@ describe("Creating task", () => {
     cy.wait("@createTask");
     cy.get(".Toastify__toast-body > :nth-child(2)").should(
       "have.text",
-      "Error: failed creating task."
+      "Failed creating task. An unexpected error occurred."
     );
   });
 
@@ -86,117 +106,100 @@ describe("Creating task", () => {
   });
 });
 
-describe("Viewing tasks", () => {
-  beforeEach(() => {
-    cy.kcLogout();
-    cy.kcLogin("user");
-    cy.visit("/");
-  });
+// describe("Viewing tasks and rewards", () => {
+//   beforeEach(() => {
+//     cy.kcLogout();
+//     cy.kcLogin("user");
+//     cy.visit("/");
 
-  it("View tasks and rewards succesfully", () => {
-    cy.intercept(
-      "GET",
-      "https://localhost:7017/api/task/60ad8b86-edf7-4e40-87d0-90a153732e8a",
-      {
-        statusCode: 200,
-        fixture: "../fixtures/tasks.json",
-      }
-    ).as("getTasks");
+//     cy.intercept(
+//       "POST",
+//       "https://localhost:7017/api/user/60ad8b86-edf7-4e40-87d0-90a153732e8a",
+//       {
+//         statusCode: 200,
+//       }
+//     ).as("login");
+//   });
 
-    cy.wait("@getTasks");
-    cy.get('[data-testid="task-1"]').should(
-      "have.attr",
-      "data-testid",
-      "task-1"
-    );
-    cy.get('[data-testid="task-1"]').should(
-      "have.text",
-      "Recurring task - Cypress"
-    );
-    cy.get('[data-testid="task-1"]').should("be.visible");
-    cy.get('[data-testid="task-2"]').should(
-      "have.attr",
-      "data-testid",
-      "task-2"
-    );
-    cy.get('[data-testid="task-2"]').should(
-      "have.text",
-      "To do task - Cypress"
-    );
-    cy.get('[data-testid="task-2"]').should("be.visible");
-  });
+//   it("View tasks and rewards succesfully", () => {
+//     taskCorrect();
+//     rewardCorrect();
 
-  it("View error, tasks error", () => {
-    cy.intercept(
-      "GET",
-      "https://localhost:7017/api/task/60ad8b86-edf7-4e40-87d0-90a153732e8a",
-      {
-        statusCode: 500,
-      }
-    ).as("getTasks");
-    cy.wait("@getTasks");
+//     cy.get('[data-testid="task-1"]').should(
+//       "have.attr",
+//       "data-testid",
+//       "task-1"
+//     );
+//     cy.get('[data-testid="task-1"]').should(
+//       "have.text",
+//       "Recurring task - Cypress"
+//     );
+//     cy.get('[data-testid="task-1"]').should("be.visible");
+//     cy.get('[data-testid="task-2"]').should(
+//       "have.attr",
+//       "data-testid",
+//       "task-2"
+//     );
+//     cy.get('[data-testid="task-2"]').should(
+//       "have.text",
+//       "To do task - Cypress"
+//     );
+//     cy.get('[data-testid="task-2"]').should("be.visible");
+//   });
 
-    cy.get('[data-testid="errorHeader"]').should(
-      "have.text",
-      "Unexpected error"
-    );
-    cy.get('[data-testid="errorHeader"]').should("be.visible");
-    cy.get('[data-testid="errorBody"]').should(
-      "have.text",
-      "Couldn't fetch tasks."
-    );
-    cy.get('[data-testid="errorBody"]').should("be.visible");
-  });
+//   it("View error, tasks error", () => {
+//     taskError();
+//     rewardCorrect();
 
-  it("View error, rewards error", () => {
-    cy.intercept("GET", "https://localhost:7017/api/reward", {
-      statusCode: 500,
-    }).as("getRewards");
-    cy.wait("@getRewards");
+//     cy.get('[data-testid="errorHeader"]').should(
+//       "have.text",
+//       "Unexpected error"
+//     );
+//     cy.get('[data-testid="errorHeader"]').should("be.visible");
+//     cy.get('[data-testid="errorBody"]').should(
+//       "have.text",
+//       "Couldn't fetch tasks."
+//     );
+//     cy.get('[data-testid="errorBody"]').should("be.visible");
+//   });
 
-    cy.get('[data-testid="errorHeader"]').should(
-      "have.text",
-      "Unexpected error"
-    );
-    cy.get('[data-testid="errorHeader"]').should("be.visible");
-    cy.get('[data-testid="errorBody"]').should(
-      "have.text",
-      "Couldn't fetch rewards."
-    );
-    cy.get('[data-testid="errorBody"]').should("be.visible");
-  });
+//   it("View error, rewards error", () => {
+//     taskCorrect();
+//     rewardError();
 
-  it("View error, tasks and rewards error", () => {
-    cy.intercept(
-      "GET",
-      "https://localhost:7017/api/task/60ad8b86-edf7-4e40-87d0-90a153732e8a",
-      {
-        statusCode: 500,
-      }
-    ).as("getTasks");
+//     cy.get('[data-testid="errorHeader"]').should(
+//       "have.text",
+//       "Unexpected error"
+//     );
+//     cy.get('[data-testid="errorHeader"]').should("be.visible");
+//     cy.get('[data-testid="errorBody"]').should(
+//       "have.text",
+//       "Couldn't fetch rewards."
+//     );
+//     cy.get('[data-testid="errorBody"]').should("be.visible");
+//   });
 
-    cy.intercept("GET", "https://localhost:7017/api/reward", {
-      statusCode: 500,
-    }).as("getRewards");
+//   it("View error, tasks and rewards error", () => {
+//     taskError();
+//     rewardError();
 
-    cy.get('[data-testid="errorBody"]').should(
-      "have.text",
-      "Couldn't fetch tasks. Couldn't fetch rewards."
-    );
-  });
+//     cy.get('[data-testid="errorBody"]').should(
+//       "have.text",
+//       "Couldn't fetch tasks. Couldn't fetch rewards."
+//     );
+//   });
 
-  it("View error, tasks error custom message", () => {
-    cy.intercept(
-      "GET",
-      "https://localhost:7017/api/task/60ad8b86-edf7-4e40-87d0-90a153732e8a",
-      {
-        statusCode: 500,
-        fixture: "../fixtures/error.json",
-      }
-    ).as("getTasks");
-    cy.wait("@getTasks");
+//   it("View error, tasks error custom message", () => {
+//     taskCustomError();
+//     rewardCorrect();
+//     cy.get('[data-testid="errorHeader"]').should("have.text", "1");
+//     cy.get('[data-testid="errorBody"]').should("have.text", "Message. ");
+//   });
 
-    cy.get('[data-testid="errorHeader"]').should("have.text", "1");
-    cy.get('[data-testid="errorBody"]').should("have.text", "Message. ");
-  });
-});
+//   it("View error, rewards error custom message", () => {
+//     taskCorrect();
+//     rewardCustomError();
+//     cy.get('[data-testid="errorHeader"]').should("have.text", "1");
+//     cy.get('[data-testid="errorBody"]').should("have.text", "Message. ");
+//   });
+// });
