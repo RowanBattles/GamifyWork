@@ -76,12 +76,6 @@ jobs:
         run: yarn dev &
         working-directory: ./Application/Frontend/GamifyWork
 
-      - name: Install Docker
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker.io
-          sudo usermod -aG docker $USER
-
       - name: Build and run Docker container
         run: |
           docker build -t gamify-work .
