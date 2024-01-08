@@ -89,4 +89,5 @@ jobs:
         run: sleep 10
 
       - name: Run Cypress e2e tests
-        run: yarn cypress run ./Application/Frontend/GamifyWork
+        run: yarn cypress run
+        working-directory: ./Application/Frontend/GamifyWork
