@@ -58,6 +58,7 @@ jobs:
   keycloak:
     needs: frontend
     runs-on: ubuntu-latest
+
     outputs:
       keycloak-container-id: ${{ steps.set-container-id.outputs.container-id }}
 
@@ -72,7 +73,7 @@ jobs:
         id: set-container-id
         run: |
           container_id=$(docker run -d -p 8080:8080 rowanbattles/keywork)
-          echo "container-id=$container_id" >> $GITHUB_ENV
+          echo "$container_id" > keycloak-container-id.txt
 
   End-to-end_tests:
     needs: keycloak
@@ -114,8 +115,8 @@ jobs:
         run: |
           timeout=300
           while [ $timeout -gt 0 ]; do
-            container_id=$(echo "container-id=$(cat $GITHUB_ENV | grep 'container-id' | cut -d'=' -f2)")
-            if docker exec $container_id curl -s -o /dev/null http://localhost:8080/auth; then
+            container_id=$(cat keycloak-container-id.txt)
+            if docker exec $container_id curl -s -o /dev/null http://localhost:8080; then
               break
             fi
             sleep 1
@@ -130,5 +131,6 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           working-directory: ./Application/Frontend/GamifyWork
+
 
 
