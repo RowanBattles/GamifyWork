@@ -70,7 +70,7 @@ jobs:
         run: docker run -d -p 8080:8080 rowanbattles/keywork
 
 
-  End-to-end tests:
+  EndToEnd tests:
     needs: keycloak
     runs-on: ubuntu-latest
 
