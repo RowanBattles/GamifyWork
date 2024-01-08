@@ -55,36 +55,14 @@ jobs:
       - name: Wait for frontend server to start
         run: sleep 10
 
-  keycloak:
-    needs: frontend
+  End-to-end_tests:
     runs-on: ubuntu-latest
-
-    outputs:
-      keycloak-container-id: ${{ steps.set-container-id.outputs.container-id }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Pull Keycloak Docker image
-        run: docker pull rowanbattles/keywork
-
-      - name: Run Keycloak Docker container
-        id: set-container-id
-        run: |
-          container_id=$(docker run -d -p 8080:8080 rowanbattles/keywork)
-          echo "::set-output name=container-id::$container_id"
-
-
-  End-to-end_tests:
-    needs: keycloak
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install Node.js and Yarn
+      - name: Setup Node.js and Yarn
         uses: actions/setup-node@v3
         with:
           node-version: '18'
@@ -94,8 +72,19 @@ jobs:
         working-directory: ./Application/Frontend/GamifyWork
 
       - name: Build frontend
-        run: yarn dev &
+        run: yarn dev
         working-directory: ./Application/Frontend/GamifyWork
+
+      - name: Install Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+          sudo usermod -aG docker $USER
+
+      - name: Build and run Docker container
+        run: |
+          docker build -t gamify-work .
+          docker run -d -p 5173:5173 -p 8080:8080 --name gamify-container gamify-work
 
       - name: Wait for frontend server to start
         run: |
@@ -115,9 +104,8 @@ jobs:
       - name: Wait for Keycloak server to start
         run: |
           timeout=300
-          container_id=${{ needs.keycloak.outputs.keycloak-container-id }}
           while [ $timeout -gt 0 ]; do
-            if docker exec $container_id curl -s -o /dev/null http://localhost:8080; then
+            if docker exec gamify-container curl -s -o /dev/null http://localhost:8080; then
               break
             fi
             sleep 1
