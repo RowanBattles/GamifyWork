@@ -69,8 +69,6 @@ jobs:
       - name: Run Keycloak Docker container
         run: docker run -d -p 8080:8080 rowanbattles/keywork
 
-    steps:
-
 
   e2e-testing:
     needs: keycloak
