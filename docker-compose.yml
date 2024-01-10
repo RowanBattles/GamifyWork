@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   api:
-    container_name: gamifywork.api
+    container_name: backend
     image: ${DOCKER_REGISTRY-}gamifyworkapi
     build:
       context: ./Application/Backend/GamifyWork
@@ -22,7 +22,7 @@ services:
       - keycloak
       
   ui:
-    container_name: gamifywork.ui
+    container_name: frontend
     image: ${DOCKER_REGISTRY-}gamifyworkfrontend
     build:
       context: ./Application/Frontend/GamifyWork
@@ -34,14 +34,14 @@ services:
       - api
       
   keycloak:
-    container_name: gamifywork.keycloak
+    container_name: keycloak
     image: rowanbattles/keywork
     restart: on-failure
     ports:
       - "8080:8080"
 
   database:
-    container_name: gamifywork.database
+    container_name: database
     image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -61,6 +61,7 @@ services:
 
   ngrok:
     image: ngrok/ngrok:latest
+    container_name: ngrok
     restart: unless-stopped
     command:
       - "start"
