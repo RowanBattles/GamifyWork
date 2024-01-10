@@ -3,7 +3,6 @@ import { filterTasksByStatus } from "../utils/Filters/taskFilters";
 import { CreateTask, MarkTask, getTasksByUser } from "../utils/api";
 import { failed, succes } from "../utils/Helpers/toast";
 import { useTaskContext } from "../hooks/TaskContext";
-import usePatch from "../hooks/usePatch";
 import keycloak from "../utils/Keycloak";
 
 function TaskTable({ tasks, title }) {
@@ -65,15 +64,30 @@ function TaskTable({ tasks, title }) {
 
   const markTask = async (id) => {
     try {
-      var error = await usePatch(MarkTask, id, "tasks");
+      var error = await PatchFunction(MarkTask, id, "tasks");
       const updatedTasks = await getTasksByUser(keycloak.subject);
       updateTasks(updatedTasks);
-      if (errorMessage != null) {
+      if (error != null) {
         throw err;
       }
     } catch (err) {
       console.log(err);
       failed(error.errorMessage);
+    }
+  };
+
+  const PatchFunction = async (patchFunction, id, dataMessage) => {
+    try {
+      await patchFunction(id);
+    } catch (error) {
+      let errorMessage = "";
+      if (error.response.data != null) {
+        const { Message, ErrorCode } = error.response.data;
+        errorMessage += ErrorCode + " " + Message;
+      } else {
+        errorMessage += `failed marking ${dataMessage}`;
+      }
+      return { errorMessage };
     }
   };
 

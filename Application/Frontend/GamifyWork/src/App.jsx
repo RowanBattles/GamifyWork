@@ -8,7 +8,6 @@ import PrivateRoute from "./utils/Helpers/PrivateRoute";
 import keycloak from "./utils/Keycloak";
 import NotFound from "./pages/static/NotFound";
 import FriendsPage from "./pages/Friends";
-import LoginPage from "./pages/static/Login";
 
 function App() {
   return (

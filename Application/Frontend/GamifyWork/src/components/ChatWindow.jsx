@@ -2,8 +2,16 @@ import { useRef, useEffect, useState } from "react";
 import signalRService from "../utils/Helpers/SignalRService";
 import { useKeycloak } from "@react-keycloak/web";
 import { filterMessagesByUsers } from "../utils/Filters/messageFilters";
+import PropTypes from "prop-types";
 
 function ChatWindow({ selectedFriend }) {
+  ChatWindow.propTypes = {
+    selectedFriend: PropTypes.shape({
+      username: PropTypes.string,
+      user_ID: PropTypes.string.isRequired,
+    }),
+  };
+
   const [scrollButton, setScrollButton] = useState(false);
   const [scrollToBottomValue, setScrollToBottom] = useState(false);
   const { keycloak } = useKeycloak();
@@ -57,11 +65,13 @@ function ChatWindow({ selectedFriend }) {
       messageListRef.current.addEventListener("scroll", CalculateScrollBoolean);
 
       return () => {
-        messageListRef.current.removeEventListener(
-          "scroll",
-          CalculateScrollBoolean
-        );
-        setScrollButton(false);
+        if (messageListRef.current != null) {
+          messageListRef.current.removeEventListener(
+            "scroll",
+            CalculateScrollBoolean
+          );
+          setScrollButton(false);
+        }
       };
     }
   }, [selectedFriend, filteredMessages]);
@@ -127,7 +137,11 @@ function ChatWindow({ selectedFriend }) {
               src="https://cdn-icons-png.flaticon.com/512/666/666201.png"
               className="h-9 w-9 bg-gray-300 rounded-full p-1"
             />
-            <span>{selectedFriend.username}</span>
+            {selectedFriend.username == null ? (
+              <span className="text-gray-400 italic">undefinied</span>
+            ) : (
+              <span>{selectedFriend.username}</span>
+            )}
           </div>
         )}
       </div>

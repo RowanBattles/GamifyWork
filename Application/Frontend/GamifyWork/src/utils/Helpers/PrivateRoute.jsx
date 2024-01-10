@@ -48,9 +48,9 @@ const PrivateRoute = ({ children }) => {
   }
 
   if (error) {
-    alert("User couldn't be loaded, you're being logged out.");
-    keycloak.logout();
-    return <Login />;
+    alert(
+      "User couldn't be loaded, you're being logged out. Try refreshing the page"
+    );
   }
 
   if (!keycloak.authenticated) {
