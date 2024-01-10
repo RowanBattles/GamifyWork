@@ -141,7 +141,7 @@ jobs:
       - name: Run SonarQube Analysis
         working-directory: ./Application/Backend/GamifyWork
         run: |
-          dotnet sonarscanner begin /k:"NetCoreApi" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" /d:sonar.token="${{ secrets.SONAR_TOKEN_BACKEND }}" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
+          dotnet sonarscanner begin /k:"GamifyWorkApi" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" /d:sonar.token="${{ secrets.SONAR_TOKEN_BACKEND }}" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
           dotnet build GamifyWork.sln --no-incremental
           dotnet-coverage collect "dotnet test GamifyWork.sln" -f xml -o "coverage.xml"
           dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN_BACKEND }}"
@@ -160,7 +160,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: 16
+          node-version: 18
 
       - name: Restore dependencies
         run: |
