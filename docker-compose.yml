@@ -52,6 +52,26 @@ services:
     volumes:
       - GamifyworkDatabaseVolume:/var/lib/mysql
       - ./Application/Backend/GamifyWork/init.sql:/docker-entrypoint-initdb.d/init.sql
+      
+  sonarqube:
+    image: rowanbattles/sonarwork
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    command:
+      - "start"
+      - "--all"
+      - "--config"
+      - "/etc/ngrok.yml"
+    volumes:
+      - ./ngrok.yml:/etc/ngrok.yml
+    ports:
+      - 4040:4040
+
 
 volumes:
   GamifyworkDatabaseVolume:
