@@ -9,6 +9,8 @@ using GamifyWork.MapperLayer.Mappers;
 using GamifyWork.ServiceLibrary.Helpers;
 using GamifyWork.ServiceLibrary.Interfaces;
 using GamifyWork.ServiceLibrary.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,9 +26,25 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod()
         .AllowAnyHeader()
         .WithOrigins("http://localhost:5173")
+        .WithOrigins("http://localhost:8080")
         .AllowCredentials();
     });
 });
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = "http://localhost:8080/auth/realms/GamifyWork";
+        options.RequireHttpsMetadata = false;
+        options.Audience = "account";
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+        };
+    });
 
 builder.Services.AddHttpClient();
 
@@ -73,6 +91,7 @@ app.UseHttpsRedirection();
 
 app.UseCors("CORSpolicy");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

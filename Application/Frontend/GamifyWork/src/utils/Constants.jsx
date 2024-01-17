@@ -8,7 +8,8 @@ const ENDPOINTS = {
   GetAllTasks: `${URL}/api/task`,
   GetTasksByUser: (id) => `${URL}/api/task/${id}`,
   CreateTask: `${URL}/api/task`,
-  MarkTask: `${URL}/api/task/MarkTask/`,
+  MarkTask: (id) => `${URL}/api/task/MarkTask/${id}`,
+  DeleteTask: (id) => `${URL}/api/task/${id}`,
 
   GetAllRewards: `${URL}/api/reward`,
 };

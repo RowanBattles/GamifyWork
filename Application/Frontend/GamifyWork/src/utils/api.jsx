@@ -58,10 +58,25 @@ export async function getTasksByUser(id) {
 }
 
 export async function MarkTask(Id) {
-  const url = EndPoints.MarkTask + Id;
+  const url = EndPoints.MarkTask(Id);
 
   try {
     await axios.patch(url);
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function DeleteTask(Id, accessToken) {
+  const url = EndPoints.DeleteTask(Id);
+
+  try {
+    await axios.delete(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     throw error;
   }
