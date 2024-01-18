@@ -132,7 +132,7 @@ describe("Viewing tasks and rewards", () => {
     );
     cy.get('[data-testid="task-1"]').should(
       "have.text",
-      "Recurring task - Cypress"
+      "Recurring task - Cypress   "
     );
     cy.get('[data-testid="task-1"]').should("be.visible");
     cy.get('[data-testid="task-2"]').should(
@@ -142,7 +142,7 @@ describe("Viewing tasks and rewards", () => {
     );
     cy.get('[data-testid="task-2"]').should(
       "have.text",
-      "To do task - Cypress"
+      "To do task - Cypress   "
     );
     cy.get('[data-testid="task-2"]').should("be.visible");
   });
