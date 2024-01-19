@@ -15,7 +15,7 @@ namespace GamifyWork.DataAccessLibrary.Data
         private readonly string _connectionString;
         public dbContext(IConfiguration configuration)
         {
-            var connectionstring = configuration.GetConnectionString("DockerConnection");
+            var connectionstring = configuration.GetConnectionString("LocalConnection");
             if (string.IsNullOrEmpty(connectionstring))
             {
                 throw new ArgumentNullException("Connection string is null");

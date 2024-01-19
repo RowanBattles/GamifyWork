@@ -66,12 +66,5 @@ namespace GamifyWork.Api.tests.Middleware
             Assert.Equal((int)HttpStatusCode.InternalServerError, context.Response.StatusCode);
             Assert.Equal("application/json", context.Response.ContentType);
         }
-
-        private async Task<string> ReadResponseBody(Stream body)
-        {
-            body.Seek(0, SeekOrigin.Begin); // Rewind the stream to the beginning
-            using var reader = new StreamReader(body, Encoding.UTF8);
-            return await reader.ReadToEndAsync();
-        }
     }
 }

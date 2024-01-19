@@ -47,7 +47,7 @@ namespace GamifyWork.ServiceLibrary.Services
             }
         }
 
-        private async Task<TaskModel> GetTaskById(int Id)
+        public async Task<TaskModel> GetTaskById(int Id)
         {
             try
             {
@@ -89,6 +89,19 @@ namespace GamifyWork.ServiceLibrary.Services
             {
                 _logger.LogError(ex, "An unexpected error occurred while retrieving tasks in service");
                 throw new TaskException("Error retrieving tasks for user" + user, (int)HttpStatusCode.InternalServerError);
+            }
+        }
+
+        public async Task DeleteTask(int Id)
+        {
+            try
+            {
+                await _taskRepository.DeleteTask(Id);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred while deleting tasks in service");
+                throw new TaskException("Error deleting tasks for user", (int)HttpStatusCode.InternalServerError);
             }
         }
     }

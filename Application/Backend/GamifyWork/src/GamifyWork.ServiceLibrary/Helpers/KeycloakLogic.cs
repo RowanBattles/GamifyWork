@@ -79,7 +79,7 @@ namespace GamifyWork.ServiceLibrary.Helpers
             {
                 var httpClient = _httpClient.CreateClient();
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-                var response = await httpClient.GetAsync($"http://keycloak:8080/auth/admin/realms/GamifyWork/users/{user_ID}");
+                var response = await httpClient.GetAsync($"http://localhost:8080/auth/admin/realms/GamifyWork/users/{user_ID}");
                 var responseContent = await response.Content.ReadAsStringAsync();
                 using var jsonDoc = JsonDocument.Parse(responseContent);
                 var username = jsonDoc.RootElement.GetProperty("username").GetString();
@@ -114,7 +114,7 @@ namespace GamifyWork.ServiceLibrary.Helpers
                 };
 
                 var httpClient = _httpClient.CreateClient();
-                var response = await httpClient.PostAsync("http://keycloak:8080/auth/realms/GamifyWork/protocol/openid-connect/token", new FormUrlEncodedContent(tokenRequest));
+                var response = await httpClient.PostAsync("http://localhost:8080/auth/realms/GamifyWork/protocol/openid-connect/token", new FormUrlEncodedContent(tokenRequest));
                 var responseContent = await response.Content.ReadAsStringAsync();
                 using var jsonDoc = JsonDocument.Parse(responseContent);
                 var accessToken = jsonDoc.RootElement.GetProperty("access_token").GetString();

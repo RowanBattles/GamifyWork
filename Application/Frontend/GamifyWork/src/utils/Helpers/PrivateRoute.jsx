@@ -12,7 +12,9 @@ const PrivateRoute = ({ children }) => {
     const validateUser = async () => {
       try {
         await getUserById(keycloak.subject);
+        console.log(keycloak.token);
         setLoading(false);
+        setError(null);
       } catch (error) {
         await createOrValidateUser();
       }
@@ -22,6 +24,7 @@ const PrivateRoute = ({ children }) => {
       try {
         await createUser(keycloak.subject);
         await validateUser();
+        setError(null);
       } catch (error) {
         setError(error);
         setLoading(false);
@@ -47,10 +50,8 @@ const PrivateRoute = ({ children }) => {
     );
   }
 
-  if (error) {
-    alert(
-      "User couldn't be loaded, you're being logged out. Try refreshing the page"
-    );
+  if (error !== null) {
+    alert("User couldn't be loaded. Try refreshing the page");
   }
 
   if (!keycloak.authenticated) {

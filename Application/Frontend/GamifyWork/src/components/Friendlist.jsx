@@ -68,7 +68,13 @@ function Friendlist({ selectedFriend, setSelectedFriend }) {
                           className="h-12 w-12 bg-gray-300 rounded-full p-1"
                         />
                         <div className="grid text-md">
-                          <span className="font-medium">{u.username}</span>
+                          {u.username == null ? (
+                            <span className="text-gray-500 font-semibold italic">
+                              undefinied
+                            </span>
+                          ) : (
+                            <span className="font-semibold">{u.username}</span>
+                          )}
                           <span className="text-gray-400">offline</span>
                         </div>
                       </div>

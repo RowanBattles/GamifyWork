@@ -106,100 +106,100 @@ describe("Creating task", () => {
   });
 });
 
-// describe("Viewing tasks and rewards", () => {
-//   beforeEach(() => {
-//     cy.kcLogout();
-//     cy.kcLogin("user");
-//     cy.visit("/");
+describe("Viewing tasks and rewards", () => {
+  beforeEach(() => {
+    cy.kcLogout();
+    cy.kcLogin("user");
+    cy.visit("/");
 
-//     cy.intercept(
-//       "POST",
-//       "https://localhost:7017/api/user/60ad8b86-edf7-4e40-87d0-90a153732e8a",
-//       {
-//         statusCode: 200,
-//       }
-//     ).as("login");
-//   });
+    cy.intercept(
+      "POST",
+      "https://localhost:7017/api/user/60ad8b86-edf7-4e40-87d0-90a153732e8a",
+      {
+        statusCode: 200,
+      }
+    ).as("login");
+  });
 
-//   it("View tasks and rewards succesfully", () => {
-//     taskCorrect();
-//     rewardCorrect();
+  it("View tasks and rewards succesfully", () => {
+    taskCorrect();
+    rewardCorrect();
 
-//     cy.get('[data-testid="task-1"]').should(
-//       "have.attr",
-//       "data-testid",
-//       "task-1"
-//     );
-//     cy.get('[data-testid="task-1"]').should(
-//       "have.text",
-//       "Recurring task - Cypress"
-//     );
-//     cy.get('[data-testid="task-1"]').should("be.visible");
-//     cy.get('[data-testid="task-2"]').should(
-//       "have.attr",
-//       "data-testid",
-//       "task-2"
-//     );
-//     cy.get('[data-testid="task-2"]').should(
-//       "have.text",
-//       "To do task - Cypress"
-//     );
-//     cy.get('[data-testid="task-2"]').should("be.visible");
-//   });
+    cy.get('[data-testid="task-1"]').should(
+      "have.attr",
+      "data-testid",
+      "task-1"
+    );
+    cy.get('[data-testid="task-1"]').should(
+      "have.text",
+      "Recurring task - Cypress   "
+    );
+    cy.get('[data-testid="task-1"]').should("be.visible");
+    cy.get('[data-testid="task-2"]').should(
+      "have.attr",
+      "data-testid",
+      "task-2"
+    );
+    cy.get('[data-testid="task-2"]').should(
+      "have.text",
+      "To do task - Cypress   "
+    );
+    cy.get('[data-testid="task-2"]').should("be.visible");
+  });
 
-//   it("View error, tasks error", () => {
-//     taskError();
-//     rewardCorrect();
+  it("View error, tasks error", () => {
+    taskError();
+    rewardCorrect();
 
-//     cy.get('[data-testid="errorHeader"]').should(
-//       "have.text",
-//       "Unexpected error"
-//     );
-//     cy.get('[data-testid="errorHeader"]').should("be.visible");
-//     cy.get('[data-testid="errorBody"]').should(
-//       "have.text",
-//       "Couldn't fetch tasks."
-//     );
-//     cy.get('[data-testid="errorBody"]').should("be.visible");
-//   });
+    cy.get('[data-testid="errorHeader"]').should(
+      "have.text",
+      "Unexpected error"
+    );
+    cy.get('[data-testid="errorHeader"]').should("be.visible");
+    cy.get('[data-testid="errorBody"]').should(
+      "have.text",
+      "Couldn't fetch tasks."
+    );
+    cy.get('[data-testid="errorBody"]').should("be.visible");
+  });
 
-//   it("View error, rewards error", () => {
-//     taskCorrect();
-//     rewardError();
+  it("View error, rewards error", () => {
+    taskCorrect();
+    rewardError();
 
-//     cy.get('[data-testid="errorHeader"]').should(
-//       "have.text",
-//       "Unexpected error"
-//     );
-//     cy.get('[data-testid="errorHeader"]').should("be.visible");
-//     cy.get('[data-testid="errorBody"]').should(
-//       "have.text",
-//       "Couldn't fetch rewards."
-//     );
-//     cy.get('[data-testid="errorBody"]').should("be.visible");
-//   });
+    cy.get('[data-testid="errorHeader"]').should(
+      "have.text",
+      "Unexpected error"
+    );
+    cy.get('[data-testid="errorHeader"]').should("be.visible");
+    cy.get('[data-testid="errorBody"]').should(
+      "have.text",
+      "Couldn't fetch rewards."
+    );
+    cy.get('[data-testid="errorBody"]').should("be.visible");
+  });
 
-//   it("View error, tasks and rewards error", () => {
-//     taskError();
-//     rewardError();
+  it("View error, tasks and rewards error", () => {
+    taskError();
+    rewardError();
 
-//     cy.get('[data-testid="errorBody"]').should(
-//       "have.text",
-//       "Couldn't fetch tasks. Couldn't fetch rewards."
-//     );
-//   });
+    cy.get('[data-testid="errorBody"]').should(
+      "have.text",
+      "Couldn't fetch tasks. Couldn't fetch rewards."
+    );
+  });
 
-//   it("View error, tasks error custom message", () => {
-//     taskCustomError();
-//     rewardCorrect();
-//     cy.get('[data-testid="errorHeader"]').should("have.text", "1");
-//     cy.get('[data-testid="errorBody"]').should("have.text", "Message. ");
-//   });
+  it("View error, tasks error custom message", () => {
+    taskCustomError();
+    rewardCorrect();
+    cy.get('[data-testid="errorHeader"]').should("have.text", "1");
+    cy.get('[data-testid="errorBody"]').should("have.text", "Message. ");
+  });
 
-//   it("View error, rewards error custom message", () => {
-//     taskCorrect();
-//     rewardCustomError();
-//     cy.get('[data-testid="errorHeader"]').should("have.text", "1");
-//     cy.get('[data-testid="errorBody"]').should("have.text", "Message. ");
-//   });
-// });
+  it("View error, rewards error custom message", () => {
+    taskCorrect();
+    rewardCustomError();
+    cy.get('[data-testid="errorHeader"]').should("have.text", "1");
+    cy.get('[data-testid="errorBody"]').should("have.text", "Message. ");
+  });
+});

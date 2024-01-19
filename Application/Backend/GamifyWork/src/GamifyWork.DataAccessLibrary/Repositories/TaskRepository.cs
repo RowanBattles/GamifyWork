@@ -116,24 +116,19 @@ namespace GamifyWork.DataAccessLibrary.Repositories
                 throw;
             }
         }
+
+        public async Task DeleteTask(int Id)
+        {
+            try
+            {
+                _dbContext.task.RemoveRange(_dbContext.task.Where(task => task.Task_ID == Id));
+                await _dbContext.SaveChangesAsync();
+            }
+            catch
+            {
+                _logger.LogError("An unexpected error occurred while deleting a task in repository");
+                throw;
+            }
+        }
     }
 }
-
-//public async Task<bool> DeleteTask(int Id)
-//{
-//    using (var db = new dbContext())
-//    {
-//        try
-//        {
-//            TaskModel taskModel = await GetTaskById(Id);
-                    
-//            db.Remove(taskModel);
-
-//            return await db.SaveChangesAsync() >= 1;
-//        }
-//        catch (Exception ex)
-//        {
-//            return false;
-//        }
-//    }
-//}

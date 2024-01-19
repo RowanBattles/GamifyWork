@@ -13,5 +13,7 @@ namespace GamifyWork.ServiceLibrary.Interfaces
         Task CreateTask(TaskModel taskModel);
         Task MarkTask(int Id);
         Task<List<TaskModel>> GetTasksByUser(Guid user);
+        Task DeleteTask(int Id);
+        Task<TaskModel> GetTaskById(int id);
     }
 }

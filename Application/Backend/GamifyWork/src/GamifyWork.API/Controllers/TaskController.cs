@@ -8,6 +8,8 @@ using GamifyWork.ServiceLibrary.Exceptions;
 using GamifyWork.API.Middleware;
 using Newtonsoft.Json;
 using Microsoft.VisualBasic;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace GamifyWork.API.Controllers
 {
@@ -41,6 +43,25 @@ namespace GamifyWork.API.Controllers
             taskModel.CheckValidation();
             await _taskService.CreateTask(taskModel);
             return Ok(taskModel);
+        }
+
+        [HttpDelete("{Id}")]
+        [Authorize]
+        public async Task<IActionResult> DeleteTask(int Id)
+        {
+            var task = await _taskService.GetTaskById(Id);
+
+            var userSubject = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (userSubject == task.User.ToString())
+            {
+                await _taskService.DeleteTask(Id);
+                return Ok();
+            }
+            else
+            {
+                return Unauthorized();
+            }
         }
 
         [HttpPatch("MarkTask/{id}")]
