@@ -26,6 +26,7 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod()
         .AllowAnyHeader()
         .WithOrigins("http://localhost:5173")
+        .WithOrigins("http://www.gamifywork.com:5173")
         .WithOrigins("http://localhost:8080")
         .AllowCredentials();
     });
